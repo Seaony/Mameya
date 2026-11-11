@@ -1,0 +1,362 @@
+---
+import { Image } from 'astro:assets';
+import avatar from '../assets/avatar.jpg';
+import { apps, contact, socials } from '../data/apps';
+import { ui, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = ui[lang];
+---
+
+<section class="intro">
+  <div class="person">
+    <Image class="avatar" src={avatar} alt={t.avatarAlt} width={56} height={56} densities={[1, 2, 3]} loading="eager" />
+    <div>
+      <h1 class="name">Seaony</h1>
+      <p class="muted">{t.tagline}</p>
+    </div>
+  </div>
+  <p class="bio">{t.intro}</p>
+</section>
+
+<section class="section" aria-labelledby="projects">
+  <h2 class="section-title small muted" id="projects">{t.projects}</h2>
+  <ul class="list">
+    {
+      apps.map((app) => (
+        <li>
+          <a class="row app" href={app.url}>
+            <Image class="icon" src={app.icon} alt="" width={36} height={36} densities={[2, 3]} />
+            <span class="label">
+              {app.name}
+              <span class="arrow" aria-hidden="true">↗</span>
+              {app.inDevelopment && <span class="tag small">{t.inDevelopment}</span>}
+            </span>
+            <span class="leader" aria-hidden="true" />
+            <span class="desc muted">{t.apps[app.id]}</span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<section class="section" aria-labelledby="contact">
+  <h2 class="section-title small muted" id="contact">{t.contact}</h2>
+  <ul class="list">
+    <li>
+      <a class="row" href={`mailto:${contact.email}`}>
+        <span class="label">{t.email}</span>
+        <span class="leader" aria-hidden="true"></span>
+        <span class="desc muted">{contact.email}</span>
+      </a>
+    </li>
+    <li>
+      <a class="row" href={contact.github.url}>
+        <span class="label">GitHub<span class="arrow" aria-hidden="true">↗</span></span>
+        <span class="leader" aria-hidden="true"></span>
+        <span class="desc muted">@{contact.github.handle}</span>
+      </a>
+    </li>
+    {
+      socials.map((s) => {
+        const cardId = `qr-${s.id}`;
+        const name = t.socials[s.id].name;
+        return (
+          <li class="qr" data-qr>
+            {s.url ? (
+              <a class="row" href={s.url} aria-describedby={cardId}>
+                <span class="label">
+                  {name}
+                  <span class="arrow" aria-hidden="true">↗</span>
+                </span>
+                <span class="leader" aria-hidden="true" />
+                <span class="desc muted">{s.handle}</span>
+              </a>
+            ) : (
+              <button class="row" type="button" aria-expanded="false" aria-controls={cardId}>
+                <span class="label">{name}</span>
+                <span class="leader" aria-hidden="true" />
+                <span class="desc muted">{t.qrCode}</span>
+              </button>
+            )}
+            <div class="qr-card" id={cardId}>
+              <Image src={s.qr} alt={`${name} ${t.qrCode}`} width={168} height={168} densities={[2]} />
+              <p class="small muted">{t.socials[s.id].scan}</p>
+            </div>
+          </li>
+        );
+      })
+    }
+  </ul>
+</section>
+
+<script>
+  // 手机上没有悬停：点一下打开二维码，再点、点空白处或按 Esc 关闭
+  const items = document.querySelectorAll<HTMLElement>('[data-qr]');
+
+  function close(item: HTMLElement) {
+    item.removeAttribute('data-open');
+    item.querySelector('button')?.setAttribute('aria-expanded', 'false');
+  }
+
+  // 只有触屏、触控笔点击才切换；鼠标靠悬停、键盘靠焦点显示，不然桌面点一下卡片会一直挂着
+  let lastPointer = '';
+  document.addEventListener('pointerdown', (e) => (lastPointer = e.pointerType), { capture: true });
+
+  items.forEach((item) => {
+    const button = item.querySelector('button');
+    button?.addEventListener('click', () => {
+      const isTouch = lastPointer === 'touch' || lastPointer === 'pen';
+      lastPointer = '';
+      if (!isTouch) return;
+      const open = !item.hasAttribute('data-open');
+      items.forEach((other) => other !== item && close(other));
+      item.toggleAttribute('data-open', open);
+      item.removeAttribute('data-dismissed');
+      button.setAttribute('aria-expanded', String(open));
+    });
+    // Esc 关掉后，鼠标移开或焦点离开再恢复悬停显示
+    item.addEventListener('mouseleave', () => item.removeAttribute('data-dismissed'));
+    item.addEventListener('focusout', () => item.removeAttribute('data-dismissed'));
+  });
+
+  document.addEventListener('click', (e) => {
+    items.forEach((item) => !item.contains(e.target as Node) && close(item));
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    items.forEach((item) => {
+      close(item);
+      item.setAttribute('data-dismissed', '');
+    });
+  });
+</script>
+
+<style>
+  .intro {
+    padding-top: 56px;
+  }
+
+  .person {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--hover);
+    /* 头像边缘加一圈极淡的描边，浅色底上不发虚 */
+    box-shadow: 0 0 0 1px light-dark(rgb(0 0 0 / 0.06), rgb(255 255 255 / 0.08));
+  }
+
+  .name {
+    font-weight: 500;
+    line-height: 1.5;
+  }
+
+  .person p {
+    line-height: 1.5;
+  }
+
+  .bio {
+    margin-top: 24px;
+    max-width: 62ch;
+  }
+
+  .section {
+    margin-top: 56px;
+  }
+
+  .section-title {
+    margin-bottom: 8px;
+  }
+
+  /* 整行可点：左名右说明，中间点线 */
+  .row {
+    --pad: 12px;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    column-gap: 12px;
+    width: calc(100% + 2 * var(--pad));
+    margin: 0 calc(-1 * var(--pad));
+    padding: 6px var(--pad);
+    border-radius: var(--radius);
+    color: inherit;
+    font: inherit;
+    line-height: inherit;
+    text-align: start;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    transition: background-color 150ms var(--ease);
+  }
+
+  .row:hover,
+  .qr[data-open] .row {
+    background: var(--hover);
+  }
+
+  .row:focus-visible {
+    outline-offset: 0;
+    border-radius: var(--radius);
+  }
+
+  /* 产品行：图标在最左；图标四周自带透明边，往左挪一点让图标本体和上面的文字对齐 */
+  .app {
+    grid-template-columns: 36px auto 1fr auto;
+    padding-left: calc(var(--pad) - 3.5px);
+    padding-block: 8px;
+  }
+
+  .icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+  }
+
+  .arrow {
+    color: var(--muted);
+    font-size: var(--small);
+    transition: transform 150ms var(--ease), color 150ms var(--ease);
+  }
+
+  .row:hover .arrow {
+    color: var(--fg);
+    transform: translate(1px, -1px);
+  }
+
+  .tag {
+    color: var(--muted);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 0 7px;
+    line-height: 18px;
+  }
+
+  .leader {
+    min-width: 16px;
+    border-top: 1px dotted var(--line);
+    transform: translateY(1px);
+  }
+
+  .desc {
+    text-align: end;
+  }
+
+  /* 二维码卡片：悬停或键盘聚焦时浮在这一行上方，右边和说明文字对齐 */
+  .qr {
+    position: relative;
+  }
+
+  .qr-card {
+    position: absolute;
+    right: 0;
+    bottom: calc(100% + 6px);
+    z-index: 10;
+    display: none;
+    width: 192px;
+    padding: 12px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    box-shadow:
+      0 12px 32px -12px rgb(0 0 0 / 0.22),
+      0 2px 6px rgb(0 0 0 / 0.05);
+    text-align: center;
+    /* 关着时透明，关闭有淡出，快速切换时旧卡片不会叠着残留 */
+    opacity: 0;
+    transform: translateY(4px);
+    transition:
+      opacity 120ms var(--ease),
+      transform 120ms var(--ease),
+      display 120ms allow-discrete;
+  }
+
+  .qr-card img {
+    width: 168px;
+    height: 168px;
+    border-radius: 8px;
+    background: #fff;
+  }
+
+  .qr-card p {
+    margin-top: 8px;
+    line-height: 1.4;
+  }
+
+  @media (hover: hover) {
+    .qr:hover .qr-card {
+      display: block;
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  .qr:has(:focus-visible) .qr-card,
+  .qr[data-open] .qr-card {
+    display: block;
+    opacity: 1;
+    transform: none;
+  }
+
+  .qr[data-dismissed] .qr-card {
+    display: none;
+    opacity: 0;
+  }
+
+  /* 打开时的起始状态；选择器和上面打开规则一样具体，才能覆盖 */
+  @starting-style {
+    .qr:hover .qr-card,
+    .qr:has(:focus-visible) .qr-card,
+    .qr[data-open] .qr-card {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+  }
+
+  /* 窄屏：说明换到名字下面，去掉点线 */
+  @media (max-width: 560px) {
+    .app {
+      grid-template-columns: 36px 1fr;
+      grid-template-areas:
+        'icon label'
+        'icon desc';
+      row-gap: 0;
+    }
+
+    .app .icon {
+      grid-area: icon;
+    }
+
+    .app .label {
+      grid-area: label;
+    }
+
+    .app .desc {
+      grid-area: desc;
+      text-align: start;
+      font-size: var(--small);
+      line-height: 1.5;
+    }
+
+    .app .leader {
+      display: none;
+    }
+  }
+</style>

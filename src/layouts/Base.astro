@@ -1,0 +1,123 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { langs, locales, ui, type Lang } from '../i18n/ui';
+import { contact } from '../data/apps';
+
+interface Props {
+  lang: Lang;
+  title: string;
+  description?: string;
+  // 首页三种语言互指；404 页不进索引
+  indexable?: boolean;
+}
+
+const { lang, title, description, indexable = true } = Astro.props;
+const t = ui[lang];
+const site = Astro.site!;
+const canonical = new URL(locales[lang].path, site).href;
+const ogImage = new URL(`/og/${lang}.png`, site).href;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Seaony',
+  url: canonical,
+  image: new URL('/avatar.jpg', site).href,
+  description: t.tagline,
+  jobTitle: 'Full-stack developer',
+  address: { '@type': 'PostalAddress', addressLocality: 'Singapore', addressCountry: 'SG' },
+  email: `mailto:${contact.email}`,
+  sameAs: [contact.github.url],
+};
+---
+
+<!doctype html>
+<html lang={locales[lang].htmlLang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    {description && <meta name="description" content={description} />}
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#fcfcfb" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#111110" media="(prefers-color-scheme: dark)" />
+
+    {/* 首次绘制前定好主题，并在根路径按浏览器语言跳转 */}
+    <script is:inline>
+      (function () {
+        var d = document.documentElement;
+        var store = {};
+        try {
+          store.theme = localStorage.getItem('theme');
+          store.lang = localStorage.getItem('lang');
+        } catch (e) {}
+        if (store.theme === 'light' || store.theme === 'dark') {
+          d.dataset.theme = store.theme;
+          var color = store.theme === 'dark' ? '#111110' : '#fcfcfb';
+          document.querySelectorAll('meta[name="theme-color"]').forEach(function (m) {
+            m.setAttribute('content', color);
+          });
+        }
+        if (location.pathname !== '/') return;
+        // 手动选过语言就按选过的来；没选过才看浏览器语言
+        var target = store.lang;
+        if (!target) {
+          var l = ((navigator.languages && navigator.languages[0]) || navigator.language || '').toLowerCase();
+          target = l.indexOf('zh') === 0 ? 'zh' : l.indexOf('ja') === 0 ? 'ja' : 'en';
+        }
+        if (target === 'zh' || target === 'ja') location.replace('/' + target + '/' + location.search + location.hash);
+      })();
+    </script>
+
+    <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" href="/favicon.png" type="image/png" sizes="96x96" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    {
+      indexable ? (
+        <>
+          <link rel="canonical" href={canonical} />
+          {langs.map((l) => (
+            <link rel="alternate" hreflang={locales[l].hreflang} href={new URL(locales[l].path, site).href} />
+          ))}
+          <link rel="alternate" hreflang="x-default" href={new URL('/', site).href} />
+          <meta property="og:type" content="profile" />
+          <meta property="og:site_name" content="Seaony" />
+          <meta property="og:url" content={canonical} />
+          <meta property="og:title" content={title} />
+          <meta property="og:description" content={description} />
+          <meta property="og:image" content={ogImage} />
+          <meta property="og:image:width" content="1200" />
+          <meta property="og:image:height" content="630" />
+          <meta property="og:image:alt" content={`Seaony · ${t.tagline}`} />
+          <meta property="og:locale" content={locales[lang].ogLocale} />
+          {langs
+            .filter((l) => l !== lang)
+            .map((l) => (
+              <meta property="og:locale:alternate" content={locales[l].ogLocale} />
+            ))}
+          <meta property="profile:username" content="Seaony" />
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta name="twitter:title" content={title} />
+          <meta name="twitter:description" content={description} />
+          <meta name="twitter:image" content={ogImage} />
+          <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+        </>
+      ) : (
+        <meta name="robots" content="noindex" />
+      )
+    }
+  </head>
+  <body>
+    <div class="page">
+      <Header lang={lang} />
+      <main>
+        <slot />
+      </main>
+      <Footer />
+    </div>
+  </body>
+</html>

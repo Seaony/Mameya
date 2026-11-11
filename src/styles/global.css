@@ -1,0 +1,127 @@
+/* Inter 只含 latin 子集（另加箭头），字重 400–600 */
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/inter-latin.woff2') format('woff2');
+  font-weight: 400 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* 回退字体按 Inter 的字宽和行高调好，换字体时页面不跳 */
+@font-face {
+  font-family: 'Inter Fallback';
+  src: local('Arial'), local('Helvetica Neue'), local('Helvetica');
+  size-adjust: 107.56%;
+  ascent-override: 90.07%;
+  descent-override: 22.43%;
+  line-gap-override: 0%;
+}
+
+:root {
+  color-scheme: light dark;
+
+  --bg: light-dark(#fcfcfb, #111110);
+  --fg: light-dark(#1b1b18, #eeeeec);
+  --muted: light-dark(#6b6a65, #a1a09a);
+  --line: light-dark(#dcdbd7, #3a3936);
+  --hover: light-dark(#f3f3f1, #1b1b1a);
+  --surface: light-dark(#ffffff, #1a1a19);
+  --selection: light-dark(#e4e3df, #34332f);
+
+  --font-latin: 'Inter', 'Inter Fallback';
+  --font-zh: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
+  --font-ja: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Yu Gothic UI', 'Meiryo', 'Noto Sans JP', sans-serif;
+
+  --text: 15px;
+  --small: 13px;
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+  --radius: 10px;
+}
+
+:root[data-theme='light'] { color-scheme: light; }
+:root[data-theme='dark'] { color-scheme: dark; }
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scrollbar-color: var(--line) transparent;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-latin), var(--font-zh);
+  font-size: var(--text);
+  line-height: 1.65;
+  font-feature-settings: 'cv11', 'ss01';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* 中日文行高大一点；日文按词组换行，中日文和西文之间自动留空 */
+:lang(zh) body { font-family: var(--font-latin), var(--font-zh); line-height: 1.8; }
+:lang(ja) body { font-family: var(--font-latin), var(--font-ja); line-height: 1.8; word-break: auto-phrase; }
+:lang(ja) body,
+:lang(zh) body { text-autospace: normal; }
+
+::selection { background: var(--selection); color: var(--fg); }
+
+p { margin: 0; text-wrap: pretty; }
+h1, h2 { margin: 0; font-size: inherit; font-weight: inherit; }
+ul { margin: 0; padding: 0; list-style: none; }
+img { display: block; }
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 150ms var(--ease), background-color 150ms var(--ease), text-decoration-color 150ms var(--ease);
+}
+
+:focus-visible {
+  outline: 2px solid var(--fg);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* 切主题那一刻关掉过渡，颜色直接换，不整页渐变闪一下 */
+.no-transition,
+.no-transition * { transition: none !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after { transition: none !important; animation: none !important; }
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* 页面骨架：单列居中，手机左右留 20px */
+.page {
+  width: 100%;
+  max-width: calc(640px + 2 * 24px);
+  margin: 0 auto;
+  padding: 0 24px;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 480px) {
+  .page { padding: 0 20px; }
+}
+
+.muted { color: var(--muted); }
+.small { font-size: var(--small); }

@@ -1,0 +1,9 @@
+---
+import Base from '../../layouts/Base.astro';
+import NotFound from '../../components/NotFound.astro';
+import { ui } from '../../i18n/ui';
+---
+
+<Base lang="ja" title={ui.ja.notFound.title} indexable={false}>
+  <NotFound lang="ja" />
+</Base>

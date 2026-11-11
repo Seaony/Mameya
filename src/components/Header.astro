@@ -1,0 +1,170 @@
+---
+import { langs, locales, ui, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = ui[lang];
+---
+
+<header class="header">
+  <a class="brand" href={locales[lang].path}>Mameya</a>
+  <div class="controls">
+    <nav class="langs" aria-label={t.language}>
+      {
+        langs.map((l) => (
+          <a
+            href={locales[l].path}
+            lang={locales[l].htmlLang}
+            hreflang={locales[l].hreflang}
+            data-lang={l}
+            aria-current={l === lang ? 'page' : undefined}
+          >
+            {locales[l].label}
+          </a>
+        ))
+      }
+    </nav>
+    <span class="divider" aria-hidden="true"></span>
+    {/* 三档循环：跟随系统 → 浅色 → 深色。文字靠 CSS 按 data-theme 显示，首屏不会闪错字 */}
+    <button class="theme" type="button" data-theme-toggle>
+      <span class="visually-hidden">{t.theme.label}: </span>
+      <span class="theme-system">{t.theme.system}</span>
+      <span class="theme-light">{t.theme.light}</span>
+      <span class="theme-dark">{t.theme.dark}</span>
+    </button>
+  </div>
+</header>
+
+<script>
+  const root = document.documentElement;
+  const order = ['system', 'light', 'dark'] as const;
+  type Theme = (typeof order)[number];
+
+  function apply(theme: Theme) {
+    // 换主题时先关掉过渡，下一帧再恢复，避免颜色渐变造成的闪烁
+    root.classList.add('no-transition');
+    if (theme === 'system') delete root.dataset.theme;
+    else root.dataset.theme = theme;
+
+    const metas = document.querySelectorAll<HTMLMetaElement>('meta[name="theme-color"]');
+    metas.forEach((m) => {
+      const fallback = m.media.includes('dark') ? '#111110' : '#fcfcfb';
+      m.content = theme === 'system' ? fallback : theme === 'dark' ? '#111110' : '#fcfcfb';
+    });
+
+    try {
+      if (theme === 'system') localStorage.removeItem('theme');
+      else localStorage.setItem('theme', theme);
+    } catch {}
+
+    requestAnimationFrame(() => requestAnimationFrame(() => root.classList.remove('no-transition')));
+  }
+
+  document.querySelector('[data-theme-toggle]')?.addEventListener('click', () => {
+    const current = (root.dataset.theme as Theme | undefined) ?? 'system';
+    apply(order[(order.indexOf(current) + 1) % order.length]);
+  });
+
+  // 手动切过语言，就记住，根路径不再按浏览器语言跳
+  document.querySelectorAll<HTMLAnchorElement>('[data-lang]').forEach((a) => {
+    a.addEventListener('click', () => {
+      try {
+        localStorage.setItem('lang', a.dataset.lang!);
+      } catch {}
+    });
+  });
+</script>
+
+<style>
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 28px 0 0;
+    height: 72px;
+    font-size: var(--small);
+  }
+
+  .brand {
+    font-size: var(--text);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    padding: 4px 0;
+  }
+
+  .controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .langs {
+    display: flex;
+    gap: 2px;
+  }
+
+  .langs a,
+  .theme {
+    color: var(--muted);
+    padding: 4px 6px;
+    border-radius: 6px;
+    white-space: nowrap;
+  }
+
+  .langs a:hover,
+  .theme:hover {
+    color: var(--fg);
+  }
+
+  .langs a[aria-current='page'] {
+    color: var(--fg);
+  }
+
+  .divider {
+    width: 1px;
+    height: 12px;
+    background: var(--line);
+  }
+
+  .theme {
+    appearance: none;
+    border: 0;
+    margin: 0 -6px 0 0;
+    background: none;
+    font: inherit;
+    line-height: inherit;
+    cursor: pointer;
+    transition: color 150ms var(--ease);
+  }
+
+  /* 三个词叠在同一格，按最宽的占位，切换时旁边的语言链接不挪位置 */
+  .theme {
+    display: inline-grid;
+    justify-items: end;
+  }
+
+  .theme-system,
+  .theme-light,
+  .theme-dark {
+    grid-area: 1 / 1;
+  }
+
+  .theme-light,
+  .theme-dark {
+    visibility: hidden;
+  }
+
+  :global(:root[data-theme='light']) .theme-system,
+  :global(:root[data-theme='dark']) .theme-system {
+    visibility: hidden;
+  }
+
+  :global(:root[data-theme='light']) .theme-light,
+  :global(:root[data-theme='dark']) .theme-dark {
+    visibility: visible;
+  }
+</style>

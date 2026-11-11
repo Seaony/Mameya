@@ -1,0 +1,11 @@
+---
+import Base from '../../layouts/Base.astro';
+import Home from '../../components/Home.astro';
+import { ui } from '../../i18n/ui';
+
+const t = ui.zh;
+---
+
+<Base lang="zh" title={t.title} description={t.description}>
+  <Home lang="zh" />
+</Base>
