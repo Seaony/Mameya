@@ -309,37 +309,6 @@ const stack: { name: string; icon: IconName; color?: string }[] = [
     gap: 2px;
   }
 
-  .icb {
-    width: 44px;
-    height: 44px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 999px;
-    border: 0;
-    padding: 0;
-    background: transparent;
-    color: var(--muted);
-    cursor: pointer;
-    transition: background 0.2s, color 0.2s;
-  }
-
-  .icb:hover,
-  .ic[data-open] .icb {
-    background: var(--surface2);
-    color: var(--text);
-  }
-
-  .tip-text {
-    padding: 8px 12px;
-    border-radius: 10px;
-    background: var(--btn);
-    color: var(--btn-ink);
-    font-size: 13px;
-    white-space: nowrap;
-    box-shadow: 0 10px 24px -10px var(--shadow);
-  }
-
   .tip-qr {
     /* 卡片显示时能接收长按和右键，方便直接保存二维码；鼠标移到卡片上也不会消失 */
     pointer-events: auto;

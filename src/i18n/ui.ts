@@ -87,7 +87,7 @@ export const ui: Record<Lang, Dict> = {
       home: 'Back to home',
     },
     apps: {
-      codeedge: 'Every AI quota. One glance.',
+      codeedge: 'Every AI quota, at the edge of your screen.',
       momento: 'Every image. Quietly kept.',
       moni: 'A compact menu bar monitor for macOS.',
       diskit: 'Every location. One menu bar.',
@@ -136,7 +136,7 @@ export const ui: Record<Lang, Dict> = {
       home: '回到首页',
     },
     apps: {
-      codeedge: '所有 AI 额度，一眼看清',
+      codeedge: '所有 AI 额度，停在屏幕边上',
       momento: '灵感图片，安静收好',
       moni: '一眼看清 Mac 状态',
       diskit: '手机、共享、网盘，都在菜单栏',
@@ -186,7 +186,7 @@ export const ui: Record<Lang, Dict> = {
       home: 'ホームへ戻る',
     },
     apps: {
-      codeedge: 'AIの利用枠を、ひと目で',
+      codeedge: 'AIの利用枠を、画面の端に',
       momento: '集めた画像を、そっとしまう',
       moni: 'Macの状態を、ひと目で',
       diskit: 'スマホも共有フォルダもクラウドも、メニューバーから',

@@ -10,6 +10,9 @@
     "build": "astro build",
     "preview": "astro preview",
     "deploy": "astro build && wrangler deploy && wrangler deploy -c www/wrangler.jsonc",
+    "dev:codeedge": "astro dev --root sites/codeedge",
+    "build:codeedge": "astro build --root sites/codeedge",
+    "deploy:codeedge": "astro build --root sites/codeedge && wrangler deploy -c sites/codeedge/wrangler.jsonc",
     "astro": "astro"
   },
   "dependencies": {

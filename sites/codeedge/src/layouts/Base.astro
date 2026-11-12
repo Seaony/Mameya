@@ -1,0 +1,118 @@
+---
+// 颜色、字体和基础样式直接用主站的，两边保持同一套风格
+import '../../../../src/styles/global.css';
+import '../styles/site.css';
+import { langs, locales, links, t, type Lang } from '../content';
+
+interface Props {
+  lang: Lang;
+  title: string;
+  description?: string;
+  indexable?: boolean;
+}
+
+const { lang, title, description, indexable = true } = Astro.props;
+const LIGHT = '#fafbfa';
+const DARK = '#131413';
+const site = Astro.site!;
+const canonical = new URL(locales[lang].path, site).href;
+const ogImage = new URL(`/og/${lang}.png`, site).href;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'CodeEdge',
+  url: canonical,
+  description,
+  applicationCategory: 'DeveloperApplication',
+  operatingSystem: 'macOS 26.5 or later',
+  downloadUrl: links.download,
+  image: new URL('/apple-touch-icon.png', site).href,
+  author: { '@type': 'Person', name: 'Seaony', url: links.home },
+};
+---
+
+<!doctype html>
+<html lang={locales[lang].htmlLang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    {description && <meta name="description" content={description} />}
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content={LIGHT} media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content={DARK} media="(prefers-color-scheme: dark)" />
+
+    {/* 首次绘制前定好主题，并在根路径按浏览器语言跳转；手动选过的主题和语言优先 */}
+    <script is:inline define:vars={{ LIGHT, DARK }}>
+      (function () {
+        var d = document.documentElement;
+        // 有脚本才折叠服务商列表，没脚本时直接全部显示
+        d.classList.add('js');
+        var store = {};
+        try {
+          store.theme = localStorage.getItem('theme');
+          store.lang = localStorage.getItem('lang');
+        } catch (e) {}
+        if (store.theme === 'light' || store.theme === 'dark') {
+          d.dataset.theme = store.theme;
+          var color = store.theme === 'dark' ? DARK : LIGHT;
+          document.querySelectorAll('meta[name="theme-color"]').forEach(function (m) {
+            m.setAttribute('content', color);
+          });
+        }
+        if (location.pathname !== '/') return;
+        // 从本站页面点过来（比如点了 English，或在新标签打开）就是自己选的，不再按浏览器语言跳
+        try {
+          if (new URL(document.referrer).origin === location.origin) return;
+        } catch (e) {}
+        var target = store.lang;
+        if (!target) {
+          var l = ((navigator.languages && navigator.languages[0]) || navigator.language || '').toLowerCase();
+          target = l.indexOf('zh') === 0 ? 'zh' : 'en';
+        }
+        if (target === 'zh') location.replace('/zh/' + location.search + location.hash);
+      })();
+    </script>
+
+    <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" href="/favicon.png" type="image/png" sizes="96x96" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    {
+      indexable ? (
+        <>
+          <link rel="canonical" href={canonical} />
+          {langs.map((l) => (
+            <link rel="alternate" hreflang={locales[l].hreflang} href={new URL(locales[l].path, site).href} />
+          ))}
+          <link rel="alternate" hreflang="x-default" href={new URL('/', site).href} />
+          <meta property="og:type" content="website" />
+          <meta property="og:site_name" content="CodeEdge" />
+          <meta property="og:url" content={canonical} />
+          <meta property="og:title" content={title} />
+          <meta property="og:description" content={description} />
+          <meta property="og:image" content={ogImage} />
+          <meta property="og:image:width" content="1200" />
+          <meta property="og:image:height" content="630" />
+          <meta property="og:image:alt" content={t[lang].shotAlt} />
+          <meta property="og:locale" content={locales[lang].ogLocale} />
+          <meta property="og:locale:alternate" content={locales[lang === 'en' ? 'zh' : 'en'].ogLocale} />
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta name="twitter:title" content={title} />
+          <meta name="twitter:description" content={description} />
+          <meta name="twitter:image" content={ogImage} />
+          <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+        </>
+      ) : (
+        <meta name="robots" content="noindex" />
+      )
+    }
+  </head>
+  <body>
+    <div class="page">
+      <slot />
+    </div>
+  </body>
+</html>

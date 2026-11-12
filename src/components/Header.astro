@@ -1,5 +1,6 @@
 ---
 import Icon from './Icon.astro';
+import ThemeToggle from './ThemeToggle.astro';
 import { Image } from 'astro:assets';
 import logo from '../assets/brand/logo.png';
 import { langs, locales, ui, type Lang } from '../i18n/ui';
@@ -55,38 +56,11 @@ const current = locales[lang];
         }
       </ul>
     </div>
-    {/* 亮暗切换：图标显示当前主题，没手动选过时跟随系统；图标靠 CSS 按实际主题显示，首屏不会跳 */}
-    <button class="theme" type="button" aria-label={t.toDark} data-theme-toggle data-to-dark={t.toDark} data-to-light={t.toLight}>
-      <Icon class="when-light" name="sun" size={18} />
-      <Icon class="when-dark" name="moon" size={18} />
-    </button>
+    <ThemeToggle toDark={t.toDark} toLight={t.toLight} />
   </nav>
 </header>
 
 <script>
-  const root = document.documentElement;
-  const systemDark = matchMedia('(prefers-color-scheme: dark)');
-  const toggle = document.querySelector<HTMLButtonElement>('[data-theme-toggle]')!;
-
-  const isDark = () => (root.dataset.theme ? root.dataset.theme === 'dark' : systemDark.matches);
-  const sync = () => {
-    toggle.setAttribute('aria-label', isDark() ? toggle.dataset.toLight! : toggle.dataset.toDark!);
-  };
-  sync();
-  systemDark.addEventListener('change', sync);
-
-  toggle.addEventListener('click', () => {
-    const next = isDark() ? 'light' : 'dark';
-    root.dataset.theme = next;
-    try {
-      localStorage.setItem('theme', next);
-    } catch {}
-    document.querySelectorAll<HTMLMetaElement>('meta[name="theme-color"]').forEach((m) => {
-      m.content = next === 'dark' ? '#131413' : '#fafbfa';
-    });
-    sync();
-  });
-
   // 语言菜单：点按钮开关，点外面或按 Esc 关闭
   const wrap = document.querySelector<HTMLElement>('[data-lang-menu]')!;
   const button = wrap.querySelector<HTMLButtonElement>('.lang')!;
@@ -239,45 +213,4 @@ const current = locales[lang];
     opacity: 1;
   }
 
-  .theme {
-    width: 44px;
-    height: 44px;
-    margin-right: -12px;
-    padding: 0;
-    border: 0;
-    background: transparent;
-    color: var(--muted);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: color 0.2s;
-  }
-
-  .theme:hover {
-    color: var(--text);
-  }
-
-  .theme :global(.when-dark) {
-    display: none;
-  }
-
-  /* 实际是深色时换成月亮 */
-  :global(:root[data-theme='dark']) .theme :global(.when-dark) {
-    display: block;
-  }
-
-  :global(:root[data-theme='dark']) .theme :global(.when-light) {
-    display: none;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    :global(:root:not([data-theme='light'])) .theme :global(.when-dark) {
-      display: block;
-    }
-
-    :global(:root:not([data-theme='light'])) .theme :global(.when-light) {
-      display: none;
-    }
-  }
 </style>

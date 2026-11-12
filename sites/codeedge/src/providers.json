@@ -1,0 +1,390 @@
+[
+  {
+    "name": "Codex",
+    "icon": "codex"
+  },
+  {
+    "name": "Claude",
+    "icon": "claude"
+  },
+  {
+    "name": "Claude Platform",
+    "icon": "claudeplatform"
+  },
+  {
+    "name": "Cursor",
+    "icon": "cursor"
+  },
+  {
+    "name": "Gemini",
+    "icon": "gemini"
+  },
+  {
+    "name": "Antigravity",
+    "icon": "antigravity"
+  },
+  {
+    "name": "Copilot",
+    "icon": "copilot"
+  },
+  {
+    "name": "Kiro",
+    "icon": "kiro"
+  },
+  {
+    "name": "xKiro",
+    "icon": "xkiro"
+  },
+  {
+    "name": "Windsurf",
+    "icon": "windsurf"
+  },
+  {
+    "name": "Amp",
+    "icon": "amp"
+  },
+  {
+    "name": "Augment",
+    "icon": "augment"
+  },
+  {
+    "name": "Devin",
+    "icon": "devin"
+  },
+  {
+    "name": "Droid",
+    "icon": "factory"
+  },
+  {
+    "name": "JetBrains AI",
+    "icon": "jetbrains"
+  },
+  {
+    "name": "Zed",
+    "icon": "zed"
+  },
+  {
+    "name": "Warp",
+    "icon": "warp"
+  },
+  {
+    "name": "Qoder",
+    "icon": "qoder"
+  },
+  {
+    "name": "Trae CN",
+    "icon": "traecn"
+  },
+  {
+    "name": "CodeRabbit",
+    "icon": "coderabbit"
+  },
+  {
+    "name": "Codebuff",
+    "icon": "codebuff"
+  },
+  {
+    "name": "Command Code",
+    "icon": "commandcode"
+  },
+  {
+    "name": "ClinePass",
+    "icon": "clinepass"
+  },
+  {
+    "name": "OpenCode",
+    "icon": "opencode"
+  },
+  {
+    "name": "OpenCode Go",
+    "icon": "opencodego"
+  },
+  {
+    "name": "Kilo",
+    "icon": "kilo"
+  },
+  {
+    "name": "Muse Code",
+    "icon": "muse"
+  },
+  {
+    "name": "Pi",
+    "icon": "pi"
+  },
+  {
+    "name": "WorkBuddy",
+    "icon": "workbuddy"
+  },
+  {
+    "name": "Raycast",
+    "icon": "raycast"
+  },
+  {
+    "name": "OpenAI",
+    "icon": "codex"
+  },
+  {
+    "name": "Azure OpenAI",
+    "icon": "codex"
+  },
+  {
+    "name": "AWS Bedrock",
+    "icon": "bedrock"
+  },
+  {
+    "name": "Vertex AI",
+    "icon": "vertexai"
+  },
+  {
+    "name": "OpenRouter",
+    "icon": "openrouter"
+  },
+  {
+    "name": "DeepSeek",
+    "icon": "deepseek"
+  },
+  {
+    "name": "Mistral",
+    "icon": "mistral"
+  },
+  {
+    "name": "Grok",
+    "icon": "grok"
+  },
+  {
+    "name": "xAI",
+    "icon": "xai"
+  },
+  {
+    "name": "Groq",
+    "icon": "groq"
+  },
+  {
+    "name": "Perplexity",
+    "icon": "perplexity"
+  },
+  {
+    "name": "Kimi Code",
+    "icon": "kimi"
+  },
+  {
+    "name": "Moonshot",
+    "icon": "kimi"
+  },
+  {
+    "name": "z.ai / GLM",
+    "icon": "zai"
+  },
+  {
+    "name": "MiniMax",
+    "icon": "minimax"
+  },
+  {
+    "name": "Alibaba",
+    "icon": "alibaba"
+  },
+  {
+    "name": "Alibaba Token Plan",
+    "icon": "alibaba"
+  },
+  {
+    "name": "Qwen Cloud",
+    "icon": "qwencloud"
+  },
+  {
+    "name": "Doubao",
+    "icon": "doubao"
+  },
+  {
+    "name": "Xiaomi MiMo",
+    "icon": "mimo"
+  },
+  {
+    "name": "StepFun",
+    "icon": "stepfun"
+  },
+  {
+    "name": "LongCat",
+    "icon": "longcat"
+  },
+  {
+    "name": "Fireworks",
+    "icon": "fireworks"
+  },
+  {
+    "name": "DeepInfra",
+    "icon": "deepinfra"
+  },
+  {
+    "name": "Hugging Face",
+    "icon": "huggingface"
+  },
+  {
+    "name": "Replicate",
+    "icon": "replicate"
+  },
+  {
+    "name": "fal",
+    "icon": "fal"
+  },
+  {
+    "name": "Venice",
+    "icon": "venice"
+  },
+  {
+    "name": "Chutes",
+    "icon": "chutes"
+  },
+  {
+    "name": "Synthetic",
+    "icon": "synthetic"
+  },
+  {
+    "name": "Ollama",
+    "icon": "ollama"
+  },
+  {
+    "name": "Poe",
+    "icon": "poe"
+  },
+  {
+    "name": "T3 Chat",
+    "icon": "t3chat"
+  },
+  {
+    "name": "Manus",
+    "icon": "manus"
+  },
+  {
+    "name": "Notion AI",
+    "icon": "notion"
+  },
+  {
+    "name": "Sakana AI",
+    "icon": "sakana"
+  },
+  {
+    "name": "Abacus AI",
+    "icon": "abacus"
+  },
+  {
+    "name": "ElevenLabs",
+    "icon": "elevenlabs"
+  },
+  {
+    "name": "Deepgram",
+    "icon": "deepgram"
+  },
+  {
+    "name": "Soniox",
+    "icon": "soniox"
+  },
+  {
+    "name": "Tavily",
+    "icon": "tavily"
+  },
+  {
+    "name": "Exa",
+    "icon": "exa"
+  },
+  {
+    "name": "Linkup",
+    "icon": "linkup"
+  },
+  {
+    "name": "Parallel",
+    "icon": "parallel"
+  },
+  {
+    "name": "Vercel AI Gateway",
+    "icon": "vercel"
+  },
+  {
+    "name": "v0",
+    "icon": "v0"
+  },
+  {
+    "name": "LiteLLM",
+    "icon": "litellm"
+  },
+  {
+    "name": "LLM Proxy",
+    "icon": "llmproxy"
+  },
+  {
+    "name": "ZenMux",
+    "icon": "zenmux"
+  },
+  {
+    "name": "ClawRouter",
+    "icon": "clawrouter"
+  },
+  {
+    "name": "Wayfinder",
+    "icon": "wayfinder"
+  },
+  {
+    "name": "Bifrost",
+    "icon": "bifrost"
+  },
+  {
+    "name": "sub2api",
+    "icon": "sub2api"
+  },
+  {
+    "name": "Neuralwatt",
+    "icon": "neuralwatt"
+  },
+  {
+    "name": "Atlas Cloud",
+    "icon": "atlascloud"
+  },
+  {
+    "name": "Langdock",
+    "icon": "langdock"
+  },
+  {
+    "name": "IBM Bob",
+    "icon": "ibmbob"
+  },
+  {
+    "name": "GitKraken AI",
+    "icon": "gitkraken"
+  },
+  {
+    "name": "Nous Portal",
+    "icon": "nous"
+  },
+  {
+    "name": "Charm Hyper",
+    "icon": "hyper"
+  },
+  {
+    "name": "Chatbox AI",
+    "icon": "chatbox"
+  },
+  {
+    "name": "Future AGI",
+    "icon": "futureagi"
+  },
+  {
+    "name": "Munito",
+    "icon": "munito"
+  },
+  {
+    "name": "OpenDesign",
+    "icon": "opendesign"
+  },
+  {
+    "name": "abliteration.ai",
+    "icon": "abliteration"
+  },
+  {
+    "name": "SiliconFlow",
+    "icon": "siliconflow"
+  },
+  {
+    "name": "Tripo",
+    "icon": "tripo"
+  }
+]

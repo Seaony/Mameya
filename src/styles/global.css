@@ -162,3 +162,35 @@ button {
 
 .ic:has(:focus-visible) .tip,
 .ic[data-open] .tip { opacity: 1; visibility: visible; transform: translate(-50%, 0); }
+
+/* 圆形图标按钮（主站联系方式、产品官网的 GitHub 等），悬停时出文字气泡 */
+.icb {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.icb:hover,
+.ic[data-open] .icb {
+  background: var(--surface2);
+  color: var(--text);
+}
+
+.tip-text {
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: var(--btn);
+  color: var(--btn-ink);
+  font-size: 13px;
+  white-space: nowrap;
+  box-shadow: 0 10px 24px -10px var(--shadow);
+}
