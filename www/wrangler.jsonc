@@ -1,0 +1,8 @@
+{
+  "$schema": "../node_modules/wrangler/config-schema.json",
+  // 只负责把 www 跳到主域名，主站仍是纯静态资源，不经过 Worker
+  "name": "mameya-www",
+  "main": "index.js",
+  "compatibility_date": "2026-11-11",
+  "routes": [{ "pattern": "www.mameya.app", "custom_domain": true }]
+}

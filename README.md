@@ -11,6 +11,7 @@ npm run dev                 # 本地开发
 npm run build               # 输出到 dist/
 npx wrangler dev            # 用 Workers 本地运行 dist/（和线上一样的 404 处理）
 npx astro check             # 类型检查
+npm run deploy              # 构建并部署：主站绑 mameya.app，www/ 里的小 Worker 把 www.mameya.app 301 到主域名
 ```
 
 ## 改内容
