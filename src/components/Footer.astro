@@ -1,18 +1,60 @@
 ---
+import { ui, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+  notFound?: boolean;
+}
+
+const { lang, notFound = false } = Astro.props;
 const year = new Date().getFullYear();
 ---
 
-<footer class="footer small muted">
-  <span>© {year} Seaony</span>
-  <span>mameya.app</span>
+<footer class:list={['footer', { 'footer-404': notFound }]}>
+  <span>© {year} Mameya · Seaony</span>
+  {
+    notFound ? (
+      <span class="mono err">ERR_404</span>
+    ) : (
+      <a class="top" href="#top">
+        {ui[lang].backToTop}
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5" /><path d="m5 12 7-7 7 7" /></svg>
+      </a>
+    )
+  }
 </footer>
 
 <style>
   .footer {
+    margin-top: 96px;
+    padding: 28px 0 40px;
+    border-top: 1px solid var(--line);
     display: flex;
+    align-items: center;
     justify-content: space-between;
     gap: 16px;
-    margin-top: auto;
-    padding: 64px 0 40px;
+    flex-wrap: wrap;
+    font-size: 13.5px;
+    color: var(--faint);
+  }
+
+  .footer-404 {
+    margin-top: 0;
+  }
+
+  .top {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 44px;
+    transition: color 0.2s;
+  }
+
+  .top:hover {
+    color: var(--text);
+  }
+
+  .err {
+    font-size: 12.5px;
   }
 </style>

@@ -14,6 +14,8 @@ interface Props {
 }
 
 const { lang, title, description, indexable = true } = Astro.props;
+const LIGHT = '#f4f5f1';
+const DARK = '#121411';
 const t = ui[lang];
 const site = Astro.site!;
 const canonical = new URL(locales[lang].path, site).href;
@@ -41,11 +43,11 @@ const jsonLd = {
     <title>{title}</title>
     {description && <meta name="description" content={description} />}
     <meta name="color-scheme" content="light dark" />
-    <meta name="theme-color" content="#fcfcfb" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#111110" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content={LIGHT} media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content={DARK} media="(prefers-color-scheme: dark)" />
 
     {/* 首次绘制前定好主题，并在根路径按浏览器语言跳转 */}
-    <script is:inline>
+    <script is:inline define:vars={{ LIGHT, DARK }}>
       (function () {
         var d = document.documentElement;
         var store = {};
@@ -55,7 +57,7 @@ const jsonLd = {
         } catch (e) {}
         if (store.theme === 'light' || store.theme === 'dark') {
           d.dataset.theme = store.theme;
-          var color = store.theme === 'dark' ? '#111110' : '#fcfcfb';
+          var color = store.theme === 'dark' ? DARK : LIGHT;
           document.querySelectorAll('meta[name="theme-color"]').forEach(function (m) {
             m.setAttribute('content', color);
           });
@@ -71,7 +73,7 @@ const jsonLd = {
       })();
     </script>
 
-    <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="icon" href="/favicon.png" type="image/png" sizes="96x96" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -114,10 +116,8 @@ const jsonLd = {
   <body>
     <div class="page">
       <Header lang={lang} />
-      <main>
-        <slot />
-      </main>
-      <Footer />
+      <slot />
+      <Footer lang={lang} notFound={!indexable} />
     </div>
   </body>
 </html>

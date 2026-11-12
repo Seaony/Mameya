@@ -1,41 +1,58 @@
-/* Inter 只含 latin 子集（另加箭头），字重 400–600 */
+/* Geist 只含 latin 子集，字重 400–600；Geist Mono 只用在编号和标签上 */
 @font-face {
-  font-family: 'Inter';
-  src: url('/fonts/inter-latin.woff2') format('woff2');
+  font-family: 'Geist';
+  src: url('/fonts/geist-latin.woff2') format('woff2');
   font-weight: 400 600;
   font-style: normal;
   font-display: swap;
 }
 
-/* 回退字体按 Inter 的字宽和行高调好，换字体时页面不跳 */
 @font-face {
-  font-family: 'Inter Fallback';
+  font-family: 'Geist Mono';
+  src: url('/fonts/geist-mono-latin.woff2') format('woff2');
+  font-weight: 400 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* 回退字体按 Geist 的字宽和行高调好，换字体时页面不跳 */
+@font-face {
+  font-family: 'Geist Fallback';
   src: local('Arial'), local('Helvetica Neue'), local('Helvetica');
-  size-adjust: 107.56%;
-  ascent-override: 90.07%;
-  descent-override: 22.43%;
+  size-adjust: 106%;
+  ascent-override: 94.81%;
+  descent-override: 27.83%;
   line-gap-override: 0%;
 }
 
+/* 颜色：按设计稿的结构，主题色换成低饱和的毛豆绿，中性色跟着偏一点灰绿 */
 :root {
   color-scheme: light dark;
 
-  --bg: light-dark(#fcfcfb, #111110);
-  --fg: light-dark(#1b1b18, #eeeeec);
-  --muted: light-dark(#6b6a65, #a1a09a);
-  --line: light-dark(#dcdbd7, #3a3936);
-  --hover: light-dark(#f3f3f1, #1b1b1a);
-  --surface: light-dark(#ffffff, #1a1a19);
-  --selection: light-dark(#e4e3df, #34332f);
+  --bg: light-dark(#f4f5f1, #121411);
+  --surface: light-dark(#fcfcfa, #191c18);
+  --surface2: light-dark(#eaede6, #232721);
+  --line: light-dark(#dfe3da, #2b2f29);
+  --line2: light-dark(#c9cfc2, #3e443b);
+  --text: light-dark(#1a1d19, #eceee8);
+  --muted: light-dark(#535a51, #adb4a8);
+  --faint: light-dark(#676e64, #8f9689);
+  --accent: light-dark(#7a9c74, #9bbd94);
+  --accent-soft: light-dark(#e2ebdd, #253022);
+  --accent-ink: light-dark(#3f5c3a, #b9d4b2);
+  --accent-ring: light-dark(rgb(122 156 116 / 0.4), rgb(155 189 148 / 0.35));
+  --focus: light-dark(#4f7049, #9bbd94);
+  --btn: light-dark(#1a1d19, #eceee8);
+  --btn-ink: light-dark(#fcfcfa, #121411);
+  --shadow: light-dark(rgb(36 52 32 / 0.14), rgb(0 0 0 / 0.5));
+  --glow: light-dark(rgb(122 156 116 / 0.14), rgb(155 189 148 / 0.07));
 
-  --font-latin: 'Inter', 'Inter Fallback';
+  --font-sans: 'Geist', 'Geist Fallback';
   --font-zh: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
   --font-ja: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Yu Gothic UI', 'Meiryo', 'Noto Sans JP', sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace;
 
-  --text: 15px;
-  --small: 13px;
-  --ease: cubic-bezier(0.2, 0, 0, 1);
-  --radius: 10px;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
 :root[data-theme='light'] { color-scheme: light; }
@@ -48,48 +65,49 @@
 html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
-  scrollbar-color: var(--line) transparent;
+  scrollbar-color: var(--line2) transparent;
 }
 
 body {
   margin: 0;
   background: var(--bg);
-  color: var(--fg);
-  font-family: var(--font-latin), var(--font-zh);
-  font-size: var(--text);
-  line-height: 1.65;
-  font-feature-settings: 'cv11', 'ss01';
+  color: var(--text);
+  font-family: var(--font-sans), var(--font-zh);
+  font-size: 16px;
+  line-height: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
+  transition: background-color 0.3s, color 0.3s;
 }
 
-/* 中日文行高大一点；日文按词组换行，中日文和西文之间自动留空 */
-:lang(zh) body { font-family: var(--font-latin), var(--font-zh); line-height: 1.8; }
-:lang(ja) body { font-family: var(--font-latin), var(--font-ja); line-height: 1.8; word-break: auto-phrase; }
+/* 日文按词组换行；中日文和西文之间自动留空 */
+:lang(ja) body { font-family: var(--font-sans), var(--font-ja); word-break: auto-phrase; }
 :lang(ja) body,
 :lang(zh) body { text-autospace: normal; }
 
-::selection { background: var(--selection); color: var(--fg); }
+::selection { background: var(--accent-soft); color: var(--text); }
 
 p { margin: 0; text-wrap: pretty; }
-h1, h2 { margin: 0; font-size: inherit; font-weight: inherit; }
+h1, h2 { margin: 0; text-wrap: balance; }
 ul { margin: 0; padding: 0; list-style: none; }
 img { display: block; }
 
 a {
   color: inherit;
   text-decoration: none;
-  transition: color 150ms var(--ease), background-color 150ms var(--ease), text-decoration-color 150ms var(--ease);
+}
+
+button {
+  font: inherit;
+  color: inherit;
 }
 
 :focus-visible {
-  outline: 2px solid var(--fg);
-  outline-offset: 2px;
-  border-radius: 4px;
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
 }
 
-/* 切主题那一刻关掉过渡，颜色直接换，不整页渐变闪一下 */
+/* 首次加载时关掉过渡，避免主题色从默认值渐变过来 */
 .no-transition,
 .no-transition * { transition: none !important; }
 
@@ -108,10 +126,10 @@ a {
   white-space: nowrap;
 }
 
-/* 页面骨架：单列居中，手机左右留 20px */
+/* 页面骨架：版心 1088px，左右 24px */
 .page {
   width: 100%;
-  max-width: calc(640px + 2 * 24px);
+  max-width: 1088px;
   margin: 0 auto;
   padding: 0 24px;
   min-height: 100dvh;
@@ -123,5 +141,26 @@ a {
   .page { padding: 0 20px; }
 }
 
-.muted { color: var(--muted); }
-.small { font-size: var(--small); }
+.mono { font-family: var(--font-mono); }
+
+/* 悬停或聚焦时出现的提示气泡 */
+.ic { position: relative; }
+
+.tip {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 8px);
+  z-index: 10;
+  transform: translate(-50%, 4px);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.18s, transform 0.18s, visibility 0.18s;
+}
+
+@media (hover: hover) {
+  .ic:hover .tip { opacity: 1; visibility: visible; transform: translate(-50%, 0); }
+}
+
+.ic:has(:focus-visible) .tip,
+.ic[data-open] .tip { opacity: 1; visibility: visible; transform: translate(-50%, 0); }

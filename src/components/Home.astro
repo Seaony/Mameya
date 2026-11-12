@@ -1,7 +1,8 @@
 ---
 import { Image } from 'astro:assets';
 import avatar from '../assets/avatar.jpg';
-import { apps, contact, socials } from '../data/apps';
+import { apps, contact, telegram, qrSocials } from '../data/apps';
+import { socialIcons } from '../data/social-icons';
 import { ui, type Lang } from '../i18n/ui';
 
 interface Props {
@@ -10,119 +11,184 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = ui[lang];
+
+// 数量从产品列表算，不手写，免得以后忘了改
+const live = apps.filter((a) => !a.inDevelopment).length;
+const dev = apps.length - live;
+const building = apps.find((a) => a.inDevelopment);
+const total = String(apps.length).padStart(2, '0');
 ---
 
-<section class="intro">
-  <div class="person">
-    <Image class="avatar" src={avatar} alt={t.avatarAlt} width={56} height={56} densities={[1, 2, 3]} loading="eager" />
-    <div>
-      <h1 class="name">Seaony</h1>
-      <p class="muted">{t.tagline}</p>
-    </div>
-  </div>
-  <p class="bio">{t.intro}</p>
-</section>
-
-<section class="section" aria-labelledby="projects">
-  <h2 class="section-title small muted" id="projects">{t.projects}</h2>
-  <ul class="list">
-    {
-      apps.map((app) => (
-        <li>
-          <a class="row app" href={app.url}>
-            <Image class="icon" src={app.icon} alt="" width={36} height={36} densities={[2, 3]} />
-            <span class="label">
-              {app.name}
-              <span class="arrow" aria-hidden="true">↗</span>
-              {app.inDevelopment && <span class="tag small">{t.inDevelopment}</span>}
-            </span>
-            <span class="leader" aria-hidden="true" />
-            <span class="desc muted">{t.apps[app.id]}</span>
+<main>
+  <section class="hero" aria-label={t.avatarAlt}>
+    <div class="hero-top">
+      <div class="person">
+        <Image class="avatar" src={avatar} alt={t.avatarAlt} width={96} height={96} densities={[1, 2, 3]} loading="eager" />
+        <div class="name-block">
+          <h1>Seaony</h1>
+          <p class="tagline">{t.tagline}</p>
+        </div>
+      </div>
+      {
+        building && (
+          <a class="status" href={building.url}>
+            <span class="pulse" aria-hidden="true" />
+            {t.building(building.name)}
           </a>
-        </li>
-      ))
-    }
-  </ul>
-</section>
+        )
+      }
+    </div>
 
-<section class="section" aria-labelledby="contact">
-  <h2 class="section-title small muted" id="contact">{t.contact}</h2>
-  <ul class="list">
-    <li>
-      <a class="row" href={`mailto:${contact.email}`}>
-        <span class="label">{t.email}</span>
-        <span class="leader" aria-hidden="true"></span>
-        <span class="desc muted">{contact.email}</span>
-      </a>
-    </li>
-    <li>
-      <a class="row" href={contact.github.url}>
-        <span class="label">GitHub<span class="arrow" aria-hidden="true">↗</span></span>
-        <span class="leader" aria-hidden="true"></span>
-        <span class="desc muted">@{contact.github.handle}</span>
-      </a>
-    </li>
-    {
-      socials.map((s) => {
-        const cardId = `qr-${s.id}`;
-        const name = t.socials[s.id].name;
-        return (
-          <li class="qr" data-qr>
-            {s.url ? (
-              <a class="row" href={s.url} aria-describedby={cardId}>
-                <span class="label">
-                  {name}
-                  <span class="arrow" aria-hidden="true">↗</span>
-                </span>
-                <span class="leader" aria-hidden="true" />
-                <span class="desc muted">{s.handle}</span>
-              </a>
-            ) : (
-              <button class="row" type="button" aria-expanded="false" aria-controls={cardId}>
-                <span class="label">{name}</span>
-                <span class="leader" aria-hidden="true" />
-                <span class="desc muted">{t.qrCode}</span>
+    <p class="bio">{t.intro}</p>
+
+    <ul class="contacts" aria-label={t.contactLabel}>
+      <li class="ic">
+        <a class="icb" href={`mailto:${contact.email}`} aria-label={`${t.email}: ${contact.email}`}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m3 7 9 6 9-6"></path></svg>
+        </a>
+        <span class="tip tip-text" aria-hidden="true">{contact.email}</span>
+      </li>
+      <li class="ic">
+        <a class="icb" href={contact.github.url} aria-label={`GitHub: @${contact.github.handle}`}>
+          <svg width="19" height="19" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
+        </a>
+        <span class="tip tip-text" aria-hidden="true">github.com/{contact.github.handle}</span>
+      </li>
+      <li class="ic">
+        <a class="icb" href={telegram.url} aria-label={`Telegram: ${telegram.handle}`}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 3 3 10.5l7 2.5 2.5 7L21 3z"></path><path d="m10 13 4.5-4.5"></path></svg>
+        </a>
+        <span class="tip tip-text" aria-hidden="true">Telegram · {telegram.handle}</span>
+      </li>
+      {
+        qrSocials.map((s) => {
+          const name = t.socials[s.id].name;
+          return (
+            <li class="ic" data-qr>
+              <button class="icb" type="button" aria-label={`${name}: ${t.qrCode}`} aria-expanded="false" aria-controls={`qr-${s.id}`}>
+                {s.id === 'wechat' ? (
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.2 7.5L3 21l2-5.6A8.4 8.4 0 1 1 21 11.5z" /></svg>
+                ) : (
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    {socialIcons[s.id].map((d) => (
+                      <path d={d} />
+                    ))}
+                  </svg>
+                )}
               </button>
-            )}
-            <div class="qr-card" id={cardId}>
-              <Image src={s.qr} alt={`${name} ${t.qrCode}`} width={168} height={168} densities={[2]} />
-              <p class="small muted">{t.socials[s.id].scan}</p>
-            </div>
+              <div class="tip tip-qr" id={`qr-${s.id}`}>
+                <Image src={s.qr} alt={`${name} ${t.qrCode}`} width={136} height={136} densities={[2]} />
+                <span>{t.socials[s.id].scan}</span>
+              </div>
+            </li>
+          );
+        })
+      }
+    </ul>
+
+    <div class="rule" aria-hidden="true"></div>
+
+    <div class="facts">
+      <div class="fact">
+        <h2 class="fact-title">{t.about}</h2>
+        <dl class="about">
+          <div>
+            <dt>{t.aboutRows.location[0]}</dt>
+            <dd>{t.aboutRows.location[1]}</dd>
+          </div>
+          <div>
+            <dt>{t.aboutRows.focus[0]}</dt>
+            <dd>{t.aboutRows.focus[1]}</dd>
+          </div>
+          <div>
+            <dt>{t.aboutRows.work[0]}</dt>
+            <dd>{t.aboutRows.work[1](live, dev)}</dd>
+          </div>
+        </dl>
+      </div>
+      <div class="fact">
+        <h2 class="fact-title">{t.stack}</h2>
+        <dl class="stack">
+          <div>
+            <dt class="mono">{t.stackRows.mac}</dt>
+            <dd><span>Swift</span><span>SwiftUI</span></dd>
+          </div>
+          <div>
+            <dt class="mono">{t.stackRows.web}</dt>
+            <dd><span>TypeScript</span><span>React</span><span>Next.js</span><span>Node.js</span></dd>
+          </div>
+          <div>
+            {/* 西文标签用等宽字体，中日文按设计稿用正文字体 */}
+            <dt class:list={{ mono: lang === 'en' }}>{t.stackRows.before}</dt>
+            <dd><span>PHP</span><span>Laravel</span></dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="products" aria-labelledby="products-title">
+    <div class="products-head">
+      <div class="products-title">
+        <h2 id="products-title">{t.projects}</h2>
+        <span class="count mono" aria-hidden="true">{total}</span>
+      </div>
+      <p class="summary">{t.projectsSummary(live, dev)}</p>
+    </div>
+
+    <ul class="cards">
+      {
+        apps.map((app) => (
+          <li>
+            <a class:list={['card', { 'card-dev': app.inDevelopment }]} href={app.url}>
+              <div class="card-top">
+                <Image class="app-icon" src={app.icon} alt="" width={56} height={56} densities={[2, 3]} />
+                {app.inDevelopment ? (
+                  <span class="dev-pill">
+                    <span class="dot" aria-hidden="true" />
+                    {t.inDevelopment}
+                  </span>
+                ) : (
+                  <span class="arr" aria-hidden="true">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7" /><path d="M8 7h9v9" /></svg>
+                  </span>
+                )}
+              </div>
+              <div class="card-text">
+                <span class="card-name">{app.name}</span>
+                <span class="card-desc">{t.apps[app.id]}</span>
+              </div>
+            </a>
           </li>
-        );
-      })
-    }
-  </ul>
-</section>
+        ))
+      }
+    </ul>
+  </section>
+</main>
 
 <script>
-  // 手机上没有悬停：点一下打开二维码，再点、点空白处或按 Esc 关闭
+  // 手机上没有悬停：触屏点一下打开二维码，再点、点外面或按 Esc 关闭。
+  // 鼠标靠悬停、键盘靠焦点显示，不走这里，免得桌面点一下卡片一直挂着。
   const items = document.querySelectorAll<HTMLElement>('[data-qr]');
-
-  function close(item: HTMLElement) {
-    item.removeAttribute('data-open');
-    item.querySelector('button')?.setAttribute('aria-expanded', 'false');
-  }
-
-  // 只有触屏、触控笔点击才切换；鼠标靠悬停、键盘靠焦点显示，不然桌面点一下卡片会一直挂着
   let lastPointer = '';
   document.addEventListener('pointerdown', (e) => (lastPointer = e.pointerType), { capture: true });
 
+  const close = (item: HTMLElement) => {
+    item.removeAttribute('data-open');
+    item.querySelector('button')?.setAttribute('aria-expanded', 'false');
+  };
+
   items.forEach((item) => {
-    const button = item.querySelector('button');
-    button?.addEventListener('click', () => {
+    const button = item.querySelector('button')!;
+    button.addEventListener('click', () => {
       const isTouch = lastPointer === 'touch' || lastPointer === 'pen';
       lastPointer = '';
       if (!isTouch) return;
       const open = !item.hasAttribute('data-open');
       items.forEach((other) => other !== item && close(other));
       item.toggleAttribute('data-open', open);
-      item.removeAttribute('data-dismissed');
       button.setAttribute('aria-expanded', String(open));
     });
-    // Esc 关掉后，鼠标移开或焦点离开再恢复悬停显示
-    item.addEventListener('mouseleave', () => item.removeAttribute('data-dismissed'));
-    item.addEventListener('focusout', () => item.removeAttribute('data-dismissed'));
   });
 
   document.addEventListener('click', (e) => {
@@ -131,232 +197,460 @@ const t = ui[lang];
 
   document.addEventListener('keydown', (e) => {
     if (e.key !== 'Escape') return;
-    items.forEach((item) => {
-      close(item);
-      item.setAttribute('data-dismissed', '');
-    });
+    items.forEach(close);
+    // 键盘聚焦或鼠标悬停时按 Esc，也要能收起提示
+    (document.activeElement as HTMLElement | null)?.closest('.ic')?.setAttribute('data-dismissed', '');
+    document.querySelectorAll('.ic:hover').forEach((ic) => ic.setAttribute('data-dismissed', ''));
+  });
+
+  document.querySelectorAll<HTMLElement>('.ic').forEach((ic) => {
+    ic.addEventListener('focusout', () => ic.removeAttribute('data-dismissed'));
+    ic.addEventListener('mouseleave', () => ic.removeAttribute('data-dismissed'));
   });
 </script>
 
 <style>
-  .intro {
-    padding-top: 56px;
+  main {
+    padding-top: 40px;
+  }
+
+  .hero-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
   }
 
   .person {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 24px;
+    flex-wrap: wrap;
   }
 
   .avatar {
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    background: var(--hover);
-    /* 头像边缘加一圈极淡的描边，浅色底上不发虚 */
-    box-shadow: 0 0 0 1px light-dark(rgb(0 0 0 / 0.06), rgb(255 255 255 / 0.08));
+    width: 96px;
+    height: 96px;
+    border-radius: 999px;
+    object-fit: cover;
+    box-shadow:
+      0 0 0 4px var(--bg),
+      0 0 0 5px var(--line);
   }
 
-  .name {
-    font-weight: 500;
-    line-height: 1.5;
+  .name-block {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
   }
 
-  .person p {
-    line-height: 1.5;
+  h1 {
+    font-size: 44px;
+    line-height: 1.05;
+    font-weight: 600;
+    letter-spacing: -0.03em;
   }
 
-  .bio {
-    margin-top: 24px;
-    max-width: 62ch;
+  .tagline {
+    font-size: 18px;
+    color: var(--muted);
   }
 
-  .section {
-    margin-top: 56px;
-  }
-
-  .section-title {
-    margin-bottom: 8px;
-  }
-
-  /* 整行可点：左名右说明，中间点线 */
-  .row {
-    --pad: 12px;
-    display: grid;
-    grid-template-columns: auto 1fr auto;
+  .status {
+    display: flex;
     align-items: center;
-    column-gap: 12px;
-    width: calc(100% + 2 * var(--pad));
-    margin: 0 calc(-1 * var(--pad));
-    padding: 6px var(--pad);
-    border-radius: var(--radius);
-    color: inherit;
-    font: inherit;
-    line-height: inherit;
-    text-align: start;
-    background: none;
-    border: 0;
-    cursor: pointer;
-    transition: background-color 150ms var(--ease);
-  }
-
-  .row:hover,
-  .qr[data-open] .row {
-    background: var(--hover);
-  }
-
-  .row:focus-visible {
-    outline-offset: 0;
-    border-radius: var(--radius);
-  }
-
-  /* 产品行：图标在最左；图标四周自带透明边，往左挪一点让图标本体和上面的文字对齐 */
-  .app {
-    grid-template-columns: 36px auto 1fr auto;
-    padding-left: calc(var(--pad) - 3.5px);
-    padding-block: 8px;
-  }
-
-  .icon {
-    width: 36px;
+    gap: 10px;
     height: 36px;
-  }
-
-  .label {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
+    padding: 0 14px;
+    border-radius: 999px;
+    background: var(--accent-soft);
+    color: var(--accent-ink);
+    font-size: 13.5px;
+    font-weight: 500;
     white-space: nowrap;
   }
 
-  .arrow {
-    color: var(--muted);
-    font-size: var(--small);
-    transition: transform 150ms var(--ease), color 150ms var(--ease);
-  }
-
-  .row:hover .arrow {
-    color: var(--fg);
-    transform: translate(1px, -1px);
-  }
-
-  .tag {
-    color: var(--muted);
-    border: 1px solid var(--line);
+  .pulse {
+    width: 8px;
+    height: 8px;
     border-radius: 999px;
-    padding: 0 7px;
-    line-height: 18px;
+    background: var(--accent);
+    animation: pulse 2.4s infinite;
   }
 
-  .leader {
-    min-width: 16px;
-    border-top: 1px dotted var(--line);
-    transform: translateY(1px);
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 var(--accent-ring); }
+    70% { box-shadow: 0 0 0 7px transparent; }
+    100% { box-shadow: 0 0 0 0 transparent; }
   }
 
-  .desc {
-    text-align: end;
+  .bio {
+    margin-top: 32px;
+    max-width: 700px;
+    font-size: 18px;
+    line-height: 1.85;
   }
 
-  /* 二维码卡片：悬停或键盘聚焦时浮在这一行上方，右边和说明文字对齐 */
-  .qr {
-    position: relative;
+  :lang(en) .bio {
+    line-height: 1.7;
   }
 
-  .qr-card {
-    position: absolute;
-    right: 0;
-    bottom: calc(100% + 6px);
-    z-index: 10;
-    display: none;
-    width: 192px;
+  .contacts {
+    margin: 20px 0 0 -10px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .icb {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    border: 0;
+    padding: 0;
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .icb:hover,
+  .ic[data-open] .icb {
+    background: var(--surface2);
+    color: var(--text);
+  }
+
+  .tip-text {
+    padding: 8px 12px;
+    border-radius: 10px;
+    background: var(--btn);
+    color: var(--btn-ink);
+    font-size: 13px;
+    white-space: nowrap;
+    box-shadow: 0 10px 24px -10px var(--shadow);
+  }
+
+  .tip-qr {
+    /* 卡片显示时能接收长按和右键，方便直接保存二维码；鼠标移到卡片上也不会消失 */
+    pointer-events: auto;
     padding: 12px;
+    border-radius: 16px;
     background: var(--surface);
     border: 1px solid var(--line);
-    border-radius: 16px;
-    box-shadow:
-      0 12px 32px -12px rgb(0 0 0 / 0.22),
-      0 2px 6px rgb(0 0 0 / 0.05);
-    text-align: center;
-    /* 关着时透明，关闭有淡出，快速切换时旧卡片不会叠着残留 */
-    opacity: 0;
-    transform: translateY(4px);
-    transition:
-      opacity 120ms var(--ease),
-      transform 120ms var(--ease),
-      display 120ms allow-discrete;
+    box-shadow: 0 20px 44px -16px var(--shadow);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
   }
 
-  .qr-card img {
-    width: 168px;
-    height: 168px;
-    border-radius: 8px;
+  .tip-qr img {
+    width: 136px;
+    height: 136px;
+    border-radius: 10px;
     background: #fff;
   }
 
-  .qr-card p {
-    margin-top: 8px;
-    line-height: 1.4;
+  .tip-qr span {
+    font-size: 12.5px;
+    color: var(--muted);
+    white-space: nowrap;
   }
 
-  @media (hover: hover) {
-    .qr:hover .qr-card {
-      display: block;
-      opacity: 1;
-      transform: none;
-    }
+  /* 第一个提示靠左对齐，不伸出屏幕左边（translate 抵消掉居中用的 -50%） */
+  .ic:first-child .tip {
+    left: 0;
+    translate: 50% 0;
   }
 
-  .qr:has(:focus-visible) .qr-card,
-  .qr[data-open] .qr-card {
-    display: block;
-    opacity: 1;
-    transform: none;
-  }
-
-  .qr[data-dismissed] .qr-card {
-    display: none;
+  .ic[data-dismissed] .tip {
     opacity: 0;
+    visibility: hidden;
   }
 
-  /* 打开时的起始状态；选择器和上面打开规则一样具体，才能覆盖 */
-  @starting-style {
-    .qr:hover .qr-card,
-    .qr:has(:focus-visible) .qr-card,
-    .qr[data-open] .qr-card {
-      opacity: 0;
-      transform: translateY(4px);
-    }
+  .rule {
+    height: 1px;
+    background: var(--line);
+    margin-top: 48px;
   }
 
-  /* 窄屏：说明换到名字下面，去掉点线 */
+  .facts {
+    margin-top: 40px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+    gap: 40px;
+  }
+
+  .fact {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .fact-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--faint);
+    letter-spacing: 0.08em;
+  }
+
+  dl {
+    margin: 0;
+  }
+
+  dd {
+    margin: 0;
+  }
+
+  .about > div {
+    display: flex;
+    gap: 16px;
+    padding: 12px 0;
+    font-size: 15px;
+    border-bottom: 1px dashed var(--line);
+  }
+
+  .about > div:last-child {
+    border-bottom: 0;
+  }
+
+  .about dt,
+  .stack dt {
+    width: 72px;
+    flex-shrink: 0;
+    color: var(--faint);
+  }
+
+  .stack {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding-top: 6px;
+  }
+
+  .stack > div {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .stack dt {
+    font-size: 13px;
+  }
+
+  .stack dd {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .stack dd span {
+    padding: 5px 12px;
+    border-radius: 999px;
+    background: var(--surface2);
+    font-size: 13.5px;
+  }
+
+  .products {
+    margin-top: 88px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  .products-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .products-title {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+  }
+
+  .products-title h2 {
+    font-size: 30px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  .count {
+    font-size: 14px;
+    color: var(--faint);
+  }
+
+  .summary {
+    font-size: 14.5px;
+    color: var(--faint);
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+    gap: 20px;
+  }
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    height: 100%;
+    min-height: 204px;
+    padding: 24px;
+    border-radius: 22px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    transition:
+      transform 0.28s var(--ease),
+      border-color 0.28s,
+      box-shadow 0.28s;
+  }
+
+  .card-dev {
+    border-style: dashed;
+    border-color: var(--line2);
+  }
+
+  .card:hover {
+    transform: translateY(-3px);
+    border-color: var(--line2);
+    box-shadow: 0 18px 40px -20px var(--shadow);
+  }
+
+  .card:focus-visible {
+    outline-offset: 2px;
+    border-radius: 22px;
+  }
+
+  .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .app-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    box-shadow: 0 2px 6px var(--shadow);
+  }
+
+  .arr {
+    /* 设计稿里边框算在 34px 外面，实际 36px */
+    box-sizing: content-box;
+    width: 34px;
+    height: 34px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.25s;
+  }
+
+  .card:hover .arr {
+    background: var(--text);
+    color: var(--bg);
+    border-color: var(--text);
+  }
+
+  .dev-pill {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    height: 28px;
+    padding: 0 11px;
+    border-radius: 999px;
+    background: var(--accent-soft);
+    color: var(--accent-ink);
+    font-size: 12.5px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: var(--accent);
+  }
+
+  .card-text {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: auto;
+  }
+
+  .card-name {
+    font-size: 19px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .card-desc {
+    font-size: 15px;
+    color: var(--muted);
+  }
+
   @media (max-width: 560px) {
-    .app {
-      grid-template-columns: 36px 1fr;
-      grid-template-areas:
-        'icon label'
-        'icon desc';
-      row-gap: 0;
+    main {
+      padding-top: 16px;
     }
 
-    .app .icon {
-      grid-area: icon;
+    /* 窄屏上最后一个二维码靠右对齐，不伸出屏幕右边 */
+    .ic:last-child .tip {
+      left: auto;
+      right: 0;
+      translate: 50% 0;
     }
 
-    .app .label {
-      grid-area: label;
+    h1 {
+      font-size: 36px;
     }
 
-    .app .desc {
-      grid-area: desc;
-      text-align: start;
-      font-size: var(--small);
-      line-height: 1.5;
+    .avatar {
+      width: 80px;
+      height: 80px;
     }
 
-    .app .leader {
-      display: none;
+    /* 头像和名字始终并排，标语自己折行 */
+    .person {
+      gap: 20px;
+      flex-wrap: nowrap;
+    }
+
+    .name-block {
+      min-width: 0;
+    }
+
+    .bio {
+      font-size: 17px;
+    }
+
+    .products {
+      margin-top: 64px;
+    }
+
+    /* 单列时卡片不需要撑高，避免页面拉得太长 */
+    .card {
+      min-height: 0;
+      padding: 20px;
+      gap: 24px;
+    }
+
+    .products-title h2 {
+      font-size: 26px;
     }
   }
 </style>

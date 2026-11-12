@@ -17,9 +17,10 @@ npx astro check             # 类型检查
 
 - 文案（三种语言）：`src/i18n/ui.ts`
 - 产品列表、链接、联系方式、社交账号：`src/data/apps.ts`
-- 产品图标：`node scripts/prepare-icons.mjs`，从 `~/code/<产品>` 里取图标，统一成 macOS 图标模板输出到 `src/assets/apps/`
+- 产品图标：`node scripts/prepare-icons.mjs`，从 `~/code/<产品>` 里取图标，统一成满版方图输出到 `src/assets/apps/`（圆角由页面加）
 - 社交二维码：`src/assets/qr/`（只截取码本身，白底）
-- 头像：`node scripts/prepare-avatar.mjs <图片路径>`，同时生成 favicon 和苹果触屏图标；换完再跑一次分享图
+- 头像：`node scripts/prepare-avatar.mjs <图片路径>`，换完再跑一次分享图
+- 网站图标（来自 Logo）：`node scripts/prepare-favicon.mjs`
 - 分享图：`node scripts/make-og.mjs`，用本机 Chrome 生成 `public/og/<lang>.png`
 
 ## 结构

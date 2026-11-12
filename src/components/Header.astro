@@ -1,4 +1,6 @@
 ---
+import { Image } from 'astro:assets';
+import logo from '../assets/brand/logo.png';
 import { langs, locales, ui, type Lang } from '../i18n/ui';
 
 interface Props {
@@ -6,70 +8,115 @@ interface Props {
 }
 
 const { lang } = Astro.props;
-const t = ui[lang];
+const t = ui[lang].header;
+const current = locales[lang];
 ---
 
-<header class="header">
-  <a class="brand" href={locales[lang].path}>Mameya</a>
-  <div class="controls">
-    <nav class="langs" aria-label={t.language}>
-      {
-        langs.map((l) => (
-          <a
-            href={locales[l].path}
-            lang={locales[l].htmlLang}
-            hreflang={locales[l].hreflang}
-            data-lang={l}
-            aria-current={l === lang ? 'page' : undefined}
-          >
-            {locales[l].label}
-          </a>
-        ))
-      }
-    </nav>
+<header class="header" id="top">
+  <a class="brand" href={current.path}>
+    <Image class="logo" src={logo} alt="" width={30} height={22} densities={[1, 2, 3]} loading="eager" />
+    Mameya
+  </a>
+  <nav class="controls" aria-label={t.site}>
+    <div class="lang-wrap" data-lang-menu>
+      <button
+        class="lang"
+        type="button"
+        aria-haspopup="true"
+        aria-expanded="false"
+        aria-controls="lang-menu"
+      >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18"></path><path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18z"></path></svg>
+        <span class="visually-hidden">{t.language}: </span>
+        <span>{current.short}</span>
+      </button>
+      <ul class="menu" id="lang-menu" aria-label={t.language} hidden>
+        {
+          langs.map((l) => (
+            <li>
+              <a
+                class="opt"
+                href={locales[l].path}
+                lang={locales[l].htmlLang}
+                hreflang={locales[l].hreflang}
+                data-lang={l}
+                aria-current={l === lang ? 'page' : undefined}
+              >
+                <span class="opt-label">
+                  <span class="code mono">{locales[l].code}</span>
+                  {locales[l].label}
+                </span>
+                <svg class="check" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"></path></svg>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
     <span class="divider" aria-hidden="true"></span>
-    {/* 三档循环：跟随系统 → 浅色 → 深色。文字靠 CSS 按 data-theme 显示，首屏不会闪错字 */}
-    <button class="theme" type="button" data-theme-toggle>
-      <span class="visually-hidden">{t.theme.label}: </span>
-      <span class="theme-system">{t.theme.system}</span>
-      <span class="theme-light">{t.theme.light}</span>
-      <span class="theme-dark">{t.theme.dark}</span>
+    {/* 亮暗开关：没手动选过时跟随系统；滑块位置靠 CSS 按实际主题算，首屏不会跳 */}
+    <button class="theme" type="button" role="switch" aria-checked="false" aria-label={t.darkMode} data-theme-toggle>
+      <span class="track">
+        <svg class="ico ico-sun" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+        <svg class="ico ico-moon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"></path></svg>
+        <span class="knob">
+          <svg class="when-light" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+          <svg class="when-dark" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"></path></svg>
+        </span>
+      </span>
     </button>
-  </div>
+  </nav>
 </header>
 
 <script>
   const root = document.documentElement;
-  const order = ['system', 'light', 'dark'] as const;
-  type Theme = (typeof order)[number];
+  const systemDark = matchMedia('(prefers-color-scheme: dark)');
+  const toggle = document.querySelector<HTMLButtonElement>('[data-theme-toggle]')!;
 
-  function apply(theme: Theme) {
-    // 换主题时先关掉过渡，下一帧再恢复，避免颜色渐变造成的闪烁
-    root.classList.add('no-transition');
-    if (theme === 'system') delete root.dataset.theme;
-    else root.dataset.theme = theme;
+  const isDark = () => (root.dataset.theme ? root.dataset.theme === 'dark' : systemDark.matches);
+  const sync = () => toggle.setAttribute('aria-checked', String(isDark()));
+  sync();
+  systemDark.addEventListener('change', sync);
 
-    const metas = document.querySelectorAll<HTMLMetaElement>('meta[name="theme-color"]');
-    metas.forEach((m) => {
-      const fallback = m.media.includes('dark') ? '#111110' : '#fcfcfb';
-      m.content = theme === 'system' ? fallback : theme === 'dark' ? '#111110' : '#fcfcfb';
-    });
-
+  toggle.addEventListener('click', () => {
+    const next = isDark() ? 'light' : 'dark';
+    root.dataset.theme = next;
     try {
-      if (theme === 'system') localStorage.removeItem('theme');
-      else localStorage.setItem('theme', theme);
+      localStorage.setItem('theme', next);
     } catch {}
-
-    requestAnimationFrame(() => requestAnimationFrame(() => root.classList.remove('no-transition')));
-  }
-
-  document.querySelector('[data-theme-toggle]')?.addEventListener('click', () => {
-    const current = (root.dataset.theme as Theme | undefined) ?? 'system';
-    apply(order[(order.indexOf(current) + 1) % order.length]);
+    document.querySelectorAll<HTMLMetaElement>('meta[name="theme-color"]').forEach((m) => {
+      m.content = next === 'dark' ? '#121411' : '#f4f5f1';
+    });
+    sync();
   });
 
-  // 手动切过语言，就记住，根路径不再按浏览器语言跳
-  document.querySelectorAll<HTMLAnchorElement>('[data-lang]').forEach((a) => {
+  // 语言菜单：点按钮开关，点外面或按 Esc 关闭
+  const wrap = document.querySelector<HTMLElement>('[data-lang-menu]')!;
+  const button = wrap.querySelector<HTMLButtonElement>('.lang')!;
+  const menu = wrap.querySelector<HTMLElement>('.menu')!;
+
+  const setOpen = (open: boolean) => {
+    menu.hidden = !open;
+    button.setAttribute('aria-expanded', String(open));
+  };
+
+  button.addEventListener('click', () => setOpen(button.getAttribute('aria-expanded') !== 'true'));
+  document.addEventListener('click', (e) => {
+    if (!wrap.contains(e.target as Node)) setOpen(false);
+  });
+  // 用 Tab 移出菜单时也收起
+  wrap.addEventListener('focusout', (e) => {
+    if (!wrap.contains(e.relatedTarget as Node)) setOpen(false);
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !menu.hidden) {
+      setOpen(false);
+      button.focus();
+    }
+  });
+
+  // 手动切过语言就记住，根路径不再按浏览器语言跳
+  menu.querySelectorAll<HTMLAnchorElement>('[data-lang]').forEach((a) => {
     a.addEventListener('click', () => {
       try {
         localStorage.setItem('lang', a.dataset.lang!);
@@ -84,16 +131,22 @@ const t = ui[lang];
     align-items: center;
     justify-content: space-between;
     gap: 16px;
-    padding: 28px 0 0;
-    height: 72px;
-    font-size: var(--small);
+    flex-wrap: wrap;
+    padding: 24px 0;
   }
 
   .brand {
-    font-size: var(--text);
-    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 17px;
+    font-weight: 600;
     letter-spacing: -0.01em;
-    padding: 4px 0;
+  }
+
+  .logo {
+    width: auto;
+    height: 22px;
   }
 
   .controls {
@@ -102,69 +155,187 @@ const t = ui[lang];
     gap: 12px;
   }
 
-  .langs {
+  .lang-wrap {
+    position: relative;
+  }
+
+  .lang {
+    height: 44px;
     display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 0 4px;
+    border: 0;
+    background: transparent;
+    color: var(--muted);
+    font-size: 14px;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+
+  .lang:hover {
+    color: var(--text);
+  }
+
+  .menu {
+    position: absolute;
+    right: 0;
+    top: 52px;
+    z-index: 20;
+    width: 184px;
+    padding: 6px;
+    border-radius: 16px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    box-shadow: 0 20px 44px -16px var(--shadow);
+    display: flex;
+    flex-direction: column;
     gap: 2px;
   }
 
-  .langs a,
-  .theme {
-    color: var(--muted);
-    padding: 4px 6px;
-    border-radius: 6px;
-    white-space: nowrap;
+  .menu[hidden] {
+    display: none;
   }
 
-  .langs a:hover,
-  .theme:hover {
-    color: var(--fg);
+  .opt {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    height: 40px;
+    padding: 0 10px 0 12px;
+    border-radius: 10px;
+    font-size: 14px;
+    transition: background 0.15s;
   }
 
-  .langs a[aria-current='page'] {
-    color: var(--fg);
+  .opt:hover,
+  .opt[aria-current='page'] {
+    background: var(--surface2);
+  }
+
+  /* 焦点框画在选项里面，不贴着菜单边缘 */
+  .opt:focus-visible {
+    outline-offset: -2px;
+  }
+
+  .opt-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .code {
+    width: 22px;
+    font-size: 11.5px;
+    color: var(--faint);
+  }
+
+  .check {
+    color: var(--accent);
+    opacity: 0;
+  }
+
+  .opt[aria-current='page'] .check {
+    opacity: 1;
   }
 
   .divider {
     width: 1px;
-    height: 12px;
-    background: var(--line);
+    height: 16px;
+    background: var(--line2);
   }
 
   .theme {
-    appearance: none;
+    width: 68px;
+    height: 44px;
+    padding: 0;
     border: 0;
-    margin: 0 -6px 0 0;
-    background: none;
-    font: inherit;
-    line-height: inherit;
+    background: transparent;
+    display: flex;
+    align-items: center;
     cursor: pointer;
-    transition: color 150ms var(--ease);
   }
 
-  /* 三个词叠在同一格，按最宽的占位，切换时旁边的语言链接不挪位置 */
-  .theme {
-    display: inline-grid;
-    justify-items: end;
+  .track {
+    position: relative;
+    display: block;
+    width: 68px;
+    height: 34px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--surface2);
+    transition: background 0.25s;
   }
 
-  .theme-system,
-  .theme-light,
-  .theme-dark {
-    grid-area: 1 / 1;
+  .ico {
+    position: absolute;
+    top: 9px;
+    color: var(--faint);
   }
 
-  .theme-light,
-  .theme-dark {
-    visibility: hidden;
+  .ico-sun {
+    left: 9px;
   }
 
-  :global(:root[data-theme='light']) .theme-system,
-  :global(:root[data-theme='dark']) .theme-system {
-    visibility: hidden;
+  .ico-moon {
+    right: 9px;
   }
 
-  :global(:root[data-theme='light']) .theme-light,
-  :global(:root[data-theme='dark']) .theme-dark {
-    visibility: visible;
+  .knob {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 26px;
+    height: 26px;
+    border-radius: 999px;
+    background: var(--surface);
+    box-shadow:
+      0 1px 3px var(--shadow),
+      0 0 0 1px var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent-ink);
+    transition: left 0.25s var(--ease);
+  }
+
+  .when-dark {
+    display: none;
+  }
+
+  /* 实际是深色时：滑块到右边、轨道变绿、滑块里换成月亮 */
+  :global(:root[data-theme='dark']) .knob {
+    left: 37px;
+  }
+
+  :global(:root[data-theme='dark']) .track {
+    background: var(--accent-soft);
+  }
+
+  :global(:root[data-theme='dark']) .when-dark {
+    display: block;
+  }
+
+  :global(:root[data-theme='dark']) .when-light {
+    display: none;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :global(:root:not([data-theme='light'])) .knob {
+      left: 37px;
+    }
+
+    :global(:root:not([data-theme='light'])) .track {
+      background: var(--accent-soft);
+    }
+
+    :global(:root:not([data-theme='light'])) .when-dark {
+      display: block;
+    }
+
+    :global(:root:not([data-theme='light'])) .when-light {
+      display: none;
+    }
   }
 </style>

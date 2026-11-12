@@ -7,7 +7,6 @@ import moni from '../assets/apps/moni.png';
 import kayoi from '../assets/apps/kayoi.png';
 import mekke from '../assets/apps/mekke.png';
 import kakatta from '../assets/apps/kakatta.png';
-import qrTelegram from '../assets/qr/telegram.png';
 import qrWechat from '../assets/qr/wechat.png';
 import qrXiaohongshu from '../assets/qr/xiaohongshu.png';
 import qrDouyin from '../assets/qr/douyin.png';
@@ -38,9 +37,10 @@ export const contact = {
 
 export type SocialId = 'telegram' | 'wechat' | 'xiaohongshu' | 'douyin';
 
-// 社交账号：悬停（手机上点一下）显示二维码。有公开链接的（Telegram）整行同时是链接。
-export const socials: { id: SocialId; qr: ImageMetadata; url?: string; handle?: string }[] = [
-  { id: 'telegram', qr: qrTelegram, url: 'https://t.me/Milkwait2', handle: '@Milkwait2' },
+export const telegram = { url: 'https://t.me/Milkwait2', handle: '@Milkwait2' };
+
+// 没有公开个人链接的账号：悬停（手机上点一下）显示二维码
+export const qrSocials: { id: Exclude<SocialId, 'telegram'>; qr: ImageMetadata }[] = [
   { id: 'wechat', qr: qrWechat },
   { id: 'xiaohongshu', qr: qrXiaohongshu },
   { id: 'douyin', qr: qrDouyin },

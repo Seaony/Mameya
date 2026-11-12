@@ -25,6 +25,3 @@ pnpm-debug.log*
 
 # wrangler 本地缓存
 .wrangler/
-
-# 交接文档只留本地
-HANDOFF.md
