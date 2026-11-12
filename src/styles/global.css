@@ -25,27 +25,26 @@
   line-gap-override: 0%;
 }
 
-/* 颜色：按设计稿的结构，主题色换成低饱和的毛豆绿，中性色跟着偏一点灰绿 */
+/* 颜色：照设计稿，低饱和的鼠尾草绿，中性色偏一点灰绿 */
 :root {
   color-scheme: light dark;
 
-  --bg: light-dark(#f4f5f1, #121411);
-  --surface: light-dark(#fcfcfa, #191c18);
-  --surface2: light-dark(#eaede6, #232721);
-  --line: light-dark(#dfe3da, #2b2f29);
-  --line2: light-dark(#c9cfc2, #3e443b);
-  --text: light-dark(#1a1d19, #eceee8);
-  --muted: light-dark(#535a51, #adb4a8);
-  --faint: light-dark(#676e64, #8f9689);
-  --accent: light-dark(#7a9c74, #9bbd94);
-  --accent-soft: light-dark(#e2ebdd, #253022);
-  --accent-ink: light-dark(#3f5c3a, #b9d4b2);
-  --accent-ring: light-dark(rgb(122 156 116 / 0.4), rgb(155 189 148 / 0.35));
-  --focus: light-dark(#4f7049, #9bbd94);
-  --btn: light-dark(#1a1d19, #eceee8);
-  --btn-ink: light-dark(#fcfcfa, #121411);
-  --shadow: light-dark(rgb(36 52 32 / 0.14), rgb(0 0 0 / 0.5));
-  --glow: light-dark(rgb(122 156 116 / 0.14), rgb(155 189 148 / 0.07));
+  --bg: light-dark(#f3f4ef, #121512);
+  --surface: light-dark(#fbfbf8, #1a1d1a);
+  --surface2: light-dark(#e8ebe3, #212521);
+  --line: light-dark(#dfe3d9, #2a2f2a);
+  --line2: light-dark(#c8cec0, #3a413a);
+  --text: light-dark(#1a1e1a, #ecefe9);
+  --muted: light-dark(#555c55, #abb2a9);
+  --faint: light-dark(#697068, #8e968c);
+  --accent: light-dark(#5a7f65, #8fb39a);
+  --accent-soft: light-dark(#e2eadf, #253128);
+  --accent-ink: light-dark(#3e6149, #a9c9b2);
+  --accent-ring: light-dark(rgb(90 127 101 / 0.35), rgb(143 179 154 / 0.35));
+  --btn: light-dark(#1a1e1a, #ecefe9);
+  --btn-ink: light-dark(#fbfbf8, #121512);
+  --shadow: light-dark(rgb(40 60 45 / 0.14), rgb(0 0 0 / 0.5));
+  --glow: light-dark(rgb(110 150 120 / 0.12), rgb(143 179 154 / 0.07));
 
   --font-sans: 'Geist', 'Geist Fallback';
   --font-zh: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
@@ -103,7 +102,7 @@ button {
 }
 
 :focus-visible {
-  outline: 2px solid var(--focus);
+  outline: 2px solid var(--accent);
   outline-offset: 3px;
 }
 
@@ -126,10 +125,10 @@ button {
   white-space: nowrap;
 }
 
-/* 页面骨架：版心 1088px，左右 24px */
+/* 页面骨架：内容固定 640px 宽，左右 24px */
 .page {
   width: 100%;
-  max-width: 1088px;
+  max-width: 688px;
   margin: 0 auto;
   padding: 0 24px;
   min-height: 100dvh;

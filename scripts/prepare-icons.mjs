@@ -13,7 +13,6 @@ const icons = [
   { id: 'momento', src: 'Momento/Momento/Assets.xcassets/AppIcon.appiconset/icon_512x512.png', template: true },
   { id: 'moni', src: 'Moni/Moni/Assets.xcassets/AppIcon.appiconset/AppIcon-512.png' },
   { id: 'kayoi', src: 'Kayoi/App/Assets.xcassets/AppIcon.appiconset/icon-512.png', template: true },
-  { id: 'mekke', src: 'Mekke/Mekke/Assets.xcassets/AppIcon.appiconset/icon_512x512.png', template: true },
   { id: 'kakatta', src: 'Kakatta/assets/logo/kakatta.png' },
 ];
 

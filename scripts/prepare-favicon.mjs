@@ -7,7 +7,7 @@ const root = new URL('..', import.meta.url).pathname;
 const logo = `${root}src/assets/brand/logo.png`;
 const clear = { r: 0, g: 0, b: 0, alpha: 0 };
 
-// Logo 是横向的豆荚，放进正方形里居中，四周留一点边
+// Logo 放进正方形里居中，四周留一点边
 const square = (size, pad, background = clear) =>
   sharp(logo)
     .resize(size - pad * 2, size - pad * 2, { fit: 'contain', background: clear })
@@ -17,7 +17,7 @@ const square = (size, pad, background = clear) =>
     .toBuffer();
 
 writeFileSync(`${root}public/favicon.png`, await square(96, 4));
-writeFileSync(`${root}public/apple-touch-icon.png`, await square(180, 28, '#e2ebdd'));
+writeFileSync(`${root}public/apple-touch-icon.png`, await square(180, 28, '#e2eadf'));
 
 // favicon.ico：一个 32px PNG 包进 ICO 文件头
 const png = await square(32, 1);

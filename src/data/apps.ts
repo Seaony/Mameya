@@ -5,13 +5,12 @@ import yomi from '../assets/apps/yomi.png';
 import momento from '../assets/apps/momento.png';
 import moni from '../assets/apps/moni.png';
 import kayoi from '../assets/apps/kayoi.png';
-import mekke from '../assets/apps/mekke.png';
 import kakatta from '../assets/apps/kakatta.png';
 import qrWechat from '../assets/qr/wechat.png';
 import qrXiaohongshu from '../assets/qr/xiaohongshu.png';
 import qrDouyin from '../assets/qr/douyin.png';
 
-export type AppId = 'yomi' | 'momento' | 'moni' | 'kayoi' | 'mekke' | 'kakatta';
+export type AppId = 'yomi' | 'momento' | 'moni' | 'kayoi' | 'kakatta';
 
 export interface App {
   id: AppId;
@@ -26,7 +25,6 @@ export const apps: App[] = [
   { id: 'momento', name: 'Momento', url: 'https://github.com/Seaony/Momento', icon: momento },
   { id: 'moni', name: 'Moni', url: 'https://github.com/Seaony/Moni', icon: moni },
   { id: 'kayoi', name: 'Kayoi', url: 'https://github.com/Seaony/Kayoi', icon: kayoi },
-  { id: 'mekke', name: 'Mekke', url: 'https://github.com/Seaony/Mekke', icon: mekke },
   { id: 'kakatta', name: 'Kakatta', url: 'https://github.com/Seaony/Kakatta', icon: kakatta, inDevelopment: true },
 ];
 

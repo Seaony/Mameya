@@ -9,16 +9,16 @@ const root = new URL('..', import.meta.url).pathname;
 const chrome = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 
 const copy = {
-  en: { lang: 'en', tagline: 'Building native apps for the Mac.' },
-  zh: { lang: 'zh-CN', tagline: '在做 Mac 原生应用。' },
-  ja: { lang: 'ja', tagline: 'Macのネイティブアプリを作っています。' },
+  en: { lang: 'en', tagline: 'Next year brings its own snow.' },
+  zh: { lang: 'zh-CN', tagline: '明年有明年的雪' },
+  ja: { lang: 'ja', tagline: '来年には来年の雪が降る' },
 };
 
 const dataUri = (file, type) => `data:${type};base64,${readFileSync(join(root, file)).toString('base64')}`;
 const font = dataUri('public/fonts/geist-latin.woff2', 'font/woff2');
 const avatar = dataUri('src/assets/avatar.jpg', 'image/jpeg');
 const logo = dataUri('src/assets/brand/logo.png', 'image/png');
-const icons = ['yomi', 'momento', 'moni', 'kayoi', 'mekke'].map((id) => dataUri(`src/assets/apps/${id}.png`, 'image/png'));
+const icons = ['yomi', 'momento', 'moni', 'kayoi'].map((id) => dataUri(`src/assets/apps/${id}.png`, 'image/png'));
 
 // 和网站浅色主题同一套颜色：毛豆绿 + 灰绿中性色
 const page = ({ lang, tagline }) => `<!doctype html>
@@ -26,21 +26,21 @@ const page = ({ lang, tagline }) => `<!doctype html>
 @font-face { font-family: Geist; src: url(${font}) format('woff2'); font-weight: 400 600; }
 html, body { margin: 0; width: 1200px; height: 630px; overflow: hidden; }
 body {
-  background: #f4f5f1; color: #1a1d19;
+  background: #f3f4ef; color: #1a1e1a;
   font-family: Geist, 'PingFang SC', 'Hiragino Sans', sans-serif;
   -webkit-font-smoothing: antialiased; text-autospace: normal; word-break: auto-phrase;
   box-sizing: border-box; padding: 72px 88px; display: flex; flex-direction: column;
-  background-image: radial-gradient(640px 420px at 82% 18%, rgb(122 156 116 / 0.16), transparent 70%);
+  background-image: radial-gradient(640px 420px at 82% 18%, rgb(110 150 120 / 0.16), transparent 70%);
 }
 .brand { display: flex; align-items: center; gap: 14px; font-size: 28px; font-weight: 600; letter-spacing: -0.01em; }
 .brand img { height: 32px; }
 .person { margin-top: 64px; display: flex; align-items: center; gap: 32px; }
-.avatar { width: 128px; height: 128px; border-radius: 50%; box-shadow: 0 0 0 6px #f4f5f1, 0 0 0 7px #dfe3da; }
+.avatar { width: 128px; height: 128px; border-radius: 50%; box-shadow: 0 0 0 6px #f3f4ef, 0 0 0 7px #dfe3d9; }
 h1 { margin: 0; font-size: 72px; font-weight: 600; letter-spacing: -0.03em; line-height: 1.05; }
-p { margin: 14px 0 0; font-size: 30px; color: #535a51; line-height: 1.35; max-width: 820px; }
+p { margin: 14px 0 0; font-size: 30px; color: #555c55; line-height: 1.35; max-width: 820px; }
 .icons { margin-top: auto; display: flex; gap: 14px; align-items: center; }
-.icons img { width: 64px; height: 64px; border-radius: 16px; box-shadow: 0 2px 8px rgb(36 52 32 / 0.16); }
-.site { margin-left: auto; font-size: 24px; color: #676e64; }
+.icons img { width: 64px; height: 64px; border-radius: 16px; box-shadow: 0 2px 8px rgb(40 60 45 / 0.16); }
+.site { margin-left: auto; font-size: 24px; color: #697068; }
 </style></head><body>
 <div class="brand"><img src="${logo}">Mameya</div>
 <div class="person"><img class="avatar" src="${avatar}"><div><h1>Seaony</h1><p>${tagline}</p></div></div>

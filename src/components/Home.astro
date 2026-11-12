@@ -1,8 +1,8 @@
 ---
+import Icon from './Icon.astro';
 import { Image } from 'astro:assets';
 import avatar from '../assets/avatar.jpg';
 import { apps, contact, telegram, qrSocials } from '../data/apps';
-import { socialIcons } from '../data/social-icons';
 import { ui, type Lang } from '../i18n/ui';
 
 interface Props {
@@ -11,52 +11,55 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = ui[lang];
-
-// 数量从产品列表算，不手写，免得以后忘了改
-const live = apps.filter((a) => !a.inDevelopment).length;
-const dev = apps.length - live;
 const building = apps.find((a) => a.inDevelopment);
-const total = String(apps.length).padStart(2, '0');
+
+// 关于：所在、专注，加上技术栈三行，同一种行样式
+const facts: [string, string][] = [
+  t.aboutRows.location,
+  t.aboutRows.focus,
+  [t.stackRows.mac, 'Swift · SwiftUI'],
+  [t.stackRows.web, 'TypeScript · React · Next.js · Node.js'],
+  [t.stackRows.before, 'PHP · Laravel'],
+];
 ---
 
 <main>
-  <section class="hero" aria-label={t.avatarAlt}>
-    <div class="hero-top">
-      <div class="person">
-        <Image class="avatar" src={avatar} alt={t.avatarAlt} width={96} height={96} densities={[1, 2, 3]} loading="eager" />
-        <div class="name-block">
-          <h1>Seaony</h1>
-          <p class="tagline">{t.tagline}</p>
-        </div>
+  <section class="hero">
+    <div class="person">
+      <Image class="avatar" src={avatar} alt={t.avatarAlt} width={80} height={80} densities={[1, 2, 3]} loading="eager" />
+      <div class="name-block">
+        <h1>Seaony</h1>
+        <p class="tagline">{t.tagline}</p>
       </div>
-      {
-        building && (
-          <a class="status" href={building.url}>
-            <span class="pulse" aria-hidden="true" />
-            {t.building(building.name)}
-          </a>
-        )
-      }
     </div>
 
     <p class="bio">{t.intro}</p>
 
+    {
+      building && (
+        <p class="status">
+          <span class="pulse" aria-hidden="true" />
+          {t.building(building.name)}
+        </p>
+      )
+    }
+
     <ul class="contacts" aria-label={t.contactLabel}>
       <li class="ic">
         <a class="icb" href={`mailto:${contact.email}`} aria-label={`${t.email}: ${contact.email}`}>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m3 7 9 6 9-6"></path></svg>
+          <Icon name="mail" size={20} />
         </a>
         <span class="tip tip-text" aria-hidden="true">{contact.email}</span>
       </li>
       <li class="ic">
         <a class="icb" href={contact.github.url} aria-label={`GitHub: @${contact.github.handle}`}>
-          <svg width="19" height="19" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
+          <Icon name="github" size={20} />
         </a>
         <span class="tip tip-text" aria-hidden="true">github.com/{contact.github.handle}</span>
       </li>
       <li class="ic">
         <a class="icb" href={telegram.url} aria-label={`Telegram: ${telegram.handle}`}>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 3 3 10.5l7 2.5 2.5 7L21 3z"></path><path d="m10 13 4.5-4.5"></path></svg>
+          <Icon name="telegram" size={20} />
         </a>
         <span class="tip tip-text" aria-hidden="true">Telegram · {telegram.handle}</span>
       </li>
@@ -66,15 +69,8 @@ const total = String(apps.length).padStart(2, '0');
           return (
             <li class="ic" data-qr>
               <button class="icb" type="button" aria-label={`${name}: ${t.qrCode}`} aria-expanded="false" aria-controls={`qr-${s.id}`}>
-                {s.id === 'wechat' ? (
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.2 7.5L3 21l2-5.6A8.4 8.4 0 1 1 21 11.5z" /></svg>
-                ) : (
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    {socialIcons[s.id].map((d) => (
-                      <path d={d} />
-                    ))}
-                  </svg>
-                )}
+                {/* 小红书是文字标志，放大一点才看得清 */}
+                <Icon name={s.id} size={s.id === 'xiaohongshu' ? 26 : 20} />
               </button>
               <div class="tip tip-qr" id={`qr-${s.id}`}>
                 <Image src={s.qr} alt={`${name} ${t.qrCode}`} width={136} height={136} densities={[2]} />
@@ -85,79 +81,40 @@ const total = String(apps.length).padStart(2, '0');
         })
       }
     </ul>
-
-    <div class="rule" aria-hidden="true"></div>
-
-    <div class="facts">
-      <div class="fact">
-        <h2 class="fact-title">{t.about}</h2>
-        <dl class="about">
-          <div>
-            <dt>{t.aboutRows.location[0]}</dt>
-            <dd>{t.aboutRows.location[1]}</dd>
-          </div>
-          <div>
-            <dt>{t.aboutRows.focus[0]}</dt>
-            <dd>{t.aboutRows.focus[1]}</dd>
-          </div>
-          <div>
-            <dt>{t.aboutRows.work[0]}</dt>
-            <dd>{t.aboutRows.work[1](live, dev)}</dd>
-          </div>
-        </dl>
-      </div>
-      <div class="fact">
-        <h2 class="fact-title">{t.stack}</h2>
-        <dl class="stack">
-          <div>
-            <dt class="mono">{t.stackRows.mac}</dt>
-            <dd><span>Swift</span><span>SwiftUI</span></dd>
-          </div>
-          <div>
-            <dt class="mono">{t.stackRows.web}</dt>
-            <dd><span>TypeScript</span><span>React</span><span>Next.js</span><span>Node.js</span></dd>
-          </div>
-          <div>
-            {/* 西文标签用等宽字体，中日文按设计稿用正文字体 */}
-            <dt class:list={{ mono: lang === 'en' }}>{t.stackRows.before}</dt>
-            <dd><span>PHP</span><span>Laravel</span></dd>
-          </div>
-        </dl>
-      </div>
-    </div>
   </section>
 
-  <section class="products" aria-labelledby="products-title">
-    <div class="products-head">
-      <div class="products-title">
-        <h2 id="products-title">{t.projects}</h2>
-        <span class="count mono" aria-hidden="true">{total}</span>
-      </div>
-      <p class="summary">{t.projectsSummary(live, dev)}</p>
-    </div>
+  <section class="block" aria-labelledby="about-title">
+    <h2 id="about-title">{t.about}</h2>
+    <dl class="facts">
+      {
+        facts.map(([k, v]) => (
+          <div>
+            <dt>{k}</dt>
+            <dd>{v}</dd>
+          </div>
+        ))
+      }
+    </dl>
+  </section>
 
-    <ul class="cards">
+  <section class="block products" aria-labelledby="products-title">
+    <h2 id="products-title">{t.projects}</h2>
+    <ul class="rows">
       {
         apps.map((app) => (
           <li>
-            <a class:list={['card', { 'card-dev': app.inDevelopment }]} href={app.url}>
-              <div class="card-top">
-                <Image class="app-icon" src={app.icon} alt="" width={56} height={56} densities={[2, 3]} />
-                {app.inDevelopment ? (
-                  <span class="dev-pill">
-                    <span class="dot" aria-hidden="true" />
-                    {t.inDevelopment}
+            <a class="row" href={app.url}>
+              <Image class="row-icon" src={app.icon} alt="" width={40} height={40} densities={[2, 3]} />
+              <span class="row-body">
+                <span class="row-text">
+                  <span class="row-head">
+                    <span class="row-name">{app.name}</span>
+                    {app.inDevelopment && <span class="dev">{t.inDevelopment}</span>}
                   </span>
-                ) : (
-                  <span class="arr" aria-hidden="true">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7" /><path d="M8 7h9v9" /></svg>
-                  </span>
-                )}
-              </div>
-              <div class="card-text">
-                <span class="card-name">{app.name}</span>
-                <span class="card-desc">{t.apps[app.id]}</span>
-              </div>
+                  <span class="row-desc">{t.apps[app.id]}</span>
+                </span>
+                <Icon class="row-arrow" name="arrowUpRight" size={16} />
+              </span>
             </a>
           </li>
         ))
@@ -211,27 +168,19 @@ const total = String(apps.length).padStart(2, '0');
 
 <style>
   main {
-    padding-top: 40px;
-  }
-
-  .hero-top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 24px;
-    flex-wrap: wrap;
+    padding-top: 48px;
   }
 
   .person {
     display: flex;
     align-items: center;
-    gap: 24px;
-    flex-wrap: wrap;
+    gap: 20px;
   }
 
   .avatar {
-    width: 96px;
-    height: 96px;
+    width: 80px;
+    height: 80px;
+    flex-shrink: 0;
     border-radius: 999px;
     object-fit: cover;
     box-shadow:
@@ -242,38 +191,44 @@ const total = String(apps.length).padStart(2, '0');
   .name-block {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 10px;
+    min-width: 0;
   }
 
   h1 {
-    font-size: 44px;
-    line-height: 1.05;
+    font-size: 26px;
+    line-height: 1.1;
     font-weight: 600;
-    letter-spacing: -0.03em;
+    letter-spacing: -0.025em;
   }
 
   .tagline {
-    font-size: 18px;
+    font-size: 16px;
     color: var(--muted);
   }
 
+  .bio {
+    margin-top: 36px;
+    font-size: 16px;
+    line-height: 1.9;
+  }
+
+  :lang(en) .bio {
+    line-height: 1.75;
+  }
+
   .status {
+    margin-top: 14px;
     display: flex;
     align-items: center;
     gap: 10px;
-    height: 36px;
-    padding: 0 14px;
-    border-radius: 999px;
-    background: var(--accent-soft);
+    font-size: 14px;
     color: var(--accent-ink);
-    font-size: 13.5px;
-    font-weight: 500;
-    white-space: nowrap;
   }
 
   .pulse {
-    width: 8px;
-    height: 8px;
+    width: 7px;
+    height: 7px;
     border-radius: 999px;
     background: var(--accent);
     animation: pulse 2.4s infinite;
@@ -281,19 +236,8 @@ const total = String(apps.length).padStart(2, '0');
 
   @keyframes pulse {
     0% { box-shadow: 0 0 0 0 var(--accent-ring); }
-    70% { box-shadow: 0 0 0 7px transparent; }
+    70% { box-shadow: 0 0 0 6px transparent; }
     100% { box-shadow: 0 0 0 0 transparent; }
-  }
-
-  .bio {
-    margin-top: 32px;
-    max-width: 700px;
-    font-size: 18px;
-    line-height: 1.85;
-  }
-
-  :lang(en) .bio {
-    line-height: 1.7;
   }
 
   .contacts {
@@ -301,7 +245,7 @@ const total = String(apps.length).padStart(2, '0');
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    gap: 4px;
+    gap: 2px;
   }
 
   .icb {
@@ -362,250 +306,156 @@ const total = String(apps.length).padStart(2, '0');
     white-space: nowrap;
   }
 
-  /* 第一个提示靠左对齐，不伸出屏幕左边（translate 抵消掉居中用的 -50%） */
-  .ic:first-child .tip {
-    left: 0;
-    translate: 50% 0;
-  }
-
   .ic[data-dismissed] .tip {
     opacity: 0;
     visibility: hidden;
   }
 
-  .rule {
-    height: 1px;
-    background: var(--line);
-    margin-top: 48px;
-  }
-
-  .facts {
-    margin-top: 40px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
-    gap: 40px;
-  }
-
-  .fact {
+  .block {
+    margin-top: 64px;
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 12px;
   }
 
-  .fact-title {
-    font-size: 13px;
+  .products {
+    margin-top: 56px;
+  }
+
+  h2 {
+    font-size: 15px;
     font-weight: 500;
-    color: var(--faint);
-    letter-spacing: 0.08em;
   }
 
-  dl {
-    margin: 0;
-  }
-
+  dl,
   dd {
     margin: 0;
   }
 
-  .about > div {
+  .facts > div {
     display: flex;
     gap: 16px;
+    align-items: baseline;
     padding: 12px 0;
+    border-bottom: 1px dashed var(--line2);
     font-size: 15px;
-    border-bottom: 1px dashed var(--line);
   }
 
-  .about > div:last-child {
+  .facts > div:last-child {
     border-bottom: 0;
   }
 
-  .about dt,
-  .stack dt {
+  .facts dt {
     width: 72px;
     flex-shrink: 0;
     color: var(--faint);
   }
 
-  .stack {
+  .row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .row-icon {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    box-shadow:
+      0 0 0 1px var(--line),
+      0 1px 2px var(--shadow);
+    transition: transform 0.3s var(--ease);
+  }
+
+  .row-body {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 0;
+    border-bottom: 1px dashed var(--line2);
+  }
+
+  .rows li:last-child .row-body {
+    border-bottom: 0;
+  }
+
+  .row-text {
+    flex: 1;
+    min-width: 0;
     display: flex;
     flex-direction: column;
-    gap: 14px;
-    padding-top: 6px;
+    gap: 4px;
   }
 
-  .stack > div {
+  .row-head {
     display: flex;
-    gap: 16px;
     align-items: center;
-  }
-
-  .stack dt {
-    font-size: 13px;
-  }
-
-  .stack dd {
-    display: flex;
-    flex-wrap: wrap;
     gap: 8px;
   }
 
-  .stack dd span {
-    padding: 5px 12px;
-    border-radius: 999px;
-    background: var(--surface2);
-    font-size: 13.5px;
+  .row-name {
+    font-size: 15.5px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    transition: color 0.2s;
   }
 
-  .products {
-    margin-top: 88px;
-    display: flex;
-    flex-direction: column;
-    gap: 28px;
-  }
-
-  .products-head {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 16px;
-    flex-wrap: wrap;
-  }
-
-  .products-title {
-    display: flex;
-    align-items: baseline;
-    gap: 12px;
-  }
-
-  .products-title h2 {
-    font-size: 30px;
-    font-weight: 600;
-    letter-spacing: -0.02em;
-  }
-
-  .count {
-    font-size: 14px;
-    color: var(--faint);
-  }
-
-  .summary {
-    font-size: 14.5px;
-    color: var(--faint);
-  }
-
-  .cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
-    gap: 20px;
-  }
-
-  .card {
-    display: flex;
-    flex-direction: column;
-    gap: 28px;
-    height: 100%;
-    min-height: 204px;
-    padding: 24px;
-    border-radius: 22px;
-    background: var(--surface);
-    border: 1px solid var(--line);
-    transition:
-      transform 0.28s var(--ease),
-      border-color 0.28s,
-      box-shadow 0.28s;
-  }
-
-  .card-dev {
-    border-style: dashed;
-    border-color: var(--line2);
-  }
-
-  .card:hover {
-    transform: translateY(-3px);
-    border-color: var(--line2);
-    box-shadow: 0 18px 40px -20px var(--shadow);
-  }
-
-  .card:focus-visible {
-    outline-offset: 2px;
-    border-radius: 22px;
-  }
-
-  .card-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-  }
-
-  .app-icon {
-    width: 56px;
-    height: 56px;
-    border-radius: 14px;
-    box-shadow: 0 2px 6px var(--shadow);
-  }
-
-  .arr {
-    /* 设计稿里边框算在 34px 外面，实际 36px */
-    box-sizing: content-box;
-    width: 34px;
-    height: 34px;
-    border-radius: 999px;
-    border: 1px solid var(--line);
-    color: var(--muted);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.25s;
-  }
-
-  .card:hover .arr {
-    background: var(--text);
-    color: var(--bg);
-    border-color: var(--text);
-  }
-
-  .dev-pill {
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    height: 28px;
-    padding: 0 11px;
+  .dev {
+    padding: 2px 8px;
     border-radius: 999px;
     background: var(--accent-soft);
     color: var(--accent-ink);
-    font-size: 12.5px;
+    font-size: 11.5px;
     font-weight: 500;
+    line-height: 1.5;
     white-space: nowrap;
   }
 
-  .dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 999px;
-    background: var(--accent);
-  }
-
-  .card-text {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    margin-top: auto;
-  }
-
-  .card-name {
-    font-size: 19px;
-    font-weight: 600;
-    letter-spacing: -0.01em;
-  }
-
-  .card-desc {
-    font-size: 15px;
+  .row-desc {
+    font-size: 12px;
+    line-height: 1.5;
     color: var(--muted);
+  }
+
+  .row :global(.row-arrow) {
+    flex-shrink: 0;
+    color: var(--faint);
+    transition:
+      transform 0.25s var(--ease),
+      color 0.2s;
+  }
+
+  .row:hover .row-icon {
+    transform: translateY(-1px) scale(1.05);
+  }
+
+  .row:hover .row-name {
+    color: var(--accent-ink);
+  }
+
+  .row:hover :global(.row-arrow) {
+    transform: translate(2px, -2px);
+    color: var(--text);
+  }
+
+  .row:focus-visible {
+    border-radius: 12px;
+  }
+
+  /* 窗口窄、左边没留白时，第一个提示靠左对齐，不伸出屏幕（translate 抵消掉居中用的 -50%） */
+  @media (max-width: 840px) {
+    .ic:first-child .tip {
+      left: 0;
+      translate: 50% 0;
+    }
   }
 
   @media (max-width: 560px) {
     main {
-      padding-top: 16px;
+      padding-top: 32px;
     }
 
     /* 窄屏上最后一个二维码靠右对齐，不伸出屏幕右边 */
@@ -613,44 +463,6 @@ const total = String(apps.length).padStart(2, '0');
       left: auto;
       right: 0;
       translate: 50% 0;
-    }
-
-    h1 {
-      font-size: 36px;
-    }
-
-    .avatar {
-      width: 80px;
-      height: 80px;
-    }
-
-    /* 头像和名字始终并排，标语自己折行 */
-    .person {
-      gap: 20px;
-      flex-wrap: nowrap;
-    }
-
-    .name-block {
-      min-width: 0;
-    }
-
-    .bio {
-      font-size: 17px;
-    }
-
-    .products {
-      margin-top: 64px;
-    }
-
-    /* 单列时卡片不需要撑高，避免页面拉得太长 */
-    .card {
-      min-height: 0;
-      padding: 20px;
-      gap: 24px;
-    }
-
-    .products-title h2 {
-      font-size: 26px;
     }
   }
 </style>

@@ -14,8 +14,8 @@ interface Props {
 }
 
 const { lang, title, description, indexable = true } = Astro.props;
-const LIGHT = '#f4f5f1';
-const DARK = '#121411';
+const LIGHT = '#f3f4ef';
+const DARK = '#121512';
 const t = ui[lang];
 const site = Astro.site!;
 const canonical = new URL(locales[lang].path, site).href;
