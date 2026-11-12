@@ -1,8 +1,8 @@
-/* Geist 只含 latin 子集，字重 400–600；Geist Mono 只用在编号和标签上 */
+/* Inter 4（可变字重加光学尺寸，大字号自动换成标题字形），只含 latin 子集；Geist Mono 只用在语言菜单的代码上 */
 @font-face {
-  font-family: 'Geist';
-  src: url('/fonts/geist-latin.woff2') format('woff2');
-  font-weight: 400 600;
+  font-family: 'Inter';
+  src: url('/fonts/inter-latin.woff2') format('woff2');
+  font-weight: 100 900;
   font-style: normal;
   font-display: swap;
 }
@@ -15,13 +15,13 @@
   font-display: swap;
 }
 
-/* 回退字体按 Geist 的字宽和行高调好，换字体时页面不跳 */
+/* 回退字体按 Inter 的字宽和行高调好，换字体时页面不跳 */
 @font-face {
-  font-family: 'Geist Fallback';
+  font-family: 'Inter Fallback';
   src: local('Arial'), local('Helvetica Neue'), local('Helvetica');
-  size-adjust: 106%;
-  ascent-override: 94.81%;
-  descent-override: 27.83%;
+  size-adjust: 107.12%;
+  ascent-override: 90.44%;
+  descent-override: 22.52%;
   line-gap-override: 0%;
 }
 
@@ -29,11 +29,11 @@
 :root {
   color-scheme: light dark;
 
-  --bg: light-dark(#f3f4f1, #131413);
-  --surface: light-dark(#fbfbfa, #1b1c1b);
-  --surface2: light-dark(#e9eae6, #222422);
-  --line: light-dark(#e0e2dd, #2b2d2b);
-  --line2: light-dark(#cacdc6, #3c3f3c);
+  --bg: light-dark(#fafbfa, #131413);
+  --surface: light-dark(#ffffff, #1b1c1b);
+  --surface2: light-dark(#f0f1f0, #222422);
+  --line: light-dark(#e6e7e6, #2b2d2b);
+  --line2: light-dark(#d2d4d2, #3c3f3c);
   --text: light-dark(#1b1d1b, #ecedea);
   --muted: light-dark(#565b56, #adb1ac);
   --faint: light-dark(#6a6f69, #91958f);
@@ -45,7 +45,7 @@
   --shadow: light-dark(rgb(40 60 45 / 0.14), rgb(0 0 0 / 0.5));
   --glow: light-dark(rgb(110 150 120 / 0.12), rgb(143 179 154 / 0.07));
 
-  --font-sans: 'Geist', 'Geist Fallback';
+  --font-sans: 'Inter', 'Inter Fallback';
   --font-zh: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
   --font-ja: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Yu Gothic UI', 'Meiryo', 'Noto Sans JP', sans-serif;
   --font-mono: 'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace;

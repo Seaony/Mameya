@@ -1,6 +1,6 @@
 ---
 import Icon from './Icon.astro';
-import { Image } from 'astro:assets';
+import { Image, getImage } from 'astro:assets';
 import avatar from '../assets/avatar.jpg';
 import { apps, contact, telegram, qrSocials } from '../data/apps';
 import { ui, type Lang } from '../i18n/ui';
@@ -13,6 +13,9 @@ interface Props {
 const { lang } = Astro.props;
 const t = ui[lang];
 const building = apps.find((a) => a.inDevelopment);
+
+// 二维码平时藏在气泡里，不在首屏下载：先只算好地址，第一次悬停、聚焦或点开时再加载
+const qrs = await Promise.all(qrSocials.map(async (s) => ({ ...s, src: (await getImage({ src: s.qr, width: 400, height: 400, quality: 90 })).src })));
 
 // 中日文一行太长时，只在逗号、顿号、句号这类标点后面断开，不把词拆到两行
 const phrases = (line: string) => line.split(/(?<=[，、：；。])/);
@@ -32,7 +35,8 @@ const stack: { name: string; icon: IconName; color?: string }[] = [
 <main>
   <section class="hero">
     <div class="person">
-      <Image class="avatar" src={avatar} alt={t.avatarAlt} width={80} height={80} densities={[1, 2, 3]} loading="eager" />
+      {/* 页面上的位图都只出一张约 4 倍大的图，用 CSS 缩小显示，小尺寸下不会糊 */}
+      <Image class="avatar" src={avatar} alt={t.avatarAlt} width={240} height={240} quality={90} loading="eager" fetchpriority="high" />
       <div class="name-block">
         <h1>Seaony</h1>
         <p class="tagline">{t.tagline}</p>
@@ -54,7 +58,7 @@ const stack: { name: string; icon: IconName; color?: string }[] = [
     {
       building && (
         <p class="status">
-          <Image class="status-icon" src={building.icon} alt="" width={18} height={18} densities={[2, 3]} />
+          <Image class="status-icon" src={building.icon} alt="" width={160} height={160} quality={90} />
           {t.building(building.name)}
         </p>
       )
@@ -86,7 +90,7 @@ const stack: { name: string; icon: IconName; color?: string }[] = [
         <span class="tip tip-text" aria-hidden="true">Telegram · {telegram.handle}</span>
       </li>
       {
-        qrSocials.map((s) => {
+        qrs.map((s) => {
           const name = t.socials[s.id].name;
           return (
             <li class="ic" data-qr>
@@ -95,7 +99,7 @@ const stack: { name: string; icon: IconName; color?: string }[] = [
                 <Icon name={s.id} size={s.id === 'xiaohongshu' ? 26 : 20} />
               </button>
               <div class="tip tip-qr" id={`qr-${s.id}`}>
-                <Image src={s.qr} alt={`${name} ${t.qrCode}`} width={136} height={136} densities={[2]} />
+                <img data-src={s.src} alt={`${name} ${t.qrCode}`} width="400" height="400" />
                 <span>{t.socials[s.id].scan}</span>
               </div>
             </li>
@@ -146,7 +150,7 @@ const stack: { name: string; icon: IconName; color?: string }[] = [
         apps.map((app) => (
           <li>
             <a class="row" href={app.url}>
-              <Image class="row-icon" src={app.icon} alt="" width={40} height={40} densities={[2, 3]} />
+              <Image class="row-icon" src={app.icon} alt="" width={160} height={160} quality={90} />
               <span class="row-body">
                 <span class="row-text">
                   <span class="row-head">
@@ -200,6 +204,16 @@ const stack: { name: string; icon: IconName; color?: string }[] = [
     // 键盘聚焦或鼠标悬停时按 Esc，也要能收起提示
     (document.activeElement as HTMLElement | null)?.closest('.ic')?.setAttribute('data-dismissed', '');
     document.querySelectorAll('.ic:hover').forEach((ic) => ic.setAttribute('data-dismissed', ''));
+  });
+
+  // 第一次悬停、聚焦或点开时才给二维码填上地址
+  items.forEach((item) => {
+    const load = () => {
+      const img = item.querySelector<HTMLImageElement>('img[data-src]');
+      if (img) img.src = img.dataset.src!;
+      img?.removeAttribute('data-src');
+    };
+    for (const type of ['pointerenter', 'focusin', 'pointerdown']) item.addEventListener(type, load, { once: true });
   });
 
   document.querySelectorAll<HTMLElement>('.ic').forEach((ic) => {
@@ -347,6 +361,11 @@ const stack: { name: string; icon: IconName; color?: string }[] = [
     background: #fff;
   }
 
+  /* 还没加载时只留白底占位，不显示替代文字 */
+  .tip-qr img:not([src]) {
+    color: transparent;
+  }
+
   .tip-qr span {
     font-size: 12.5px;
     color: var(--muted);
@@ -480,7 +499,7 @@ const stack: { name: string; icon: IconName; color?: string }[] = [
     min-width: 0;
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 2px;
   }
 
   .row-head {
@@ -490,7 +509,7 @@ const stack: { name: string; icon: IconName; color?: string }[] = [
   }
 
   .row-name {
-    font-size: 15.5px;
+    font-size: 14.5px;
     font-weight: 500;
     letter-spacing: -0.01em;
     transition: color 0.2s;
@@ -509,7 +528,7 @@ const stack: { name: string; icon: IconName; color?: string }[] = [
 
   .row-desc {
     font-size: 12px;
-    line-height: 1.5;
+    line-height: 1.4;
     color: var(--muted);
   }
 

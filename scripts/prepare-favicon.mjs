@@ -1,10 +1,12 @@
-// 用 Logo 生成网站图标：favicon.ico（32px）、favicon.png（96px）、苹果触屏图标（180px，浅绿底）。
+// 用 Logo 生成网站图标：favicon.ico（32px）、favicon.png（96px）用透明背景的 Logo；
+// 苹果触屏图标（180px）要不透明的方图，直接用选中的原图（带暖黄渐变底）。
 // 用法：node scripts/prepare-favicon.mjs
 import sharp from 'sharp';
 import { writeFileSync } from 'node:fs';
 
 const root = new URL('..', import.meta.url).pathname;
 const logo = `${root}src/assets/brand/logo.png`;
+const tile = `${root}design/app-icon/正式资源/logo-tile.png`;
 const clear = { r: 0, g: 0, b: 0, alpha: 0 };
 
 // Logo 放进正方形里居中，四周留一点边
@@ -17,7 +19,7 @@ const square = (size, pad, background = clear) =>
     .toBuffer();
 
 writeFileSync(`${root}public/favicon.png`, await square(96, 4));
-writeFileSync(`${root}public/apple-touch-icon.png`, await square(180, 28, '#e2eadf'));
+writeFileSync(`${root}public/apple-touch-icon.png`, await sharp(tile).resize(180, 180).png({ compressionLevel: 9 }).toBuffer());
 
 // favicon.ico：一个 32px PNG 包进 ICO 文件头
 const png = await square(32, 1);

@@ -14,7 +14,7 @@ interface Props {
 }
 
 const { lang, title, description, indexable = true } = Astro.props;
-const LIGHT = '#f3f4f1';
+const LIGHT = '#fafbfa';
 const DARK = '#131413';
 const t = ui[lang];
 const site = Astro.site!;
@@ -73,7 +73,7 @@ const jsonLd = {
       })();
     </script>
 
-    <link rel="preload" href="/fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="icon" href="/favicon.png" type="image/png" sizes="96x96" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />

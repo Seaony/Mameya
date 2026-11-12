@@ -29,13 +29,13 @@ Astro（纯静态输出）+ 手写 CSS，部署到 Cloudflare Workers 静态资�
 ## Brand Commitments
 
 - 简约但精细：元素少，每处细节都要经得起细看。版式以桌面设计稿「Mameya 个人网站 Redesign」为准。
-- 名字取「豆屋」的意思：Logo 是一小筐豆子，主题色是低饱和的鼠尾草绿。
-- 英文字体 Geist，中日文用系统字体。
+- 名字取「豆屋」的意思：Logo 是一只抱着豆子的仓鼠，主题色是低饱和的鼠尾草绿。
+- 英文字体 Inter，中日文用系统字体。
 
 ## Evidence on Hand
 
 - 头像：用户指定的橙发动漫头像（`src/assets/avatar.jpg`）。
-- 产品：Yomi、Momento、Moni、Kayoi、Kakatta（开发中），一句话介绍取自各仓库 README。
+- 产品：CodeEdge、Momento、Moni、Diskit、Kakatta（开发中），一句话介绍取自各仓库 README。
 - 联系方式：邮箱、GitHub、Telegram（链接），微信、小红书、抖音（二维码）。
 
 ## Product Principles

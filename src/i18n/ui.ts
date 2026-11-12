@@ -46,7 +46,7 @@ export const ui: Record<Lang, Dict> = {
   en: {
     title: 'Seaony',
     description:
-      'Seaony is a full-stack developer in Singapore who builds Mac apps, websites and the services behind them, and cares about getting the details right. Projects include Yomi, Momento, Moni and Kayoi.',
+      'Seaony is a full-stack developer in Singapore who builds Mac apps, websites and the services behind them, and cares about getting the details right. Projects include CodeEdge, Momento, Moni and Diskit.',
     tagline: 'Next year brings its own snow.',
     intro: [
       'A full-stack developer who makes products.',
@@ -87,16 +87,16 @@ export const ui: Record<Lang, Dict> = {
       home: 'Back to home',
     },
     apps: {
-      yomi: 'Every AI quota. One glance.',
-      momento: 'Every image. In one place.',
+      codeedge: 'Every AI quota. One glance.',
+      momento: 'Every image. Quietly kept.',
       moni: 'A compact menu bar monitor for macOS.',
-      kayoi: 'Every location. One menu bar.',
+      diskit: 'Every location. One menu bar.',
       kakatta: 'Watches Xianyu for what you want. Runs in Docker.',
     },
   },
   zh: {
     title: 'Seaony',
-    description: 'Seaony，全栈开发者，人在新加坡。Mac 应用、网站和服务端都写，在意把每个细节做好。作品有 Yomi、Momento、Moni 和 Kayoi。',
+    description: 'Seaony，全栈开发者，人在新加坡。Mac 应用、网站和服务端都写，在意把每个细节做好。作品有 CodeEdge、Momento、Moni 和 Diskit。',
     tagline: '明年有明年的雪',
     intro: [
       '一个做产品的全栈开发者。',
@@ -109,7 +109,7 @@ export const ui: Record<Lang, Dict> = {
     email: '邮箱',
     about: '关于',
     aboutRows: {
-      location: ['所在', '新加坡'],
+      location: ['所在', 'Singapore'],
       making: ['在做', 'Mac 应用、网站和服务端'],
       stack: '技术栈',
     },
@@ -136,17 +136,17 @@ export const ui: Record<Lang, Dict> = {
       home: '回到首页',
     },
     apps: {
-      yomi: '所有 AI 额度，一眼看清',
-      momento: '灵感图片，收在一处',
+      codeedge: '所有 AI 额度，一眼看清',
+      momento: '灵感图片，安静收好',
       moni: '一眼看清 Mac 状态',
-      kayoi: '手机、共享、网盘，都在菜单栏',
+      diskit: '手机、共享、网盘，都在菜单栏',
       kakatta: '帮你盯着闲鱼，Docker 自己部署',
     },
   },
   ja: {
     title: 'Seaony',
     description:
-      'シンガポール在住のフルスタックエンジニア、Seaony。Macアプリ、Webサイト、サーバーサイドまで手がけ、細部まで丁寧に作ることを大切にしています。Yomi、Momento、Moni、Kayoi。',
+      'シンガポール在住のフルスタックエンジニア、Seaony。Macアプリ、Webサイト、サーバーサイドまで手がけ、細部まで丁寧に作ることを大切にしています。CodeEdge、Momento、Moni、Diskit。',
     tagline: '来年には来年の雪が降る',
     intro: [
       'プロダクトを作るフルスタックエンジニア。',
@@ -159,7 +159,7 @@ export const ui: Record<Lang, Dict> = {
     email: 'メール',
     about: 'プロフィール',
     aboutRows: {
-      location: ['拠点', 'シンガポール'],
+      location: ['拠点', 'Singapore'],
       making: ['制作', 'Macアプリ、Webサイト、サーバーサイド'],
       stack: '技術',
     },
@@ -186,10 +186,10 @@ export const ui: Record<Lang, Dict> = {
       home: 'ホームへ戻る',
     },
     apps: {
-      yomi: 'AIの利用枠を、ひと目で',
-      momento: '集めた画像を、一か所に',
+      codeedge: 'AIの利用枠を、ひと目で',
+      momento: '集めた画像を、そっとしまう',
       moni: 'Macの状態を、ひと目で',
-      kayoi: 'スマホも共有フォルダもクラウドも、メニューバーから',
+      diskit: 'スマホも共有フォルダもクラウドも、メニューバーから',
       kakatta: '闲鱼で欲しいものを見張る。Dockerで動く',
     },
   },

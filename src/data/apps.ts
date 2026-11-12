@@ -1,16 +1,16 @@
 // 产品列表：链接集中写在这里，以后有了 <产品>.mameya.app 只改 url。
 // 文案（一句话介绍）在 src/i18n/ui.ts 里按语言写。
 import type { ImageMetadata } from 'astro';
-import yomi from '../assets/apps/yomi.png';
+import codeedge from '../assets/apps/codeedge.png';
 import momento from '../assets/apps/momento.png';
 import moni from '../assets/apps/moni.png';
-import kayoi from '../assets/apps/kayoi.png';
+import diskit from '../assets/apps/diskit.png';
 import kakatta from '../assets/apps/kakatta.png';
 import qrWechat from '../assets/qr/wechat.png';
 import qrXiaohongshu from '../assets/qr/xiaohongshu.png';
 import qrDouyin from '../assets/qr/douyin.png';
 
-export type AppId = 'yomi' | 'momento' | 'moni' | 'kayoi' | 'kakatta';
+export type AppId = 'codeedge' | 'momento' | 'moni' | 'diskit' | 'kakatta';
 
 export interface App {
   id: AppId;
@@ -21,10 +21,10 @@ export interface App {
 }
 
 export const apps: App[] = [
-  { id: 'yomi', name: 'Yomi', url: 'https://github.com/Seaony/Yomi', icon: yomi },
+  { id: 'codeedge', name: 'CodeEdge', url: 'https://github.com/Seaony/CodeEdge', icon: codeedge },
   { id: 'momento', name: 'Momento', url: 'https://github.com/Seaony/Momento', icon: momento },
   { id: 'moni', name: 'Moni', url: 'https://github.com/Seaony/Moni', icon: moni },
-  { id: 'kayoi', name: 'Kayoi', url: 'https://github.com/Seaony/Kayoi', icon: kayoi },
+  { id: 'diskit', name: 'Diskit', url: 'https://github.com/Seaony/Diskit', icon: diskit },
   { id: 'kakatta', name: 'Kakatta', url: 'https://github.com/Seaony/Kakatta', icon: kakatta, inDevelopment: true },
 ];
 

@@ -15,7 +15,8 @@ const current = locales[lang];
 
 <header class="header" id="top">
   <a class="brand" href={current.path}>
-    <Image class="logo" src={logo} alt="" width={23} height={24} densities={[1, 2, 3]} loading="eager" />
+    {/* 只出一张 4 倍大的图，用 CSS 缩到 24px 高；按 24px 出小图会糊 */}
+    <Image class="logo" src={logo} alt="" width={99} height={96} quality={90} loading="eager" />
     Mameya
   </a>
   <nav class="controls" aria-label={t.site}>
@@ -81,7 +82,7 @@ const current = locales[lang];
       localStorage.setItem('theme', next);
     } catch {}
     document.querySelectorAll<HTMLMetaElement>('meta[name="theme-color"]').forEach((m) => {
-      m.content = next === 'dark' ? '#131413' : '#f3f4f1';
+      m.content = next === 'dark' ? '#131413' : '#fafbfa';
     });
     sync();
   });

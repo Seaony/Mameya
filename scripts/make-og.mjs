@@ -15,19 +15,19 @@ const copy = {
 };
 
 const dataUri = (file, type) => `data:${type};base64,${readFileSync(join(root, file)).toString('base64')}`;
-const font = dataUri('public/fonts/geist-latin.woff2', 'font/woff2');
+const font = dataUri('public/fonts/inter-latin.woff2', 'font/woff2');
 const avatar = dataUri('src/assets/avatar.jpg', 'image/jpeg');
 const logo = dataUri('src/assets/brand/logo.png', 'image/png');
-const icons = ['yomi', 'momento', 'moni', 'kayoi'].map((id) => dataUri(`src/assets/apps/${id}.png`, 'image/png'));
+const icons = ['codeedge', 'momento', 'moni', 'diskit'].map((id) => dataUri(`src/assets/apps/${id}.png`, 'image/png'));
 
 // 和网站浅色主题同一套颜色：毛豆绿 + 灰绿中性色
 const page = ({ lang, tagline }) => `<!doctype html>
 <html lang="${lang}"><head><meta charset="utf-8"><style>
-@font-face { font-family: Geist; src: url(${font}) format('woff2'); font-weight: 400 600; }
+@font-face { font-family: Inter; src: url(${font}) format('woff2'); font-weight: 100 900; }
 html, body { margin: 0; width: 1200px; height: 630px; overflow: hidden; }
 body {
-  background: #f3f4f1; color: #1b1d1b;
-  font-family: Geist, 'PingFang SC', 'Hiragino Sans', sans-serif;
+  background: #fafbfa; color: #1b1d1b;
+  font-family: Inter, 'PingFang SC', 'Hiragino Sans', sans-serif;
   -webkit-font-smoothing: antialiased; text-autospace: normal; word-break: auto-phrase;
   box-sizing: border-box; padding: 72px 88px; display: flex; flex-direction: column;
   background-image: radial-gradient(640px 420px at 82% 18%, rgb(110 150 120 / 0.16), transparent 70%);
@@ -35,7 +35,7 @@ body {
 .brand { display: flex; align-items: center; gap: 14px; font-size: 28px; font-weight: 600; letter-spacing: -0.01em; }
 .brand img { height: 32px; }
 .person { margin-top: 64px; display: flex; align-items: center; gap: 32px; }
-.avatar { width: 128px; height: 128px; border-radius: 50%; box-shadow: 0 0 0 6px #f3f4f1, 0 0 0 7px #e0e2dd; }
+.avatar { width: 128px; height: 128px; border-radius: 50%; box-shadow: 0 0 0 6px #fafbfa, 0 0 0 7px #e6e7e6; }
 h1 { margin: 0; font-size: 72px; font-weight: 600; letter-spacing: -0.03em; line-height: 1.05; }
 p { margin: 14px 0 0; font-size: 30px; color: #565b56; line-height: 1.35; max-width: 820px; }
 .icons { margin-top: auto; display: flex; gap: 14px; align-items: center; }
