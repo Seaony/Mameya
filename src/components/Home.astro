@@ -74,6 +74,12 @@ const stack: { name: string; icon: IconName; color?: string }[] = [
         <span class="tip tip-text" aria-hidden="true">github.com/{contact.github.handle}</span>
       </li>
       <li class="ic">
+        <a class="icb" href={contact.x.url} aria-label={`X: @${contact.x.handle}`}>
+          <Icon name="x" size={20} />
+        </a>
+        <span class="tip tip-text" aria-hidden="true">x.com/{contact.x.handle}</span>
+      </li>
+      <li class="ic">
         <a class="icb" href={telegram.url} aria-label={`Telegram: ${telegram.handle}`}>
           <Icon name="telegram" size={20} />
         </a>
@@ -259,9 +265,10 @@ const stack: { name: string; icon: IconName; color?: string }[] = [
     text-wrap: balance;
   }
 
+  /* 短语整块换行；比一行还长的短语（没有标点的长句）才在内部折行，不撑出屏幕 */
   :lang(zh) .phrase,
   :lang(ja) .phrase {
-    white-space: nowrap;
+    display: inline-block;
   }
 
   .status {
@@ -549,6 +556,18 @@ const stack: { name: string; icon: IconName; color?: string }[] = [
       left: auto;
       right: 0;
       translate: 50% 0;
+    }
+  }
+
+  /* 最窄的手机上 7 个按钮 44px 排不下一行，缩到 40px */
+  @media (max-width: 359px) {
+    .contacts {
+      gap: 0;
+    }
+
+    .icb {
+      width: 40px;
+      height: 40px;
     }
   }
 </style>

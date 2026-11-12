@@ -30,6 +30,7 @@ export const apps: App[] = [
 
 export const contact = {
   github: { url: 'https://github.com/Seaony', handle: 'Seaony' },
+  x: { url: 'https://x.com/wseaony', handle: 'wseaony' },
   email: 'seaony@outlook.com',
 };
 
