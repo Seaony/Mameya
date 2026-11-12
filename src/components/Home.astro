@@ -4,6 +4,7 @@ import { Image } from 'astro:assets';
 import avatar from '../assets/avatar.jpg';
 import { apps, contact, telegram, qrSocials } from '../data/apps';
 import { ui, type Lang } from '../i18n/ui';
+import type { IconName } from '../data/icons';
 
 interface Props {
   lang: Lang;
@@ -13,13 +14,18 @@ const { lang } = Astro.props;
 const t = ui[lang];
 const building = apps.find((a) => a.inDevelopment);
 
-// 关于：所在、专注，加上技术栈三行，同一种行样式
-const facts: [string, string][] = [
-  t.aboutRows.location,
-  t.aboutRows.focus,
-  [t.stackRows.mac, 'Swift · SwiftUI'],
-  [t.stackRows.web, 'TypeScript · React · Next.js · Node.js'],
-  [t.stackRows.before, 'PHP · Laravel'],
+// 中日文一行太长时，只在逗号、顿号、句号这类标点后面断开，不把词拆到两行
+const phrases = (line: string) => line.split(/(?<=[，、：；。])/);
+
+// 技术栈标签：logo 用品牌色，亮暗两套，保证在灰底上看得清。
+// SwiftUI 没有公开的 logo，用 Swift 的燕子配 SwiftUI 的蓝色。Next.js 的 logo 是纯黑，跟随文字颜色。
+const stack: { name: string; icon: IconName; color?: string }[] = [
+  { name: 'Swift', icon: 'swift', color: 'light-dark(#F05138, #FF7A5C)' },
+  { name: 'SwiftUI', icon: 'swift', color: 'light-dark(#0A7CFF, #4DA3FF)' },
+  { name: 'TypeScript', icon: 'typescript', color: 'light-dark(#3178C6, #5B9BE0)' },
+  { name: 'React', icon: 'react', color: 'light-dark(#087EA4, #58C4DC)' },
+  { name: 'Next.js', icon: 'nextjs' },
+  { name: 'Node.js', icon: 'nodejs', color: 'light-dark(#3F8B3A, #6CC24A)' },
 ];
 ---
 
@@ -33,12 +39,22 @@ const facts: [string, string][] = [
       </div>
     </div>
 
-    <p class="bio">{t.intro}</p>
+    <p class="bio">
+      {
+        t.intro.map((line) => (
+          <span class="line">
+            {phrases(line).map((p) => (
+              <span class="phrase">{p}</span>
+            ))}
+          </span>
+        ))
+      }
+    </p>
 
     {
       building && (
         <p class="status">
-          <span class="pulse" aria-hidden="true" />
+          <Image class="status-icon" src={building.icon} alt="" width={18} height={18} densities={[2, 3]} />
           {t.building(building.name)}
         </p>
       )
@@ -86,14 +102,34 @@ const facts: [string, string][] = [
   <section class="block" aria-labelledby="about-title">
     <h2 id="about-title">{t.about}</h2>
     <dl class="facts">
-      {
-        facts.map(([k, v]) => (
-          <div>
-            <dt>{k}</dt>
-            <dd>{v}</dd>
-          </div>
-        ))
-      }
+      <div>
+        <dt>{t.aboutRows.location[0]}</dt>
+        <dd class="place">
+          <Icon name="mapPin" size={16} />
+          {t.aboutRows.location[1]}
+        </dd>
+      </div>
+      <div>
+        <dt>{t.aboutRows.making[0]}</dt>
+        <dd>{t.aboutRows.making[1]}</dd>
+      </div>
+      <div class="stack-row">
+        <dt>{t.aboutRows.stack}</dt>
+        <dd>
+          <ul class="chips">
+            {
+              stack.map((item) => (
+                <li class="chip">
+                  <span class="chip-logo" style={item.color && `color: ${item.color}`}>
+                    <Icon name={item.icon} size={13} />
+                  </span>
+                  {item.name}
+                </li>
+              ))
+            }
+          </ul>
+        </dd>
+      </div>
     </dl>
   </section>
 
@@ -217,6 +253,17 @@ const facts: [string, string][] = [
     line-height: 1.75;
   }
 
+  /* 每句单独一行；窄屏放不下时按短语折行 */
+  .line {
+    display: block;
+    text-wrap: balance;
+  }
+
+  :lang(zh) .phrase,
+  :lang(ja) .phrase {
+    white-space: nowrap;
+  }
+
   .status {
     margin-top: 14px;
     display: flex;
@@ -226,18 +273,11 @@ const facts: [string, string][] = [
     color: var(--accent-ink);
   }
 
-  .pulse {
-    width: 7px;
-    height: 7px;
-    border-radius: 999px;
-    background: var(--accent);
-    animation: pulse 2.4s infinite;
-  }
-
-  @keyframes pulse {
-    0% { box-shadow: 0 0 0 0 var(--accent-ring); }
-    70% { box-shadow: 0 0 0 6px transparent; }
-    100% { box-shadow: 0 0 0 0 transparent; }
+  .status-icon {
+    width: 18px;
+    height: 18px;
+    border-radius: 5px;
+    box-shadow: 0 0 0 1px var(--line);
   }
 
   .contacts {
@@ -349,6 +389,52 @@ const facts: [string, string][] = [
     width: 72px;
     flex-shrink: 0;
     color: var(--faint);
+  }
+
+  .place {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .place :global(svg) {
+    color: var(--faint);
+  }
+
+  /* 技术栈那行是一组标签：左边的字和第一排标签对齐，标签折成多排时也不往下跑 */
+  .facts > .stack-row {
+    align-items: flex-start;
+    padding-block: 10px;
+  }
+
+  .stack-row dt {
+    line-height: 28px;
+  }
+
+  .facts dd {
+    text-wrap: balance;
+  }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .chip {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    height: 28px;
+    padding: 0 10px 0 8px;
+    border-radius: 999px;
+    background: var(--surface2);
+    font-size: 13.5px;
+    white-space: nowrap;
+  }
+
+  .chip-logo {
+    display: flex;
   }
 
   .row {

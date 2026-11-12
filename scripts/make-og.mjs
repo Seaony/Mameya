@@ -26,7 +26,7 @@ const page = ({ lang, tagline }) => `<!doctype html>
 @font-face { font-family: Geist; src: url(${font}) format('woff2'); font-weight: 400 600; }
 html, body { margin: 0; width: 1200px; height: 630px; overflow: hidden; }
 body {
-  background: #f3f4ef; color: #1a1e1a;
+  background: #f3f4f1; color: #1b1d1b;
   font-family: Geist, 'PingFang SC', 'Hiragino Sans', sans-serif;
   -webkit-font-smoothing: antialiased; text-autospace: normal; word-break: auto-phrase;
   box-sizing: border-box; padding: 72px 88px; display: flex; flex-direction: column;
@@ -35,12 +35,12 @@ body {
 .brand { display: flex; align-items: center; gap: 14px; font-size: 28px; font-weight: 600; letter-spacing: -0.01em; }
 .brand img { height: 32px; }
 .person { margin-top: 64px; display: flex; align-items: center; gap: 32px; }
-.avatar { width: 128px; height: 128px; border-radius: 50%; box-shadow: 0 0 0 6px #f3f4ef, 0 0 0 7px #dfe3d9; }
+.avatar { width: 128px; height: 128px; border-radius: 50%; box-shadow: 0 0 0 6px #f3f4f1, 0 0 0 7px #e0e2dd; }
 h1 { margin: 0; font-size: 72px; font-weight: 600; letter-spacing: -0.03em; line-height: 1.05; }
-p { margin: 14px 0 0; font-size: 30px; color: #555c55; line-height: 1.35; max-width: 820px; }
+p { margin: 14px 0 0; font-size: 30px; color: #565b56; line-height: 1.35; max-width: 820px; }
 .icons { margin-top: auto; display: flex; gap: 14px; align-items: center; }
 .icons img { width: 64px; height: 64px; border-radius: 16px; box-shadow: 0 2px 8px rgb(40 60 45 / 0.16); }
-.site { margin-left: auto; font-size: 24px; color: #697068; }
+.site { margin-left: auto; font-size: 24px; color: #6a6f69; }
 </style></head><body>
 <div class="brand"><img src="${logo}">Mameya</div>
 <div class="person"><img class="avatar" src="${avatar}"><div><h1>Seaony</h1><p>${tagline}</p></div></div>

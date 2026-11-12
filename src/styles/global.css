@@ -25,24 +25,23 @@
   line-gap-override: 0%;
 }
 
-/* 颜色：照设计稿，低饱和的鼠尾草绿，中性色偏一点灰绿 */
+/* 颜色：主题色是低饱和的鼠尾草绿；底色和文字用中性灰，只带一点点绿 */
 :root {
   color-scheme: light dark;
 
-  --bg: light-dark(#f3f4ef, #121512);
-  --surface: light-dark(#fbfbf8, #1a1d1a);
-  --surface2: light-dark(#e8ebe3, #212521);
-  --line: light-dark(#dfe3d9, #2a2f2a);
-  --line2: light-dark(#c8cec0, #3a413a);
-  --text: light-dark(#1a1e1a, #ecefe9);
-  --muted: light-dark(#555c55, #abb2a9);
-  --faint: light-dark(#697068, #8e968c);
+  --bg: light-dark(#f3f4f1, #131413);
+  --surface: light-dark(#fbfbfa, #1b1c1b);
+  --surface2: light-dark(#e9eae6, #222422);
+  --line: light-dark(#e0e2dd, #2b2d2b);
+  --line2: light-dark(#cacdc6, #3c3f3c);
+  --text: light-dark(#1b1d1b, #ecedea);
+  --muted: light-dark(#565b56, #adb1ac);
+  --faint: light-dark(#6a6f69, #91958f);
   --accent: light-dark(#5a7f65, #8fb39a);
   --accent-soft: light-dark(#e2eadf, #253128);
   --accent-ink: light-dark(#3e6149, #a9c9b2);
-  --accent-ring: light-dark(rgb(90 127 101 / 0.35), rgb(143 179 154 / 0.35));
-  --btn: light-dark(#1a1e1a, #ecefe9);
-  --btn-ink: light-dark(#fbfbf8, #121512);
+  --btn: light-dark(#1b1d1b, #ecedea);
+  --btn-ink: light-dark(#fbfbfa, #131413);
   --shadow: light-dark(rgb(40 60 45 / 0.14), rgb(0 0 0 / 0.5));
   --glow: light-dark(rgb(110 150 120 / 0.12), rgb(143 179 154 / 0.07));
 

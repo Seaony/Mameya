@@ -19,14 +19,14 @@ interface Dict {
   title: string;
   description: string;
   tagline: string;
-  intro: string;
+  // 简介按句意分行，每个元素是一行
+  intro: string[];
   avatarAlt: string;
   building: (name: string) => string;
   contactLabel: string;
   email: string;
   about: string;
-  aboutRows: { location: [string, string]; focus: [string, string] };
-  stackRows: { mac: string; web: string; before: string };
+  aboutRows: { location: [string, string]; making: [string, string]; stack: string };
   projects: string;
   inDevelopment: string;
   socials: Record<SocialId, { name: string; scan: string }>;
@@ -46,10 +46,14 @@ export const ui: Record<Lang, Dict> = {
   en: {
     title: 'Seaony',
     description:
-      'Seaony is a full-stack developer in Singapore who makes native Mac apps: Yomi, Momento, Moni and Kayoi.',
+      'Seaony is a full-stack developer in Singapore who builds Mac apps, websites and the services behind them, and cares about getting the details right. Projects include Yomi, Momento, Moni and Kayoi.',
     tagline: 'Next year brings its own snow.',
-    intro:
-      'I’m a full-stack developer based in Singapore. Lately I’ve been writing Mac apps in Swift and SwiftUI. On the web I use TypeScript, React, Next.js and Node.js. Before that, it was PHP and Laravel.',
+    intro: [
+      'A full-stack developer who makes products.',
+      'What I build changes from one project to the next,',
+      'but I care about the same thing every time:',
+      'every detail has been looked after, and the people using it can feel it.',
+    ],
     avatarAlt: 'Seaony’s avatar',
     building: (name) => `Building ${name}`,
     contactLabel: 'Contact',
@@ -57,9 +61,9 @@ export const ui: Record<Lang, Dict> = {
     about: 'About',
     aboutRows: {
       location: ['Based in', 'Singapore'],
-      focus: ['Focus', 'Native macOS apps'],
+      making: ['Building', 'Mac apps, websites and the services behind them'],
+      stack: 'Stack',
     },
-    stackRows: { mac: 'Mac', web: 'Web', before: 'Before' },
     projects: 'Projects',
     inDevelopment: 'In progress',
     socials: {
@@ -92,10 +96,13 @@ export const ui: Record<Lang, Dict> = {
   },
   zh: {
     title: 'Seaony',
-    description: 'Seaony，全栈开发者，人在新加坡，做 Mac 原生应用：Yomi、Momento、Moni 和 Kayoi。',
+    description: 'Seaony，全栈开发者，人在新加坡。Mac 应用、网站和服务端都写，在意把每个细节做好。作品有 Yomi、Momento、Moni 和 Kayoi。',
     tagline: '明年有明年的雪',
-    intro:
-      '全栈开发者，人在新加坡。最近主要用 Swift 和 SwiftUI 写 Mac 应用，Web 那边用 TypeScript、React、Next.js 和 Node.js。最早写的是 PHP 和 Laravel。',
+    intro: [
+      '一个做产品的全栈开发者。',
+      '写的东西各不相同，在意的是同一件事：',
+      '每个细节都被认真对待过，用的人能感觉得到。',
+    ],
     avatarAlt: 'Seaony 的头像',
     building: (name) => `正在开发 ${name}`,
     contactLabel: '联系方式',
@@ -103,9 +110,9 @@ export const ui: Record<Lang, Dict> = {
     about: '关于',
     aboutRows: {
       location: ['所在', '新加坡'],
-      focus: ['专注', 'macOS 原生应用'],
+      making: ['在做', 'Mac 应用、网站和服务端'],
+      stack: '技术栈',
     },
-    stackRows: { mac: 'Mac', web: 'Web', before: '起步' },
     projects: '产品',
     inDevelopment: '开发中',
     socials: {
@@ -139,10 +146,13 @@ export const ui: Record<Lang, Dict> = {
   ja: {
     title: 'Seaony',
     description:
-      'シンガポール在住のフルスタックエンジニア、Seaony。Macのネイティブアプリを作っています。Yomi、Momento、Moni、Kayoi。',
+      'シンガポール在住のフルスタックエンジニア、Seaony。Macアプリ、Webサイト、サーバーサイドまで手がけ、細部まで丁寧に作ることを大切にしています。Yomi、Momento、Moni、Kayoi。',
     tagline: '来年には来年の雪が降る',
-    intro:
-      'シンガポールでフルスタックエンジニアをしています。最近はSwiftとSwiftUIでMacアプリを書いていて、WebではTypeScript、React、Next.js、Node.jsを使います。もともとはPHPとLaravelでした。',
+    intro: [
+      'プロダクトを作るフルスタックエンジニア。',
+      '作るものは毎回違っても、大切にしていることはひとつです。',
+      '細部まで丁寧に向き合うこと。使う人に、それが伝わるように。',
+    ],
     avatarAlt: 'Seaonyのアバター',
     building: (name) => `${name}を開発中`,
     contactLabel: '連絡先',
@@ -150,9 +160,9 @@ export const ui: Record<Lang, Dict> = {
     about: 'プロフィール',
     aboutRows: {
       location: ['拠点', 'シンガポール'],
-      focus: ['専門', 'macOSネイティブアプリ'],
+      making: ['制作', 'Macアプリ、Webサイト、サーバーサイド'],
+      stack: '技術',
     },
-    stackRows: { mac: 'Mac', web: 'Web', before: '最初' },
     projects: 'プロダクト',
     inDevelopment: '開発中',
     socials: {

@@ -81,7 +81,7 @@ const current = locales[lang];
       localStorage.setItem('theme', next);
     } catch {}
     document.querySelectorAll<HTMLMetaElement>('meta[name="theme-color"]').forEach((m) => {
-      m.content = next === 'dark' ? '#121512' : '#f3f4ef';
+      m.content = next === 'dark' ? '#131413' : '#f3f4f1';
     });
     sync();
   });
