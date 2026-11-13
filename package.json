@@ -13,6 +13,9 @@
     "dev:codeedge": "astro dev --root sites/codeedge",
     "build:codeedge": "astro build --root sites/codeedge",
     "deploy:codeedge": "astro build --root sites/codeedge && wrangler deploy -c sites/codeedge/wrangler.jsonc",
+    "dev:diskit": "astro dev --root sites/diskit",
+    "build:diskit": "astro build --root sites/diskit",
+    "deploy:diskit": "astro build --root sites/diskit && wrangler deploy -c sites/diskit/wrangler.jsonc",
     "astro": "astro"
   },
   "dependencies": {

@@ -1,0 +1,87 @@
+---
+import { Image } from 'astro:assets';
+import Icon from '../../../../src/components/Icon.astro';
+import ThemeToggle from '../../../../src/components/ThemeToggle.astro';
+import icon from '../assets/icon.png';
+import { locales, t, type Lang } from '../content';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const c = t[lang];
+const other: Lang = lang === 'en' ? 'zh' : 'en';
+---
+
+<header class="header" id="top">
+  <a class="brand" href={locales[lang].path}>
+    <Image class="brand-icon" src={icon} alt="" width={96} height={96} quality={90} loading="eager" />
+    Diskit
+  </a>
+  <nav class="controls" aria-label={c.language}>
+    {/* 只有两种语言，直接链到另一种 */}
+    <a class="lang" href={locales[other].path} lang={locales[other].htmlLang} hreflang={locales[other].hreflang} data-lang={other}>
+      <Icon name="globe" size={16} />
+      {locales[other].label}
+    </a>
+    <ThemeToggle toDark={c.toDark} toLight={c.toLight} />
+  </nav>
+</header>
+
+<script>
+  // 手动切过语言就记住，根路径不再按浏览器语言跳
+  document.querySelectorAll<HTMLAnchorElement>('[data-lang]').forEach((a) =>
+    a.addEventListener('click', () => {
+      try {
+        localStorage.setItem('lang', a.dataset.lang!);
+      } catch {}
+    }),
+  );
+</script>
+
+<style>
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 40px 0 24px;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .brand-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+  }
+
+  .controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .lang {
+    height: 44px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 0 4px;
+    color: var(--muted);
+    font-size: 14px;
+    transition: color 0.2s;
+  }
+
+  .lang:hover {
+    color: var(--text);
+  }
+</style>

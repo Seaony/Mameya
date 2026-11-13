@@ -37,6 +37,6 @@ public/
   _headers          /_astro/ 和 /fonts/ 长期缓存
 ```
 
-产品官网放在 `sites/<产品>/`，各自是独立的 Astro 站点、单独部署到 `<产品>.mameya.app`，颜色、字体、图标组件直接引用上面的 `src/`。现在有 `sites/codeedge/`（见里面的 README）。
+产品官网放在 `sites/<产品>/`，各自是独立的 Astro 站点、单独部署到 `<产品>.mameya.app`，颜色、字体、图标组件直接引用上面的 `src/`。现在有 `sites/codeedge/` 和 `sites/diskit/`（见各自的 README）。
 
 以后加博客：在 `src/pages/`（和 `zh/`、`ja/`）下加 `blog/` 目录即可，现有结构不用动。

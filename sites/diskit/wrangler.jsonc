@@ -1,0 +1,11 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "diskit",
+  "compatibility_date": "2026-11-11",
+  "routes": [{ "pattern": "diskit.mameya.app", "custom_domain": true }],
+  "assets": {
+    "directory": "./dist",
+    // 找不到的路径返回最近一层目录里的 404.html（/zh/xxx 用中文 404）
+    "not_found_handling": "404-page"
+  }
+}

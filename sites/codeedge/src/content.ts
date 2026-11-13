@@ -53,7 +53,6 @@ interface Dict {
   privacyRows: [IconName, string, string][];
   start: string;
   steps: [string, string][];
-  unsigned: string;
   maker: string;
   others: string;
   backToTop: string;
@@ -111,8 +110,6 @@ export const t: Record<Lang, Dict> = {
       ['Enable providers', 'In Settings → Providers, turn on the services you use.'],
       ['Glance', 'Rings appear in the rail as providers report data. Click one for details.'],
     ],
-    unsigned:
-      'CodeEdge isn’t signed with an Apple Developer ID or notarised yet, so macOS may block the first launch. Open System Settings → Privacy & Security and choose to open it anyway.',
     maker: 'Made by',
     others: 'Other projects',
     backToTop: 'Back to top',
@@ -168,8 +165,6 @@ export const t: Record<Lang, Dict> = {
       ['启用 Provider', '在设置的 Providers 里，打开你在用的服务。'],
       ['看一眼', 'Provider 返回数据后，圆环就会出现在侧边栏里，点开看详情。'],
     ],
-    unsigned:
-      '目前还没有使用 Apple Developer ID 签名，也没有经过公证，首次打开可能被系统拦截。请到「系统设置 → 隐私与安全性」中选择仍要打开。',
     maker: '作者',
     others: '其他产品',
     backToTop: '回到顶部',

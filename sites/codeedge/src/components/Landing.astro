@@ -179,10 +179,6 @@ const contacts = [
         ))
       }
     </ol>
-    <p class="note warn">
-      <Icon name="shieldWarning" size={16} />
-      <span>{c.unsigned}</span>
-    </p>
   </section>
 
   {/* 结尾是作者卡片：头像、名字、一句话介绍、联系方式，再链回主站 */}
@@ -468,18 +464,6 @@ const contacts = [
   .facts dt :global(svg) {
     flex-shrink: 0;
     color: var(--accent);
-  }
-
-  .warn {
-    display: flex;
-    align-items: flex-start;
-    gap: 8px;
-  }
-
-  .warn :global(svg) {
-    flex-shrink: 0;
-    /* 图标对齐第一行字的中线 */
-    margin-top: calc((1.7em - 16px) / 2);
   }
 
   .facts dd {
