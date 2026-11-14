@@ -1,0 +1,703 @@
+---
+import { Image } from 'astro:assets';
+import Icon from '../../../../src/components/Icon.astro';
+import logo from '../../../../src/assets/brand/logo.png';
+import avatar from '../../../../src/assets/avatar.jpg';
+import { apps, contact, telegram } from '../../../../src/data/apps';
+import { ui } from '../../../../src/i18n/ui';
+import icon from '../assets/icon.png';
+import shot from '../assets/shot.png';
+import { links, t, type Lang } from '../content';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const c = t[lang];
+
+// 中文一行太长时，只在逗号、顿号、句号后面断开，不把词拆到两行（和主站简介一样）
+const phrases = (line: string) => line.split(/(?<=[，、：；。])/);
+
+// README 里的宣传主图，只有英文深色一张，自带背景，不跟页面深浅色切换；出约 2 倍宽的图，用 CSS 缩到正文宽度
+// 手机上下 720 宽的那张，桌面下 1280 宽的
+const shotWidths = [720, 1280];
+const shotSizes = '(max-width: 688px) calc(100vw - 40px), 640px';
+// 结尾的作者卡片直接用主站的个人信息，两边改一处就行
+const me = ui[lang];
+const others = apps.filter((a) => a.id !== 'monitto');
+const contacts = [
+  { icon: 'mail', label: `${me.email}: ${contact.email}`, tip: contact.email, href: `mailto:${contact.email}` },
+  { icon: 'github', label: `GitHub: @${contact.github.handle}`, tip: `github.com/${contact.github.handle}`, href: contact.github.url },
+  { icon: 'x', label: `X: @${contact.x.handle}`, tip: `x.com/${contact.x.handle}`, href: contact.x.url },
+  { icon: 'telegram', label: `Telegram: ${telegram.handle}`, tip: telegram.handle, href: telegram.url },
+] as const;
+---
+
+<main>
+  <section class="hero" aria-labelledby="name">
+    <div class="product">
+      <Image class="app-icon" src={icon} alt="" width={320} height={320} quality={90} loading="eager" />
+      <div class="name-block">
+        <h1 id="name">Monitto</h1>
+        <p class="tagline">{c.tagline}</p>
+      </div>
+    </div>
+
+    <p class="intro">
+      {
+        c.intro.map((line) => (
+          <span class="line">
+            {phrases(line).map((p) => (
+              <span class="phrase">{p}</span>
+            ))}
+          </span>
+        ))
+      }
+    </p>
+
+    <p class="req">
+      <Icon name="apple" size={15} />
+      {c.requirements}
+    </p>
+
+    <div class="actions">
+      <a class="btn" href={links.download}>
+        <Icon name="download" size={17} />
+        {c.download}
+      </a>
+      <ul class="links">
+        <li class="ic">
+          <a class="icb" href={links.github} aria-label={c.githubTip}>
+            <Icon name="github" size={20} />
+          </a>
+          <span class="tip tip-text" aria-hidden="true">{c.githubTip}</span>
+        </li>
+        <li class="ic">
+          <a class="icb" href={links.changelog} aria-label={c.changelog}>
+            <Icon name="history" size={20} />
+          </a>
+          <span class="tip tip-text" aria-hidden="true">{c.changelog}</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="shot">
+    <Image src={shot} alt={c.shotAlt} widths={shotWidths} sizes={shotSizes} quality={82} loading="eager" fetchpriority="high" />
+  </div>
+
+  <section class="block" aria-labelledby="for-you">
+    <h2 id="for-you">{c.forYou}</h2>
+    <div class="prose">
+      <p>{c.problem}</p>
+      <p class="strong">{c.answer}</p>
+      <p>{c.fit}</p>
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="what-it-does">
+    <h2 id="what-it-does">{c.whatItDoes}</h2>
+    <dl class="facts">
+      {
+        c.features.map(([icon, label, text]) => (
+          <div>
+            <dt>
+              <Icon name={icon} size={16} />
+              {label}
+            </dt>
+            <dd>{text}</dd>
+          </div>
+        ))
+      }
+    </dl>
+    <p class="note warn">
+      <Icon name="info" size={16} />
+      <span>{c.sources}</span>
+    </p>
+  </section>
+
+  <section class="block" aria-labelledby="privacy">
+    <h2 id="privacy">{c.privacy}</h2>
+    <dl class="facts">
+      {
+        c.privacyRows.map(([icon, label, text]) => (
+          <div>
+            <dt>
+              <Icon name={icon} size={16} />
+              {label}
+            </dt>
+            <dd>{text}</dd>
+          </div>
+        ))
+      }
+    </dl>
+  </section>
+
+  <section class="block" aria-labelledby="start">
+    <h2 id="start">{c.start}</h2>
+    <ol class="rows">
+      {
+        c.steps.map(([title, desc], i) => (
+          <li class="row">
+            <span class="step-num" aria-hidden="true">{i + 1}</span>
+            <span class="row-body">
+              <span class="row-name">{title}</span>
+              <span class="row-desc">{desc}</span>
+            </span>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  {/* 结尾是作者卡片：头像、名字、一句话介绍、联系方式，再链回主站 */}
+  <section class="block" aria-labelledby="maker">
+    <h2 id="maker">{c.maker}</h2>
+    <div class="card">
+      <div class="card-head">
+        <Image class="avatar" src={avatar} alt={me.avatarAlt} width={160} height={160} quality={90} />
+        <div class="who">
+          <p class="who-name">Seaony</p>
+          <p class="who-tagline">{me.tagline}</p>
+        </div>
+        <p class="where">
+          <Icon name="mapPin" size={14} />
+          {me.aboutRows.location[1]}
+        </p>
+      </div>
+      <p class="bio">
+        {
+          me.intro.map((line) => (
+            <span class="phrase">{line}</span>
+          ))
+        }
+      </p>
+      <div class="card-apps">
+        <p class="card-label">{c.others}</p>
+        <ul class="apps">
+          {
+            others.map((app) => (
+              <li>
+                <a class="app" href={app.url}>
+                  <Image class="app-icon-sm" src={app.icon} alt="" width={160} height={160} quality={90} />
+                  <span class="app-text">
+                    <span class="app-name">
+                      {app.name}
+                      {app.inDevelopment && <span class="dev">{me.inDevelopment}</span>}
+                    </span>
+                    <span class="app-desc">{me.apps[app.id]}</span>
+                  </span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+      <div class="card-foot">
+        <ul class="links" aria-label={me.contactLabel}>
+          {
+            contacts.map((x) => (
+              <li class="ic">
+                <a class="icb" href={x.href} aria-label={x.label}>
+                  <Icon name={x.icon} size={18} />
+                </a>
+                <span class="tip tip-text" aria-hidden="true">{x.tip}</span>
+              </li>
+            ))
+          }
+        </ul>
+        <a class="home" href={links.home}>
+          <Image class="home-logo" src={logo} alt="" width={99} height={96} quality={90} />
+          mameya.app
+          <Icon class="home-arrow" name="arrowUpRight" size={14} />
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+
+<style>
+  main {
+    padding-top: 48px;
+  }
+
+  /* 首屏和主站的个人信息一样：图标、名字、标语，下面按句分行的介绍 */
+  .product {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .app-icon {
+    width: 80px;
+    height: 80px;
+    flex-shrink: 0;
+    border-radius: 18px;
+    box-shadow:
+      0 0 0 1px var(--line),
+      0 8px 20px -12px var(--shadow);
+  }
+
+  .name-block {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 0;
+  }
+
+  h1 {
+    font-size: 26px;
+    line-height: 1.1;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+  }
+
+  .tagline {
+    font-size: 16px;
+    color: var(--muted);
+  }
+
+  .intro {
+    margin-top: 36px;
+    font-size: 16px;
+    line-height: 1.9;
+  }
+
+  :lang(en) .intro {
+    line-height: 1.75;
+  }
+
+  .line {
+    display: block;
+    text-wrap: balance;
+  }
+
+  :lang(zh) .phrase {
+    display: inline-block;
+  }
+
+  .req {
+    margin-top: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: var(--faint);
+  }
+
+  .actions {
+    margin-top: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .links {
+    display: flex;
+    gap: 2px;
+  }
+
+  .shot {
+    display: block;
+    margin-top: 48px;
+  }
+
+  .shot img {
+    width: 100%;
+    height: auto;
+    border-radius: 16px;
+    box-shadow:
+      0 0 0 1px var(--line),
+      0 20px 40px -28px var(--shadow);
+  }
+
+  /* 分组：标题加内容，和主站「关于」「产品」同一套间距 */
+  .block {
+    margin-top: 64px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  /* 分区标题比正文大一号、更粗，一眼和正文分开 */
+  h2 {
+    font-size: 18px;
+    line-height: 1.3;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+  }
+
+  .prose {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--muted);
+  }
+
+  :lang(zh) .prose {
+    line-height: 1.85;
+  }
+
+  .prose .strong {
+    color: var(--text);
+  }
+
+  dl,
+  dd {
+    margin: 0;
+  }
+
+  .facts > div {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    padding: 12px 0;
+    border-bottom: 1px dashed var(--line2);
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  .facts > div:last-child {
+    border-bottom: 0;
+  }
+
+  /* 标签高度和右边第一行字一样，图标和文字都对齐第一行 */
+  .facts dt {
+    width: 104px;
+    height: 1.7em;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--faint);
+  }
+
+  .facts dt :global(svg) {
+    flex-shrink: 0;
+    color: var(--accent);
+  }
+
+  .warn {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .warn :global(svg) {
+    flex-shrink: 0;
+    /* 图标对齐第一行字的中线 */
+    margin-top: calc((1.7em - 16px) / 2);
+  }
+
+  .facts dd {
+    text-wrap: pretty;
+  }
+
+  .note {
+    font-size: 13.5px;
+    line-height: 1.7;
+    color: var(--faint);
+  }
+
+  /* 步骤和结尾链接都用主站产品列表那种行：左边方块，右边两行字，行间虚线从文字开始 */
+  .rows {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .step-num {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    background: var(--surface2);
+    display: grid;
+    place-items: center;
+  }
+
+  .step-num {
+    font-size: 15px;
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+    color: var(--muted);
+  }
+
+  .row-body {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 14px 0;
+    border-bottom: 1px dashed var(--line2);
+  }
+
+  .rows li:last-child .row-body {
+    border-bottom: 0;
+  }
+
+  .row-name {
+    font-size: 14.5px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    transition: color 0.2s;
+  }
+
+  .row-desc {
+    font-size: 12.5px;
+    line-height: 1.45;
+    color: var(--muted);
+  }
+
+  /* 作者卡片：比正文多一层白底，像一张名片 */
+  .card {
+    padding: 22px 24px 14px;
+    border-radius: 20px;
+    background: var(--surface);
+    box-shadow:
+      0 0 0 1px var(--line),
+      0 16px 36px -28px var(--shadow);
+  }
+
+  .card-head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .avatar {
+    width: 52px;
+    height: 52px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    box-shadow: 0 0 0 1px var(--line);
+  }
+
+  .who {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .who-name {
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .who-tagline {
+    font-size: 13.5px;
+    color: var(--muted);
+  }
+
+  .where {
+    align-self: flex-start;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    height: 26px;
+    padding: 0 10px 0 8px;
+    border-radius: 999px;
+    background: var(--surface2);
+    font-size: 12.5px;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  .bio {
+    margin-top: 18px;
+    font-size: 14.5px;
+    line-height: 1.8;
+    text-wrap: pretty;
+  }
+
+  :lang(zh) .bio .phrase {
+    display: inline;
+  }
+
+  :lang(en) .bio .phrase + .phrase::before {
+    content: ' ';
+  }
+
+  .card-apps {
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--line2);
+  }
+
+  .card-label {
+    font-size: 12.5px;
+    color: var(--faint);
+  }
+
+  /* 其他产品两列排，整块可点；悬停时铺一层浅底 */
+  .apps {
+    margin: 8px -8px 0;
+    display: grid;
+    /* minmax(0, …) 让长标语折行，不把网格撑宽 */
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2px;
+  }
+
+  .app {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px;
+    border-radius: 12px;
+    transition: background 0.15s;
+  }
+
+  .app:hover {
+    background: var(--surface2);
+  }
+
+  .app-icon-sm {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    border-radius: 9px;
+    box-shadow: 0 0 0 1px var(--line);
+  }
+
+  .app-text {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  .app-name {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+
+  .dev {
+    padding: 0 6px;
+    border-radius: 999px;
+    background: var(--accent-soft);
+    color: var(--accent-ink);
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 18px;
+    white-space: nowrap;
+  }
+
+  .app-desc {
+    font-size: 12.5px;
+    line-height: 1.4;
+    color: var(--muted);
+    text-wrap: pretty;
+  }
+
+  .card-foot {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--line2);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  /* 图标按钮自带留白，往左挪一点，让第一个图标和上面的文字对齐 */
+  .card-foot .links {
+    margin-left: -12px;
+  }
+
+  .home {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    height: 44px;
+    font-size: 13.5px;
+    color: var(--muted);
+    transition: color 0.2s;
+  }
+
+  .home-logo {
+    width: auto;
+    height: 18px;
+    transition: transform 0.3s var(--ease);
+  }
+
+  .home :global(.home-arrow) {
+    color: var(--faint);
+    transition:
+      transform 0.25s var(--ease),
+      color 0.2s;
+  }
+
+  .home:hover {
+    color: var(--text);
+  }
+
+  .home:hover .home-logo {
+    transform: translateY(-1px) scale(1.08);
+  }
+
+  .home:hover :global(.home-arrow) {
+    transform: translate(2px, -2px);
+    color: var(--text);
+  }
+
+  /* 窄屏放不下右上角的所在地，就换到名字下面一行 */
+  @media (max-width: 420px) {
+    .card {
+      padding: 20px 20px 12px;
+    }
+
+    .card-head {
+      flex-wrap: wrap;
+      row-gap: 10px;
+    }
+
+    .where {
+      margin-left: 66px;
+    }
+
+    .apps {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    /* 最窄的屏幕上联系方式和主站链接放不进一行，主站链接换到下一行靠右 */
+    .card-foot {
+      flex-wrap: wrap;
+      row-gap: 0;
+    }
+
+    .home {
+      margin-left: auto;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .facts > div {
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .facts dt {
+      width: auto;
+      font-size: 13.5px;
+    }
+  }
+</style>

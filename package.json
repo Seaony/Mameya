@@ -16,6 +16,9 @@
     "dev:diskit": "astro dev --root sites/diskit",
     "build:diskit": "astro build --root sites/diskit",
     "deploy:diskit": "astro build --root sites/diskit && wrangler deploy -c sites/diskit/wrangler.jsonc",
+    "dev:monitto": "astro dev --root sites/monitto",
+    "build:monitto": "astro build --root sites/monitto",
+    "deploy:monitto": "astro build --root sites/monitto && wrangler deploy -c sites/monitto/wrangler.jsonc",
     "astro": "astro"
   },
   "dependencies": {
