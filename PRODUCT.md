@@ -35,7 +35,7 @@ Astro（纯静态输出）+ 手写 CSS，部署到 Cloudflare Workers 静态资�
 ## Evidence on Hand
 
 - 头像：用户指定的橙发动漫头像（`src/assets/avatar.jpg`）。
-- 产品：CodeEdge、Momento、Moni、Diskit、Kakatta（开发中），一句话介绍取自各仓库 README。
+- 产品：CodeEdge、Momento、Monitto、Diskit、Kakatta（开发中），一句话介绍取自各仓库 README。
 - 联系方式：邮箱、GitHub、Telegram（链接），微信、小红书、抖音（二维码）。
 
 ## Product Principles

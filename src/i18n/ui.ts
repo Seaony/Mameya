@@ -46,7 +46,7 @@ export const ui: Record<Lang, Dict> = {
   en: {
     title: 'Seaony',
     description:
-      'Seaony is a full-stack developer in Singapore who builds Mac apps, websites and the services behind them, and cares about getting the details right. Projects include CodeEdge, Momento, Moni and Diskit.',
+      'Seaony is a full-stack developer in Singapore who builds Mac apps, websites and the services behind them, and cares about getting the details right. Projects include CodeEdge, Momento, Monitto and Diskit.',
     tagline: 'Next year brings its own snow.',
     intro: [
       'A full-stack developer who makes products.',
@@ -89,14 +89,14 @@ export const ui: Record<Lang, Dict> = {
     apps: {
       codeedge: 'Every AI quota, at the edge of your screen.',
       momento: 'Every image. Quietly kept.',
-      moni: 'A compact menu bar monitor for macOS.',
+      monitto: 'Your Mac, at a glance.',
       diskit: 'Every location. One menu bar.',
       kakatta: 'Watches Xianyu for what you want. Runs in Docker.',
     },
   },
   zh: {
     title: 'Seaony',
-    description: 'Seaony，全栈开发者，人在新加坡。Mac 应用、网站和服务端都写，在意把每个细节做好。作品有 CodeEdge、Momento、Moni 和 Diskit。',
+    description: 'Seaony，全栈开发者，人在新加坡。Mac 应用、网站和服务端都写，在意把每个细节做好。作品有 CodeEdge、Momento、Monitto 和 Diskit。',
     tagline: '明年有明年的雪',
     intro: [
       '一个做产品的全栈开发者。',
@@ -138,7 +138,7 @@ export const ui: Record<Lang, Dict> = {
     apps: {
       codeedge: '所有 AI 额度，停在屏幕边上',
       momento: '灵感图片，安静收好',
-      moni: '一眼看清 Mac 状态',
+      monitto: '点一下菜单栏，看清这台 Mac 的状态',
       diskit: '手机、共享、网盘，都在菜单栏',
       kakatta: '帮你盯着闲鱼，Docker 自己部署',
     },
@@ -146,7 +146,7 @@ export const ui: Record<Lang, Dict> = {
   ja: {
     title: 'Seaony',
     description:
-      'シンガポール在住のフルスタックエンジニア、Seaony。Macアプリ、Webサイト、サーバーサイドまで手がけ、細部まで丁寧に作ることを大切にしています。CodeEdge、Momento、Moni、Diskit。',
+      'シンガポール在住のフルスタックエンジニア、Seaony。Macアプリ、Webサイト、サーバーサイドまで手がけ、細部まで丁寧に作ることを大切にしています。CodeEdge、Momento、Monitto、Diskit。',
     tagline: '来年には来年の雪が降る',
     intro: [
       'プロダクトを作るフルスタックエンジニア。',
@@ -188,7 +188,7 @@ export const ui: Record<Lang, Dict> = {
     apps: {
       codeedge: 'AIの利用枠を、画面の端に',
       momento: '集めた画像を、そっとしまう',
-      moni: 'Macの状態を、ひと目で',
+      monitto: 'Macの状態を、ひと目で',
       diskit: 'スマホも共有フォルダもクラウドも、メニューバーから',
       kakatta: '闲鱼で欲しいものを見張る。Dockerで動く',
     },

@@ -3,14 +3,14 @@
 import type { ImageMetadata } from 'astro';
 import codeedge from '../assets/apps/codeedge.png';
 import momento from '../assets/apps/momento.png';
-import moni from '../assets/apps/moni.png';
+import monitto from '../assets/apps/monitto.png';
 import diskit from '../assets/apps/diskit.png';
 import kakatta from '../assets/apps/kakatta.png';
 import qrWechat from '../assets/qr/wechat.png';
 import qrXiaohongshu from '../assets/qr/xiaohongshu.png';
 import qrDouyin from '../assets/qr/douyin.png';
 
-export type AppId = 'codeedge' | 'momento' | 'moni' | 'diskit' | 'kakatta';
+export type AppId = 'codeedge' | 'momento' | 'monitto' | 'diskit' | 'kakatta';
 
 export interface App {
   id: AppId;
@@ -23,7 +23,7 @@ export interface App {
 export const apps: App[] = [
   { id: 'codeedge', name: 'CodeEdge', url: 'https://codeedge.mameya.app/', icon: codeedge },
   { id: 'momento', name: 'Momento', url: 'https://github.com/Seaony/Momento', icon: momento },
-  { id: 'moni', name: 'Moni', url: 'https://github.com/Seaony/Moni', icon: moni },
+  { id: 'monitto', name: 'Monitto', url: 'https://github.com/Seaony/Monitto', icon: monitto },
   { id: 'diskit', name: 'Diskit', url: 'https://diskit.mameya.app/', icon: diskit },
   { id: 'kakatta', name: 'Kakatta', url: 'https://github.com/Seaony/Kakatta', icon: kakatta, inDevelopment: true },
 ];

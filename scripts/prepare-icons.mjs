@@ -10,7 +10,7 @@ const out = new URL('../src/assets/apps/', import.meta.url).pathname;
 const icons = [
   { id: 'codeedge', src: 'CodeEdge/CodeEdge/Assets.xcassets/AppIcon.appiconset/icon_512x512@2x.png' },
   { id: 'momento', src: 'Momento/design/app-icon/正式资源/app-icon-1024-fullbleed.png' },
-  { id: 'moni', src: 'Moni/Moni/Assets.xcassets/AppIcon.appiconset/AppIcon-512@2x.png' },
+  { id: 'monitto', src: 'Monitto/design/app-icon/正式资源/AppIcon-1024.png' },
   { id: 'diskit', src: 'Diskit/design/app-icon/folder-peek.png' },
   { id: 'kakatta', src: 'Kakatta/assets/logo/kakatta.png' },
 ];

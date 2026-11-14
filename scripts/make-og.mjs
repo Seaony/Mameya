@@ -18,7 +18,7 @@ const dataUri = (file, type) => `data:${type};base64,${readFileSync(join(root, f
 const font = dataUri('public/fonts/inter-latin.woff2', 'font/woff2');
 const avatar = dataUri('src/assets/avatar.jpg', 'image/jpeg');
 const logo = dataUri('src/assets/brand/logo.png', 'image/png');
-const icons = ['codeedge', 'momento', 'moni', 'diskit'].map((id) => dataUri(`src/assets/apps/${id}.png`, 'image/png'));
+const icons = ['codeedge', 'momento', 'monitto', 'diskit'].map((id) => dataUri(`src/assets/apps/${id}.png`, 'image/png'));
 
 // 和网站浅色主题同一套颜色：毛豆绿 + 灰绿中性色
 const page = ({ lang, tagline }) => `<!doctype html>
