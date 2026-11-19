@@ -1,0 +1,56 @@
+---
+import Icon from '../../../../src/components/Icon.astro';
+import { t, type Lang } from '../content';
+
+interface Props {
+  lang: Lang;
+  notFound?: boolean;
+}
+
+const { lang, notFound = false } = Astro.props;
+const year = new Date().getFullYear();
+---
+
+{/* 和主站的页脚一样：版权加「回到顶部」 */}
+<footer class:list={['footer', { 'footer-404': notFound }]}>
+  <span>© {year} Mameya · Seaony</span>
+  {
+    !notFound && (
+      <a class="top" href="#top">
+        {t[lang].backToTop}
+        <Icon name="arrowUp" size={14} />
+      </a>
+    )
+  }
+</footer>
+
+<style>
+  .footer {
+    margin-top: 80px;
+    padding: 24px 0 40px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    font-size: 13.5px;
+    color: var(--faint);
+  }
+
+  .footer-404 {
+    margin-top: 0;
+  }
+
+  .top {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 44px;
+    transition: color 0.2s;
+  }
+
+  .top:hover {
+    color: var(--text);
+  }
+</style>

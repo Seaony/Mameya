@@ -19,6 +19,9 @@
     "dev:monitto": "astro dev --root sites/monitto",
     "build:monitto": "astro build --root sites/monitto",
     "deploy:monitto": "astro build --root sites/monitto && wrangler deploy -c sites/monitto/wrangler.jsonc",
+    "dev:tartkit": "astro dev --root sites/tartkit",
+    "build:tartkit": "astro build --root sites/tartkit",
+    "deploy:tartkit": "astro build --root sites/tartkit && wrangler deploy -c sites/tartkit/wrangler.jsonc",
     "astro": "astro"
   },
   "dependencies": {

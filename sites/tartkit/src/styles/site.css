@@ -1,0 +1,36 @@
+/* 官网自己的公共样式：下载按钮。和主站 404 页的「回到首页」是同一种黑色胶囊 */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 44px;
+  padding: 0 20px;
+  border-radius: 999px;
+  background: var(--btn);
+  color: var(--btn-ink);
+  font-size: 14.5px;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.btn:hover {
+  opacity: 0.86;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+/* 正文里的文字链接：下划线压低一点，颜色跟随文字 */
+.text-link {
+  text-decoration: underline;
+  text-decoration-color: var(--line2);
+  text-underline-offset: 3px;
+  transition: text-decoration-color 0.2s, color 0.2s;
+}
+
+.text-link:hover {
+  color: var(--text);
+  text-decoration-color: currentColor;
+}

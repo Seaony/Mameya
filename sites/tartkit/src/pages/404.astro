@@ -1,0 +1,13 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import NotFound from '../components/NotFound.astro';
+import Footer from '../components/Footer.astro';
+import { t } from '../content';
+---
+
+<Base lang="en" title={t.en.notFound.title} indexable={false}>
+  <Header lang="en" />
+  <NotFound lang="en" />
+  <Footer lang="en" notFound />
+</Base>

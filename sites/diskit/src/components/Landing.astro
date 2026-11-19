@@ -209,20 +209,24 @@ const contacts = [
         <p class="card-label">{c.others}</p>
         <ul class="apps">
           {
-            others.map((app) => (
-              <li>
-                <a class="app" href={app.url}>
-                  <Image class="app-icon-sm" src={app.icon} alt="" width={160} height={160} quality={90} />
-                  <span class="app-text">
-                    <span class="app-name">
-                      {app.name}
-                      {app.inDevelopment && <span class="dev">{me.inDevelopment}</span>}
+            others.map((app) => {
+              // 没有公开页面的产品只显示，不做成链接
+              const Row = app.url ? 'a' : 'div';
+              return (
+                <li>
+                  <Row class="app" href={app.url}>
+                    <Image class="app-icon-sm" src={app.icon} alt="" width={160} height={160} quality={90} />
+                    <span class="app-text">
+                      <span class="app-name">
+                        {app.name}
+                        {app.inDevelopment && <span class="dev">{me.inDevelopment}</span>}
+                      </span>
+                      <span class="app-desc">{me.apps[app.id]}</span>
                     </span>
-                    <span class="app-desc">{me.apps[app.id]}</span>
-                  </span>
-                </a>
-              </li>
-            ))
+                  </Row>
+                </li>
+              );
+            })
           }
         </ul>
       </div>
@@ -678,7 +682,7 @@ const contacts = [
     transition: background 0.15s;
   }
 
-  .app:hover {
+  a.app:hover {
     background: var(--surface2);
   }
 

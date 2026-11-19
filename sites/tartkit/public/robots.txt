@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://tartkit.mameya.app/sitemap.xml

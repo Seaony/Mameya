@@ -46,7 +46,7 @@ export const ui: Record<Lang, Dict> = {
   en: {
     title: 'Seaony',
     description:
-      'Seaony is a full-stack developer in Singapore who builds Mac apps, websites and the services behind them, and cares about getting the details right. Projects include CodeEdge, Momento, Monitto and Diskit.',
+      'Seaony is a full-stack developer in Singapore who builds Mac apps, websites and the services behind them, and cares about getting the details right. Projects include CodeEdge, Momento, Monitto, Diskit and Tartkit.',
     tagline: 'Next year brings its own snow.',
     intro: [
       'A full-stack developer who makes products.',
@@ -91,12 +91,14 @@ export const ui: Record<Lang, Dict> = {
       momento: 'Every image. Quietly kept.',
       monitto: 'Your Mac, at a glance.',
       diskit: 'Every location. One menu bar.',
+      tartkit: 'Every VM. One menu bar.',
+      grlive: 'Ricoh GR photo transfer and remote shooting, on iOS and Android.',
       kakatta: 'Watches Xianyu for what you want. Runs in Docker.',
     },
   },
   zh: {
     title: 'Seaony',
-    description: 'Seaony，全栈开发者，人在新加坡。Mac 应用、网站和服务端都写，在意把每个细节做好。作品有 CodeEdge、Momento、Monitto 和 Diskit。',
+    description: 'Seaony，全栈开发者，人在新加坡。Mac 应用、网站和服务端都写，在意把每个细节做好。作品有 CodeEdge、Momento、Monitto、Diskit 和 Tartkit。',
     tagline: '明年有明年的雪',
     intro: [
       '一个做产品的全栈开发者。',
@@ -140,13 +142,15 @@ export const ui: Record<Lang, Dict> = {
       momento: '灵感图片，安静收好',
       monitto: '点一下菜单栏，看清这台 Mac 的状态',
       diskit: '手机、共享、网盘，都在菜单栏',
+      tartkit: '所有虚拟机，都在菜单栏',
+      grlive: '理光 GR 传图、遥控拍照，iOS 和安卓',
       kakatta: '帮你盯着闲鱼，Docker 自己部署',
     },
   },
   ja: {
     title: 'Seaony',
     description:
-      'シンガポール在住のフルスタックエンジニア、Seaony。Macアプリ、Webサイト、サーバーサイドまで手がけ、細部まで丁寧に作ることを大切にしています。CodeEdge、Momento、Monitto、Diskit。',
+      'シンガポール在住のフルスタックエンジニア、Seaony。Macアプリ、Webサイト、サーバーサイドまで手がけ、細部まで丁寧に作ることを大切にしています。CodeEdge、Momento、Monitto、Diskit、Tartkit。',
     tagline: '来年には来年の雪が降る',
     intro: [
       'プロダクトを作るフルスタックエンジニア。',
@@ -190,6 +194,8 @@ export const ui: Record<Lang, Dict> = {
       momento: '集めた画像を、そっとしまう',
       monitto: 'Macの状態を、ひと目で',
       diskit: 'スマホも共有フォルダもクラウドも、メニューバーから',
+      tartkit: 'macOSもLinuxも、仮想マシンはメニューバーから',
+      grlive: 'リコーGRの写真転送とリモート撮影。iOSとAndroidで',
       kakatta: '闲鱼で欲しいものを見張る。Dockerで動く',
     },
   },

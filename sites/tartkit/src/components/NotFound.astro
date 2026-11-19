@@ -1,0 +1,47 @@
+---
+import Icon from '../../../../src/components/Icon.astro';
+import { locales, t, type Lang } from '../content';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const c = t[lang].notFound;
+---
+
+<main class="nf">
+  <h1>{c.heading}</h1>
+  <p>{c.body}</p>
+  <a class="btn" href={locales[lang].path}>
+    <Icon name="arrowLeft" size={16} />
+    {c.home}
+  </a>
+</main>
+
+<style>
+  .nf {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    text-align: center;
+    padding: 48px 0 96px;
+  }
+
+  h1 {
+    font-size: 26px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  p {
+    color: var(--muted);
+  }
+
+  .btn {
+    margin-top: 20px;
+  }
+</style>

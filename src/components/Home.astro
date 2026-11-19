@@ -147,23 +147,27 @@ const stack: { name: string; icon: IconName; color?: string }[] = [
     <h2 id="products-title">{t.projects}</h2>
     <ul class="rows">
       {
-        apps.map((app) => (
-          <li>
-            <a class="row" href={app.url}>
-              <Image class="row-icon" src={app.icon} alt="" width={160} height={160} quality={90} />
-              <span class="row-body">
-                <span class="row-text">
-                  <span class="row-head">
-                    <span class="row-name">{app.name}</span>
-                    {app.inDevelopment && <span class="dev">{t.inDevelopment}</span>}
+        apps.map((app) => {
+          // 没有公开页面的产品只显示，不做成链接，也不带箭头
+          const Row = app.url ? 'a' : 'div';
+          return (
+            <li>
+              <Row class="row" href={app.url}>
+                <Image class="row-icon" src={app.icon} alt="" width={160} height={160} quality={90} />
+                <span class="row-body">
+                  <span class="row-text">
+                    <span class="row-head">
+                      <span class="row-name">{app.name}</span>
+                      {app.inDevelopment && <span class="dev">{t.inDevelopment}</span>}
+                    </span>
+                    <span class="row-desc">{t.apps[app.id]}</span>
                   </span>
-                  <span class="row-desc">{t.apps[app.id]}</span>
+                  {app.url && <Icon class="row-arrow" name="arrowUpRight" size={16} />}
                 </span>
-                <Icon class="row-arrow" name="arrowUpRight" size={16} />
-              </span>
-            </a>
-          </li>
-        ))
+              </Row>
+            </li>
+          );
+        })
       }
     </ul>
   </section>
@@ -509,15 +513,15 @@ const stack: { name: string; icon: IconName; color?: string }[] = [
       color 0.2s;
   }
 
-  .row:hover .row-icon {
+  a.row:hover .row-icon {
     transform: translateY(-1px) scale(1.05);
   }
 
-  .row:hover .row-name {
+  a.row:hover .row-name {
     color: var(--accent-ink);
   }
 
-  .row:hover :global(.row-arrow) {
+  a.row:hover :global(.row-arrow) {
     transform: translate(2px, -2px);
     color: var(--text);
   }
