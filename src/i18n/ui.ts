@@ -88,7 +88,7 @@ export const ui: Record<Lang, Dict> = {
     },
     apps: {
       codeedge: 'Every AI quota, at the edge of your screen.',
-      momento: 'Every image. Quietly kept.',
+      momento: 'Your image library, on your own disk.',
       monitto: 'Your Mac, at a glance.',
       diskit: 'Every location. One menu bar.',
       tartkit: 'Every VM. One menu bar.',
@@ -139,7 +139,7 @@ export const ui: Record<Lang, Dict> = {
     },
     apps: {
       codeedge: '所有 AI 额度，停在屏幕边上',
-      momento: '灵感图片，安静收好',
+      momento: '图片素材，收在自己的硬盘里',
       monitto: '点一下菜单栏，看清这台 Mac 的状态',
       diskit: '手机、共享、网盘，都在菜单栏',
       tartkit: '所有虚拟机，都在菜单栏',
@@ -191,7 +191,7 @@ export const ui: Record<Lang, Dict> = {
     },
     apps: {
       codeedge: 'AIの利用枠を、画面の端に',
-      momento: '集めた画像を、そっとしまう',
+      momento: '画像ライブラリを、自分のディスクに',
       monitto: 'Macの状態を、ひと目で',
       diskit: 'スマホも共有フォルダもクラウドも、メニューバーから',
       tartkit: 'macOSもLinuxも、仮想マシンはメニューバーから',

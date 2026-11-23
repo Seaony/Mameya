@@ -22,6 +22,9 @@
     "dev:tartkit": "astro dev --root sites/tartkit",
     "build:tartkit": "astro build --root sites/tartkit",
     "deploy:tartkit": "astro build --root sites/tartkit && wrangler deploy -c sites/tartkit/wrangler.jsonc",
+    "dev:momento": "cd sites/momento && astro dev",
+    "build:momento": "astro build --root sites/momento",
+    "deploy:momento": "astro build --root sites/momento && wrangler deploy -c sites/momento/wrangler.jsonc",
     "astro": "astro"
   },
   "dependencies": {

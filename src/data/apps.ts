@@ -25,7 +25,7 @@ export interface App {
 
 export const apps: App[] = [
   { id: 'codeedge', name: 'CodeEdge', url: 'https://codeedge.mameya.app/', icon: codeedge },
-  { id: 'momento', name: 'Momento', url: 'https://github.com/Seaony/Momento', icon: momento },
+  { id: 'momento', name: 'Momento', url: 'https://momento.mameya.app/', icon: momento },
   { id: 'monitto', name: 'Monitto', url: 'https://monitto.mameya.app/', icon: monitto },
   { id: 'diskit', name: 'Diskit', url: 'https://diskit.mameya.app/', icon: diskit },
   { id: 'tartkit', name: 'Tartkit', url: 'https://tartkit.mameya.app/', icon: tartkit },
