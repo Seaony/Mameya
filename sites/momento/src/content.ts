@@ -25,13 +25,14 @@ export const platforms: [IconName, string][] = [
   ['linux', 'Linux · GTK 3'],
 ];
 
-// 支持的格式，分组照 README 的表格；格式名各语言一样，组名和说明在下面按语言写
+// 支持的格式，分组照 README 的表格；格式名各语言一样，组名和说明在下面按语言写。
+// 每组一个类别图标，组里每个标签前都放，颜色按组区分（见 Landing.astro 的 .fmt-*）
 export type FormatId = 'images' | 'raw' | 'videos' | 'live';
-export const formats: { id: FormatId; items: string[] }[] = [
-  { id: 'images', items: ['JPEG', 'PNG', 'GIF', 'WebP', 'TIFF', 'BMP', 'HEIC', 'AVIF'] },
-  { id: 'raw', items: ['DNG', 'CR2', 'CR3', 'NEF', 'ARW', 'RAF', 'ORF', 'RW2', 'PSD', 'JPEG 2000', 'TGA', 'EXR', 'HDR'] },
-  { id: 'videos', items: ['MP4', 'MOV', 'M4V', 'WebM'] },
-  { id: 'live', items: ['HEIC + MOV', 'JPEG + MOV'] },
+export const formats: { id: FormatId; icon: IconName; items: string[] }[] = [
+  { id: 'images', icon: 'fileImage', items: ['JPEG', 'PNG', 'GIF', 'WebP', 'TIFF', 'BMP', 'HEIC', 'AVIF'] },
+  { id: 'raw', icon: 'aperture', items: ['DNG', 'CR2', 'CR3', 'NEF', 'ARW', 'RAF', 'ORF', 'RW2', 'PSD', 'JPEG 2000', 'TGA', 'EXR', 'HDR'] },
+  { id: 'videos', icon: 'fileVideo', items: ['MP4', 'MOV', 'M4V', 'WebM'] },
+  { id: 'live', icon: 'livePhoto', items: ['HEIC + MOV', 'JPEG + MOV'] },
 ];
 
 interface Dict {
@@ -56,6 +57,17 @@ interface Dict {
   whatItDoes: string;
   // 每行：图标、标签、说明
   features: [IconName, string, string][];
+  // 浏览器扩展：开场一句，四种保存方式（图标、标签、说明），限制，手动安装，按钮
+  ext: {
+    title: string;
+    intro: string;
+    rows: [IconName, string, string][];
+    limits: string;
+    // 手动安装：标题、副标题、三步（每步配一个小示意图）；mock 是示意图里 Chrome 界面上的字
+    install: { title: string; sub: string; steps: [string, string, string] };
+    mock: { extensions: string; devMode: string; load: string };
+    get: string;
+  };
   supported: string;
   groups: Record<FormatId, { label: string; note?: string }>;
   privacy: string;
@@ -103,6 +115,28 @@ export const t: Record<Lang, Dict> = {
       ['trayArrowDown', 'Import', 'Drag in, paste, or choose files or whole folders, with duplicates detected by content. Watched folders import anything you put in them and move the originals to the trash. Keywords embedded in images can become tags.'],
       ['appWindow', 'Native', 'macOS, Windows and Linux share the same native interface, in English, Chinese and Japanese. A password lock, a menu bar icon, launch at login, customizable shortcuts, and light and dark appearances.'],
     ],
+    ext: {
+      title: 'Browser extension',
+      intro: 'Found an image worth keeping? Right-click it and choose Save to Momento, with no downloading and dragging it in later. The extension works in Chrome and needs Momento open on your computer with a library open.',
+      rows: [
+        ['cursorClick', 'One image', 'Right-click an image, a video or an image link. The extension looks for the largest version it can find: the biggest size in srcset, the original in the page’s data, and original-size rules for sites like Zhihu, Douban, Lofter, Bilibili, Unsplash, Pexels, ArtStation and Flickr.'],
+        ['stack', 'Whole post', 'On Xiaohongshu, Instagram, Pixiv, Weibo, X, Pinterest, Behance, Dribbble, Zcool, Huaban and ArtStation, open a post’s own page, right-click and choose Save Entire Post to Momento. Its images and mp4 videos are saved together; a Live Photo comes in as a photo and a separate video. Xiaohongshu notes and Instagram posts also get a Momento button that does this in one click.'],
+        ['listChecks', 'Whole page', 'Right-click the page and choose Save Images on This Page…, or click Momento in the extensions menu, to list the images the extension finds. Filter by size and format, Shift-click to select a range, and save them in one go.'],
+        ['camera', 'Screenshot', 'Right-click an empty spot and choose Save Screenshot of Visible Area. What you see is saved as a PNG.'],
+      ],
+      limits: 'Each saved image keeps the page it came from, so you can open the source again from Momento. Streamed videos such as Bilibili, Douyin and live replays can’t be saved, and images that need a login to view sometimes can’t be downloaded.',
+      install: {
+        title: 'Install by hand',
+        sub: 'Takes about a minute.',
+        steps: [
+          'Download the Manual-Install zip from the latest release and unzip it somewhere you’ll keep.',
+          'Open `chrome://extensions` and turn on Developer mode.',
+          'Click Load unpacked and choose the extension folder.',
+        ],
+      },
+      mock: { extensions: 'Extensions', devMode: 'Developer mode', load: 'Load unpacked' },
+      get: 'Get the extension',
+    },
     supported: 'Supported formats',
     groups: {
       images: { label: 'Images' },
@@ -158,6 +192,24 @@ export const t: Record<Lang, Dict> = {
       ['trayArrowDown', '导入', '拖入、粘贴、选文件或整个文件夹，按内容去重。可以监视几个文件夹，放进去的图自动导入，原文件移到废纸篓。图片里自带的关键字可以直接变成标签。'],
       ['appWindow', '原生', 'macOS、Windows 和 Linux 用同一套原生界面，支持中文、英文和日语。还有密码锁、菜单栏图标、开机启动、可以改的快捷键，以及浅色和深色外观。'],
     ],
+    ext: {
+      title: '浏览器扩展',
+      intro: '看到想留的图片，不用先下载再拖进来，在网页上右键选「保存到 Momento」就行。扩展用在 Chrome 上，需要电脑上开着 Momento，并且打开了一个图库。',
+      rows: [
+        ['cursorClick', '单张', '在图片、视频或图片链接上右键。扩展会尽量找原图：srcset 里最大的一档、页面数据里的原图地址，以及知乎、豆瓣、Lofter、B 站、Unsplash、Pexels、ArtStation、Flickr 等网站的原图规则。'],
+        ['stack', '整帖', '在小红书、Instagram、Pixiv、微博、X、Pinterest、Behance、Dribbble、站酷、花瓣、ArtStation 打开帖子页面后右键，选「保存这一帖全部」，图片和 mp4 视频一起存；实况照片会存成一张图和一段单独的视频。小红书笔记和 Instagram 帖子上还有一个 Momento 按钮，点一下就存整帖。'],
+        ['listChecks', '整页', '在页面上右键选「批量保存本页图片…」，或者从浏览器的扩展菜单里点 Momento，列出扩展在这一页找到的图片，按尺寸和格式筛选，可以 Shift 连选，选好后一次存进 Momento。'],
+        ['camera', '截图', '在页面空白处右键，选「截取可见区域保存到 Momento」，当前这一屏存成 PNG。'],
+      ],
+      limits: '存进去的图片会带上来源网页，之后在 Momento 里能点回原页面。B 站、抖音、直播回放这类分片播放的视频存不了；要登录才能看的图片，有时下载不到。',
+      install: {
+        title: '手动安装',
+        sub: '大约一分钟',
+        steps: ['下载 Manual-Install 压缩包，解压到一个会长期保留的位置', '打开 `chrome://extensions`，开启「开发者模式」', '点「加载已解压的扩展程序」，选 extension 文件夹'],
+      },
+      mock: { extensions: '扩展程序', devMode: '开发者模式', load: '加载已解压的扩展程序' },
+      get: '获取扩展',
+    },
     supported: '支持的格式',
     groups: {
       images: { label: '图片' },
