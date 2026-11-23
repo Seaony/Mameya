@@ -1,7 +1,7 @@
 ---
 import Icon from './Icon.astro';
 import { Image } from 'astro:assets';
-import bean from '../assets/brand/bean-404.png';
+import enaga from '../assets/brand/enaga-404.png';
 import { locales, ui, type Lang } from '../i18n/ui';
 
 interface Props {
@@ -13,10 +13,10 @@ const t = ui[lang].notFound;
 ---
 
 <main class="nf">
-  {/* 「404」中间的 0 换成迷路的小毛豆 */}
+  {/* 「404」中间的 0 换成拿着放大镜找东西的山雀（和 Logo 同一只） */}
   <p class="code" aria-hidden="true">
     <span>4</span>
-    <Image class="bean" src={bean} alt="" width={317} height={480} quality={90} loading="eager" />
+    <Image class="enaga" src={enaga} alt="" width={330} height={560} quality={90} loading="eager" />
     <span>4</span>
   </p>
 
@@ -50,11 +50,12 @@ const t = ui[lang].notFound;
     letter-spacing: -0.07em;
   }
 
-  /* 小毛豆和数字 4 一样高，左右留出和字距相当的空隙 */
-  .bean {
+  /* 山雀身体（不算尾巴）占图高的 3/4，图高 1em 时身体和数字 4 一样高；
+     上边距把它往下挪，让脚踩在 4 的底线上、尾巴垂到底线以下；左右留出和字距相当的空隙 */
+  .enaga {
     width: auto;
-    height: 0.95em;
-    margin: 0 0.06em 0 0.07em;
+    height: 1em;
+    margin: 0.24em 0.06em 0 0.07em;
   }
 
   h1 {

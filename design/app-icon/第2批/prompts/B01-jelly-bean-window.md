@@ -1,0 +1,8 @@
+The brand: Mameya, from the Japanese 豆屋, "the bean shop". It is the personal studio name of an indie developer who builds Mac apps, websites and web services and cares about polishing every small detail. The mark is used as the website logo (shown as small as 24px next to the word "Mameya"), as the favicon and as the social avatar. The bean is the brand: a fresh, vivid, appetizing green bean like edamame (around #6CC04A, light #A5DE73, shade #3F9A3A), plump and slightly kidney-shaped. Never draw coffee beans, never grey-green or neon green.
+Output one full-bleed 1:1 square logo artwork, 1024x1024, square outer corners, no text, no letters, no numbers, no watermark, no border. One main subject only. Make it look like a professionally designed, high-quality App Store icon: confident shapes, crisp clean edges, strong contrast, readable at 32px. Expressions must be cute and natural: never sly, smug, mischievous or half-lidded.
+
+Concept B01: a jelly green bean character rising from the bottom-right corner, lifting up a tiny rounded app window that also has a little smiling face — the bean shop makes apps.
+Style: soft translucent jelly / frosted-glass material with a gentle translucent glow at the edges, smooth rounded forms, no hard specular hotspots.
+Composition: the bean is huge, cropped by the bottom and right edges, about 80% of the square; one arm lifts the small window (white frosted card with three tiny dots on top and a simple happy face) toward the top-left.
+Expression: playful wink and a happy open smile on the bean; content smile on the window.
+Background: bright soft multicolor gradient of peach, magenta, purple and sky blue, with a few tiny sparkle dots in empty space.

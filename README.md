@@ -21,7 +21,7 @@ npm run deploy              # 构建并部署：主站绑 mameya.app，www/ 里�
 - 产品图标：`node scripts/prepare-icons.mjs`，从 `~/code/<产品>` 里取图标，统一成满版方图输出到 `src/assets/apps/`（圆角由页面加）
 - 社交二维码：`src/assets/qr/`（只截取码本身，白底）
 - 头像：`node scripts/prepare-avatar.mjs <图片路径>`，换完再跑一次分享图
-- 网站图标（来自 Logo）：`node scripts/prepare-favicon.mjs`
+- Logo 和网站图标：`node scripts/prepare-favicon.mjs`，从 `design/app-icon/正式资源/logo-tile.png` 生成圆角 Logo 和 favicon
 - 分享图：`node scripts/make-og.mjs`，用本机 Chrome 生成 `public/og/<lang>.png`
 
 ## 结构
