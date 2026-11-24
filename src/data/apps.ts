@@ -6,13 +6,12 @@ import momento from '../assets/apps/momento.png';
 import monitto from '../assets/apps/monitto.png';
 import diskit from '../assets/apps/diskit.png';
 import tartkit from '../assets/apps/tartkit.png';
-import kakatta from '../assets/apps/kakatta.png';
 import grlive from '../assets/apps/grlive.png';
 import qrWechat from '../assets/qr/wechat.png';
 import qrXiaohongshu from '../assets/qr/xiaohongshu.png';
 import qrDouyin from '../assets/qr/douyin.png';
 
-export type AppId = 'codeedge' | 'momento' | 'monitto' | 'diskit' | 'tartkit' | 'grlive' | 'kakatta';
+export type AppId = 'codeedge' | 'momento' | 'monitto' | 'diskit' | 'tartkit' | 'grlive';
 
 export interface App {
   id: AppId;
@@ -31,7 +30,6 @@ export const apps: App[] = [
   { id: 'tartkit', name: 'Tartkit', url: 'https://tartkit.mameya.app/', icon: tartkit },
   // 首屏的「正在开发」取第一个开发中的产品
   { id: 'grlive', name: 'GRLive', icon: grlive, inDevelopment: true },
-  { id: 'kakatta', name: 'Kakatta', url: 'https://github.com/Seaony/Kakatta', icon: kakatta, inDevelopment: true },
 ];
 
 export const contact = {

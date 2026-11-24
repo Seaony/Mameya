@@ -13,7 +13,6 @@ const icons = [
   { id: 'monitto', src: 'Monitto/design/app-icon/正式资源/AppIcon-1024.png' },
   { id: 'diskit', src: 'Diskit/design/app-icon/folder-peek.png' },
   { id: 'tartkit', src: 'Tartkit/design/app-icon/正式资源/AppIcon-1024.png' },
-  { id: 'kakatta', src: 'Kakatta/assets/logo/kakatta.png' },
   { id: 'grlive', src: 'GRLive/design/app-icon/正式资源/app-icon-1024.png' },
 ];
 

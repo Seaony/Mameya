@@ -93,7 +93,6 @@ export const ui: Record<Lang, Dict> = {
       diskit: 'Every location. One menu bar.',
       tartkit: 'Every VM. One menu bar.',
       grlive: 'Ricoh GR photo transfer and remote shooting, on iOS and Android.',
-      kakatta: 'Watches Xianyu for what you want. Runs in Docker.',
     },
   },
   zh: {
@@ -144,7 +143,6 @@ export const ui: Record<Lang, Dict> = {
       diskit: '手机、共享、网盘，都在菜单栏',
       tartkit: '所有虚拟机，都在菜单栏',
       grlive: '理光 GR 传图、遥控拍照，iOS 和安卓',
-      kakatta: '帮你盯着闲鱼，Docker 自己部署',
     },
   },
   ja: {
@@ -196,7 +194,6 @@ export const ui: Record<Lang, Dict> = {
       diskit: 'スマホも共有フォルダもクラウドも、メニューバーから',
       tartkit: 'macOSもLinuxも、仮想マシンはメニューバーから',
       grlive: 'リコーGRの写真転送とリモート撮影。iOSとAndroidで',
-      kakatta: '闲鱼で欲しいものを見張る。Dockerで動く',
     },
   },
 };
