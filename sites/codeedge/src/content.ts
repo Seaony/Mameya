@@ -19,7 +19,7 @@ export const links = {
 
 // 服务商名字两种语言一样；README 里列了将近一百个，这里只挑最常见的一组做标签
 export const providers = [
-  'Codex', 'Claude', 'Cursor', 'Gemini', 'Copilot', 'Kiro', 'Windsurf', 'Amp', 'Zed', 'Warp',
+  'Codex', 'Claude', 'Cursor', 'Gemini', 'Antigravity', 'Copilot', 'Kiro', 'Windsurf', 'Amp', 'Zed', 'Warp',
   'OpenAI', 'OpenRouter', 'DeepSeek', 'Mistral', 'Kimi Code', 'z.ai / GLM', 'MiniMax', 'Ollama',
 ];
 
@@ -74,7 +74,7 @@ export const t: Record<Lang, Dict> = {
       'Remaining quota, reset times, today’s tokens and estimated spend,',
       'without opening a single dashboard.',
     ],
-    requirements: 'macOS 26.5 or later · Apple silicon and Intel',
+    requirements: 'macOS 15 or later · Apple silicon and Intel',
     download: 'Download for Mac',
     githubTip: 'GitHub · Seaony/CodeEdge',
     changelog: 'Changelog',
@@ -88,7 +88,7 @@ export const t: Record<Lang, Dict> = {
     features: [
       ['sidebar', 'Rail', 'One ring per provider, filled to the share of quota that’s left. It floats at either edge of the screen, stays there across Spaces and remembers its position.'],
       ['chartDonut', 'Details', 'Click a ring for the plan, every quota window (session, 5-hour, weekly, monthly, credits, balance), how much of each is used, and when it resets.'],
-      ['coins', 'Spend', 'Today’s and the last 30 days’ tokens from the local session logs of Codex, Claude Code, Pi and DeepSeek, priced with each model’s rates.'],
+      ['coins', 'Spend', 'See token totals for today and the last 30 days from supported local session logs, including Codex, Claude Code, Pi, DeepSeek and T3 Code. Cost estimates use model rates where available.'],
       ['plugs', 'Real data', 'Quotas come from each provider’s own source: its API, a local account, its CLI or a browser session. Nothing is guessed from chat text or logs.'],
       ['appWindow', 'Native', 'SwiftUI and AppKit. System, dark and light appearance, English and Simplified Chinese, launch at login and in-app updates.'],
     ],
@@ -102,7 +102,7 @@ export const t: Record<Lang, Dict> = {
       ['key', 'Keys', 'Stored in the macOS Keychain.'],
       ['laptop', 'Local', 'Usage caches, preferences and the rail’s position stay on your Mac.'],
       ['fileText', 'Logs', 'Read only for token and cost totals. Chat and code text are never parsed into quotas.'],
-      ['wifi', 'Network', 'Only each provider’s own data source, plus GitHub Releases for updates.'],
+      ['wifi', 'Network', 'CodeEdge connects to each provider’s data source, GitHub Releases for updates, and TelemetryDeck for anonymous app statistics. Statistics are on by default and can be turned off in Settings. They don’t include accounts, keys, quotas or AI usage.'],
     ],
     start: 'Quick start',
     steps: [
@@ -129,7 +129,7 @@ export const t: Record<Lang, Dict> = {
       '剩余额度、重置时间、今日 Token 和预估花费，',
       '不用再打开任何一个控制台。',
     ],
-    requirements: 'macOS 26.5 或更高版本 · 支持 Apple 芯片和 Intel',
+    requirements: 'macOS 15 或更高版本 · 支持 Apple 芯片和 Intel',
     download: '下载 Mac 版',
     githubTip: 'GitHub · Seaony/CodeEdge',
     changelog: '更新日志',
@@ -143,7 +143,7 @@ export const t: Record<Lang, Dict> = {
     features: [
       ['sidebar', '侧边栏', '每个 Provider 一个圆环，按剩余额度比例填充。悬浮在屏幕任意一侧，切换桌面空间也一直都在，下次启动会恢复原位。'],
       ['chartDonut', '详情', '点击圆环会打开一张紧凑卡片：套餐、所有额度窗口（会话、5 小时、每周、每月、点数、余额）、各自用了多少，以及什么时候重置。'],
-      ['coins', '花费', '从 Codex、Claude Code、Pi 和 DeepSeek 的本地会话日志统计今天和最近 30 天的 Token，并按各模型价格计算金额。'],
+      ['coins', '花费', '从 Codex、Claude Code、Pi、DeepSeek 和 T3 Code 等工具的本地会话日志统计今天和最近 30 天的 Token。有模型单价时，也会估算花费。'],
       ['plugs', '真实数据', '额度来自各服务自己的数据源：接口、本机账号、命令行或浏览器会话，从不根据聊天内容或日志去猜。'],
       ['appWindow', '原生', 'SwiftUI 与 AppKit。支持系统、深色、浅色外观，英文和简体中文，登录时启动和应用内更新。'],
     ],
@@ -157,7 +157,7 @@ export const t: Record<Lang, Dict> = {
       ['key', '密钥', '保存在 macOS 钥匙串中。'],
       ['laptop', '本机', '用量缓存、偏好设置和侧边栏位置都只保存在本机。'],
       ['fileText', '日志', '只用于统计 Token 和金额，聊天内容和代码文本不会被解析成额度。'],
-      ['wifi', '联网', '只访问各 Provider 自己的数据源，以及用于更新的 GitHub Releases。'],
+      ['wifi', '联网', '连接各 Provider 的数据源、用于检查更新的 GitHub Releases，以及用于匿名应用统计的 TelemetryDeck。匿名统计默认开启，可在设置中关闭，不包含账号、密钥、额度或 AI 用量。'],
     ],
     start: '快速开始',
     steps: [

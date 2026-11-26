@@ -92,7 +92,7 @@ export const ui: Record<Lang, Dict> = {
       monitto: 'Your Mac, at a glance.',
       diskit: 'Every location. One menu bar.',
       tartkit: 'Every VM. One menu bar.',
-      grlive: 'Ricoh GR photo transfer and remote shooting, on iOS and Android.',
+      grlive: 'Transfer photos, shoot remotely and manage recipes for Ricoh GR on iOS and Android.',
     },
   },
   zh: {
@@ -142,7 +142,7 @@ export const ui: Record<Lang, Dict> = {
       monitto: '点一下菜单栏，看清这台 Mac 的状态',
       diskit: '手机、共享、网盘，都在菜单栏',
       tartkit: '所有虚拟机，都在菜单栏',
-      grlive: '理光 GR 传图、遥控拍照，iOS 和安卓',
+      grlive: '理光 GR 传图、遥控拍照和管理配方，支持 iOS 和安卓',
     },
   },
   ja: {
@@ -193,7 +193,7 @@ export const ui: Record<Lang, Dict> = {
       monitto: 'Macの状態を、ひと目で',
       diskit: 'スマホも共有フォルダもクラウドも、メニューバーから',
       tartkit: 'macOSもLinuxも、仮想マシンはメニューバーから',
-      grlive: 'リコーGRの写真転送とリモート撮影。iOSとAndroidで',
+      grlive: 'リコーGRの写真転送・リモート撮影・レシピ管理。iOSとAndroidで',
     },
   },
 };

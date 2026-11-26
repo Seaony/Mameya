@@ -139,7 +139,7 @@ export const t: Record<Lang, Dict> = {
     steps: [
       ['Install', 'Install Tart with `brew install cirruslabs/cli/tart`, then download the DMG and drag Tartkit into Applications.'],
       ['Create a machine', 'Click the menu bar icon and press +. Search or pick a system, then fill in the name and hardware.'],
-      ['Use it', 'Click a card to start the machine, or to bring a running one’s window to the front. Right-click to suspend, stop, connect over SSH or Screen Sharing, open settings or delete.'],
+      ['Use it', 'Click a card to start the machine, or to bring a running one’s window to the front. Right-click to rename, suspend, stop, connect over SSH or Screen Sharing, open settings or delete.'],
     ],
     early: 'Tartkit is early. If Tart isn’t installed in a usual place, set its path in Settings › General.',
     maker: 'Made by',
@@ -188,7 +188,7 @@ export const t: Record<Lang, Dict> = {
     steps: [
       ['安装', '先用 `brew install cirruslabs/cli/tart` 装好 Tart，再下载 DMG，把 Tartkit 拖进「应用程序」。'],
       ['新建虚拟机', '点菜单栏的 Tartkit 图标，按 +。搜索或直接点选系统，再填名字和硬件。'],
-      ['开始使用', '点卡片启动虚拟机；已经在运行的，会把它的窗口调到最前。右键可以挂起、停止、用 SSH 或屏幕共享连接、打开设置或删除。'],
+      ['开始使用', '点卡片启动虚拟机；已经在运行的，会把它的窗口调到最前。右键可以重命名、挂起、停止、用 SSH 或屏幕共享连接、打开设置或删除。'],
     ],
     early: 'Tartkit 还在早期。Tart 没装在常见位置时，到「设置 › 通用」里指定它的路径。',
     maker: '作者',

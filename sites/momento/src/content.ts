@@ -15,6 +15,7 @@ export const links = {
   changelog: 'https://github.com/Seaony/Momento/releases',
   github: 'https://github.com/Seaony/Momento',
   extension: 'https://github.com/Seaony/Momento-Chomre-Extension',
+  extensionDownload: 'https://github.com/Seaony/Momento-Chomre-Extension/releases/latest',
   home: 'https://mameya.app',
 };
 
@@ -127,7 +128,7 @@ export const t: Record<Lang, Dict> = {
       limits: 'Each saved image keeps the page it came from, so you can open the source again from Momento. Streamed videos such as Bilibili, Douyin and live replays can’t be saved, and images that need a login to view sometimes can’t be downloaded.',
       install: {
         title: 'Install by hand',
-        sub: 'Takes about a minute.',
+        sub: 'Manual installs don’t update automatically.',
         steps: [
           'Download the Manual-Install zip from the latest release and unzip it somewhere you’ll keep.',
           'Open `chrome://extensions` and turn on Developer mode.',
@@ -135,7 +136,7 @@ export const t: Record<Lang, Dict> = {
         ],
       },
       mock: { extensions: 'Extensions', devMode: 'Developer mode', load: 'Load unpacked' },
-      get: 'Get the extension',
+      get: 'Download extension',
     },
     supported: 'Supported formats',
     groups: {
@@ -189,7 +190,7 @@ export const t: Record<Lang, Dict> = {
       ['palette', '查找', '每张图导入时自动提取 8 色色板。可以按颜色、标签和扩展名筛选，也可以搜名称、备注、来源链接和标签。智能文件夹（在「设置 › 侧栏」里打开）按条件自动收集图片，比如「宽度超过 2000 像素、色板里有蓝色的 PNG」。'],
       ['folders', '整理', '嵌套文件夹、标签、收藏和备注，都能多选后一次改完。标签可以复制后粘贴到别的图上。批量重命名可以按模板编号，也可以查找替换。'],
       ['copy', '查重导出', '「查找相似图片」把看起来一样的图分成一组，选一张保留，其余几张的标签、文件夹和备注并进来，然后移到回收站。导出时可以转成 JPEG 或 PNG、限制最长边，常用的设置存成预设。'],
-      ['trayArrowDown', '导入', '拖入、粘贴、选文件或整个文件夹，按内容去重。可以监视几个文件夹，放进去的图自动导入，原文件移到废纸篓。图片里自带的关键字可以直接变成标签。'],
+      ['trayArrowDown', '导入', '拖入、粘贴、选文件或整个文件夹，按内容去重。可以设几个自动导入的文件夹，放进去的图会自动导入，原文件移到废纸篓。图片里自带的关键字可以直接变成标签。'],
       ['appWindow', '原生', 'macOS、Windows 和 Linux 用同一套原生界面，支持中文、英文和日语。还有密码锁、菜单栏图标、开机启动、可以改的快捷键，以及浅色和深色外观。'],
     ],
     ext: {
@@ -204,11 +205,11 @@ export const t: Record<Lang, Dict> = {
       limits: '存进去的图片会带上来源网页，之后在 Momento 里能点回原页面。B 站、抖音、直播回放这类分片播放的视频存不了；要登录才能看的图片，有时下载不到。',
       install: {
         title: '手动安装',
-        sub: '大约一分钟',
+        sub: '手动安装的扩展不会自动更新。',
         steps: ['下载 Manual-Install 压缩包，解压到一个会长期保留的位置', '打开 `chrome://extensions`，开启「开发者模式」', '点「加载已解压的扩展程序」，选 extension 文件夹'],
       },
       mock: { extensions: '扩展程序', devMode: '开发者模式', load: '加载已解压的扩展程序' },
-      get: '获取扩展',
+      get: '下载扩展',
     },
     supported: '支持的格式',
     groups: {

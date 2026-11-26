@@ -13,19 +13,19 @@ export const links = {
   download: 'https://github.com/Seaony/Diskit/releases/latest',
   changelog: 'https://github.com/Seaony/Diskit/releases',
   github: 'https://github.com/Seaony/Diskit',
+  license: 'https://github.com/Seaony/Diskit/blob/HEAD/LICENSE',
   home: 'https://mameya.app',
 };
 
 // 支持的位置，分组和顺序照 README 的表格；kind 对应 App 里的类型图标（public/types/<kind>-light|dark.svg）
 type Name = string | { en: string; zh: string };
-export type GroupId = 'devices' | 'shares' | 'drives' | 'experimental' | 'storage';
+export type GroupId = 'devices' | 'shares' | 'experimental' | 'storage';
 export const locations: { id: GroupId; items: [kind: string, name: Name][] }[] = [
   {
     id: 'devices',
     items: [
       ['androidUSB', { en: 'Android phone (USB)', zh: '安卓手机（USB）' }],
       ['androidWiFi', { en: 'Android phone (wireless debugging)', zh: '安卓手机（无线调试）' }],
-      ['ricohGR', { en: 'Ricoh GR IV', zh: '理光 GR IV' }],
       ['cameraUSB', { en: 'USB cameras', zh: 'USB 相机' }],
     ],
   },
@@ -35,18 +35,6 @@ export const locations: { id: GroupId; items: [kind: string, name: Name][] }[] =
       ['smb', 'SMB'],
       ['webdav', 'WebDAV'],
       ['nfs', 'NFS'],
-    ],
-  },
-  {
-    id: 'drives',
-    items: [
-      ['aliyunDrive', { en: 'Aliyun Drive', zh: '阿里云盘' }],
-      ['baiduDrive', { en: 'Baidu Netdisk', zh: '百度网盘' }],
-      ['drive115', { en: '115 Drive', zh: '115 网盘' }],
-      ['drive123', { en: '123 Drive', zh: '123 云盘' }],
-      ['oneDrive', 'OneDrive'],
-      ['googleDrive', 'Google Drive'],
-      ['dropbox', 'Dropbox'],
     ],
   },
   {
@@ -102,6 +90,7 @@ interface Dict {
   groups: Record<GroupId, string>;
   webdavPresets: string;
   signIn: string;
+  license: string;
   privacy: string;
   privacyRows: [IconName, string, string][];
   start: string;
@@ -143,14 +132,15 @@ export const t: Record<Lang, Dict> = {
       ['squaresFour', 'Panel', 'Lives in the menu bar with no Dock icon. Each location is a card or a row with a status dot and the space left. Drag to reorder, right-click for actions, or use the keyboard: arrow keys, Return, ⌘N to add, ⌘E to edit.'],
       ['hardDrives', 'Shares', 'SMB, WebDAV and NFS mount through macOS, so Finder and every other app see normal volumes. Diskit lists the shares on an SMB server, checks your password before saving, and leaves mounts in place when you quit.'],
       ['deviceMobile', 'Phones', 'Android phones connect over USB debugging, or wireless debugging with a pairing code on Android 11 and later. Diskit speaks ADB itself: no adb to install, nothing to add to the phone.'],
-      ['camera', 'Cameras', 'Ricoh GR IV and other USB cameras are read through macOS Image Capture. Photos stay untouched unless the camera allows deleting.'],
+      ['camera', 'Cameras', 'Connect Ricoh and other supported cameras through USB Cameras. Diskit reads them through macOS Image Capture. Photos stay untouched unless the camera allows deleting.'],
       ['appWindow', 'Native', 'SwiftUI and AppKit. Light and dark appearance, English and Simplified Chinese, launch at login and in-app updates.'],
     ],
     supported: 'Supported locations',
-    groups: { devices: 'Devices', shares: 'Shares', drives: 'Cloud drives', experimental: 'Experimental drives', storage: 'Object storage' },
+    groups: { devices: 'Devices', shares: 'Shares', experimental: 'Experimental drives', storage: 'Object storage' },
     webdavPresets: 'WebDAV works over HTTP and HTTPS, with presets for Jianguoyun, Nextcloud, ownCloud, Synology, QNAP and OpenList.',
     signIn:
-      'Official cloud drives sign in through each provider’s own authorisation page. Experimental drives sign in through the provider’s website or with your account and password, and use unofficial interfaces, so they may stop working when the provider changes its site.',
+      'Experimental drives sign in through the provider’s website or with your account and password. They use unofficial interfaces and may stop working when the provider changes its site.',
+    license: 'Open source under the MIT License',
     privacy: 'Privacy',
     privacyRows: [
       ['key', 'Keys', 'Passwords, tokens and cookies are stored in your login Keychain.'],
@@ -199,14 +189,15 @@ export const t: Record<Lang, Dict> = {
       ['squaresFour', '面板', '常驻菜单栏，不占 Dock。每个位置是一张卡片或一行，带状态点和剩余空间。可以拖动排序、右键操作，也可以用键盘：方向键选择，回车执行，⌘N 添加，⌘E 编辑。'],
       ['hardDrives', '共享', 'SMB、WebDAV、NFS 通过 macOS 挂载，Finder 和其他 App 都把它们当作普通的盘。Diskit 能列出 SMB 服务器上的共享，保存前先验证密码，退出时保留挂载。'],
       ['deviceMobile', '手机', '安卓手机通过 USB 调试连接，Android 11 及以上也可以用配对码走无线调试。Diskit 自己实现了 ADB 协议，不用装 adb，手机上也不用装任何东西。'],
-      ['camera', '相机', '理光 GR IV 和其他 USB 相机通过 macOS 的图像捕捉读取。除非相机允许删除，否则不会改动照片。'],
+      ['camera', '相机', '理光和其他受支持的相机统一从「相机（USB）」连接，由 macOS 的「图像捕捉」读取。除非相机允许删除，否则不会改动照片。'],
       ['appWindow', '原生', 'SwiftUI 与 AppKit。支持浅色和深色外观、简体中文和英文，可以开机启动，可以在应用内更新。'],
     ],
     supported: '支持的位置',
-    groups: { devices: '设备', shares: '共享', drives: '网盘', experimental: '实验性网盘', storage: '对象存储' },
+    groups: { devices: '设备', shares: '共享', experimental: '实验性网盘', storage: '对象存储' },
     webdavPresets: 'WebDAV 支持 HTTP 和 HTTPS，内置坚果云、Nextcloud、ownCloud、群晖、威联通和 OpenList 预设。',
     signIn:
-      '官方网盘通过各自的授权页面登录。实验性网盘通过服务商网页或账号密码登录，使用非官方接口，服务商改版后可能暂时失效。',
+      '实验性网盘通过服务商网页或账号密码登录，使用非官方接口，服务商改版后可能暂时失效。',
+    license: '以 MIT 许可证开源',
     privacy: '隐私',
     privacyRows: [
       ['key', '密钥', '密码、令牌和 Cookie 保存在登录钥匙串里。'],
